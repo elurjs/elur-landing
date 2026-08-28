@@ -7,7 +7,7 @@ export function SizeBench(): ElurTemplate {
     <div class="container animate-on-scroll">
       <div class="section-header">
         <div class="section-label">📊 Lean by design</div>
-        <h2 class="section-title">The Lightweight<br><span class="gradient-text">Micro-Framework.</span></h2>
+        <h2 class="section-title">The Lightweight<br><span class="gradient-text">Framework.</span></h2>
         <p class="section-desc">We include the router, forms, and state management in a bundle smaller than other
           frameworks' core runtimes.</p>
       </div>

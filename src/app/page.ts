@@ -26,13 +26,13 @@ import { Cta } from "./_components/Cta";
 import { Contribute } from "./_components/Contribute";
 
 export const generateMetadata = (): PageMetadata => ({
-  title: "Elur — Lightweight Reactive Micro-Framework for JavaScript",
+  title: "Elur — Lightweight Reactive Framework for JavaScript",
   description:
     "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler. ~15 KB gzipped, zero dependencies.",
   canonical: "https://www.elur.dev/",
   openGraph: {
     type: "website",
-    title: "Elur — Lightweight Reactive Micro-Framework for JavaScript",
+    title: "Elur — Lightweight Reactive Framework for JavaScript",
     description:
       "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler.",
     siteName: "Elur",
@@ -46,7 +46,7 @@ export const generateMetadata = (): PageMetadata => ({
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elur — Lightweight Reactive Micro-Framework for JavaScript",
+    title: "Elur — Lightweight Reactive Framework for JavaScript",
     description:
       "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler.",
     image: "https://www.elur.dev/og-image.jpg",
