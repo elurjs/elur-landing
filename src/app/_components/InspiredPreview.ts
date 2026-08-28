@@ -1,14 +1,14 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function InspiredPreview(): NixTemplate {
+export function InspiredPreview(): ElurTemplate {
   return raw(`
 <section class="section inspired-preview-section" id="inspired">
     <div class="container">
       <div class="inspired-preview-card animate-on-scroll">
         <h3>Why trust this approach?</h3>
         <p>
-          Nix.js is not reinventing UI from scratch. It combines proven ideas from frameworks developers already trust:
+          Elur is not reinventing UI from scratch. It combines proven ideas from frameworks developers already trust:
           tagged templates, fine-grained signals, provide/inject, function components, and auto-tracking.
         </p>
         <div class="inspired-preview-chips">

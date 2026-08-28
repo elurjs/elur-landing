@@ -1,4 +1,4 @@
-import type { PageDataLoad } from "@deijose/nix-js-kit";
+import type { PageDataLoad } from "@elurjs/kit";
 import { getInlineCss } from "./lib/inline-css";
 
 export const load: PageDataLoad = async () => {

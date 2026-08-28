@@ -3,7 +3,7 @@
  * safe when IntersectionObserver is unavailable.
  */
 
-import { html } from "@deijose/nix-js";
+import { html } from "@elurjs/core";
 
 function ScrollReveal() {
   if (typeof window === "undefined" || typeof document === "undefined") return null;

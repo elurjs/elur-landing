@@ -1,49 +1,49 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function NixIonic(): NixTemplate {
+export function ElurIonic(): ElurTemplate {
   return raw(`
-<section class="section nix-ionic-section" id="nix-ionic">
+<section class="section elur-ionic-section" id="elur-ionic">
     <div class="container">
       <div class="section-header animate-on-scroll">
         <div class="section-label" style="color:var(--orange)">📱 Mobile Apps</div>
-        <h2 class="section-title">Nix.js goes&nbsp;<span
+        <h2 class="section-title">Elur goes&nbsp;<span
             style="background:linear-gradient(135deg,var(--orange),var(--accent-light));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">mobile.</span>
         </h2>
         <p class="section-desc">
-          <strong>Nix-Ionic</strong> bridges Nix.js reactivity with the full Ionic component library.
+          <strong>Elur-Ionic</strong> bridges Elur reactivity with the full Ionic component library.
           Build native-quality mobile apps with signals, client-side routing, and&nbsp;<em>modular loading</em>.
-          Since <strong>v2.0</strong>, the router uses the core Nix.js router (no <code>ion-router</code>), with <code>IonRouterOutlet</code>, <code>createTabsLayout</code>, and <code>createBottomTabBar</code> for tab navigation.
+          Since <strong>v2.0</strong>, the router uses the core Elur router (no <code>ion-router</code>), with <code>IonRouterOutlet</code>, <code>createTabsLayout</code>, and <code>createBottomTabBar</code> for tab navigation.
         </p>
       </div>
 
       <!-- Hero layout: text + code -->
       <div class="ionic-hero-layout animate-on-scroll">
         <div class="ionic-hero-text">
-          <h3>Ionic Web Components.<br>Nix.js Reactivity.</h3>
+          <h3>Ionic Web Components.<br>Elur Reactivity.</h3>
           <p>
             Install <code
-              style="font-family:var(--font-mono);font-size:0.85em;color:var(--orange);background:rgba(251,146,60,0.1);padding:2px 6px;border-radius:4px">@deijose/nix-ionic</code>
+              style="font-family:var(--font-mono);font-size:0.85em;color:var(--orange);background:rgba(251,146,60,0.1);padding:2px 6px;border-radius:4px">@elurjs/ionic</code>
             and let the Vite plugin auto-register only the <code>&lt;ion-*&gt;</code> tags you use — or import bundles manually for full control.
           </p>
           <ul class="ionic-features-list">
             <li><span class="ionic-check">✓</span> Auto-registration via Vite plugin — zero manual setup</li>
             <li><span class="ionic-check">✓</span> Or import bundles manually: layout, forms, overlays, navigation…</li>
             <li><span class="ionic-check">✓</span> Core bootstrap registers only essential Ionic elements</li>
-            <li><span class="ionic-check">✓</span> Routing via core Nix.js router + <code>IonRouterOutlet</code></li>
+            <li><span class="ionic-check">✓</span> Routing via core Elur router + <code>IonRouterOutlet</code></li>
             <li><span class="ionic-check">✓</span> <code>createTabsLayout</code> &amp; <code>createBottomTabBar</code> for tab apps</li>
             <li><span class="ionic-check">✓</span> Compatible with Capacitor for true native deployment</li>
             <li><span class="ionic-check">✓</span> Signals-first — all state is reactive by default</li>
           </ul>
           <div class="ionic-install-box">
-            <span><span class="dollar">$</span> npm install <span class="pkg">@deijose/nix-ionic</span></span>
+            <span><span class="dollar">$</span> npm install <span class="pkg">@elurjs/ionic</span></span>
           </div>
           <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;font-size:0.78rem;color:var(--text-muted)">
             <span
-              style="padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(251,146,60,0.08)">Nix-Ionic
+              style="padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(251,146,60,0.08)">Elur-Ionic
               2.0.7</span>
             <span
-              style="padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(96,165,250,0.08)">Nix.js
+              style="padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(96,165,250,0.08)">Elur
               3.5.0 compatible</span>
             <span
               style="padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(52,211,153,0.08)">Ionic
@@ -57,25 +57,25 @@ export function NixIonic(): NixTemplate {
             <span class="code-filename">main.ts</span>
           </div>
           <div class="code-body">
-            <pre><span class="kw">import</span> { NixComponent, html, mount, nixRouter } <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
-<span class="kw">import</span> { IonRouterOutlet } <span class="kw">from</span> <span class="str">"@deijose/nix-ionic"</span>;
+            <pre><span class="kw">import</span> { ElurComponent, html, mount, elurRouter } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
+<span class="kw">import</span> { IonRouterOutlet } <span class="kw">from</span> <span class="str">"@elurjs/ionic"</span>;
 
 <span class="cmt">// Auto-generated by the Vite plugin — scans html\`\` templates</span>
 <span class="cmt">// for &lt;ion-*&gt; tags and registers only what you use.</span>
-<span class="kw">import</span> <span class="str">"virtual:nix-ionic/registration"</span>;
+<span class="kw">import</span> <span class="str">"virtual:elur-ionic/registration"</span>;
 
 <span class="kw">import</span> { HomePage } <span class="kw">from</span> <span class="str">"./pages/HomePage"</span>;
 <span class="kw">import</span> { TaskDetailPage } <span class="kw">from</span> <span class="str">"./pages/TaskDetailPage"</span>;
 
-<span class="kw">const</span> router = <span class="fn">nixRouter</span>();
+<span class="kw">const</span> router = <span class="fn">elurRouter</span>();
 
-<span class="cmt">// Nix.js router + IonRouterOutlet (no ion-router needed)</span>
+<span class="cmt">// Elur router + IonRouterOutlet (no ion-router needed)</span>
 <span class="kw">const</span> outlet = <span class="kw">new</span> <span class="fn">IonRouterOutlet</span>([
   { path: <span class="str">"/"</span>,         component: (ctx) => <span class="kw">new</span> <span class="fn">HomePage</span>(ctx) },
   { path: <span class="str">"/task/:id"</span>, component: (ctx) => <span class="kw">new</span> <span class="fn">TaskDetailPage</span>(ctx) },
 ]);
 
-<span class="kw">class</span> <span class="fn">App</span> <span class="kw">extends</span> <span class="type">NixComponent</span> {
+<span class="kw">class</span> <span class="fn">App</span> <span class="kw">extends</span> <span class="type">ElurComponent</span> {
   <span class="fn">render</span>() {
     <span class="kw">return</span> <span class="fn">html</span><span class="str">\`&lt;ion-app&gt;\${outlet}&lt;/ion-app&gt;\`</span>;
   }
@@ -101,7 +101,7 @@ export function NixIonic(): NixTemplate {
             subpath imports. Minimal fixture = 11.3% of full bundle (gzip).</p>
         </div>
         <div class="ionic-feature-card animate-on-scroll">
-          <span class="ionic-feature-icon">�</span>
+          <span class="ionic-feature-icon">🎨</span>
           <h4>Reactive Overlays</h4>
           <p>Signal-based <code>createToast()</code>, <code>createAlert()</code>, <code>createLoading()</code>,
             <code>createActionSheet()</code>, <code>createPopover()</code>, <code>createModal()</code>,
@@ -109,7 +109,7 @@ export function NixIonic(): NixTemplate {
             semantics, and stale-result protection.</p>
         </div>
         <div class="ionic-feature-card animate-on-scroll">
-          <span class="ionic-feature-icon">�️</span>
+          <span class="ionic-feature-icon">🗄️</span>
           <h4>Cache Policies</h4>
           <p>LRU/FIFO max eviction, TTL expiry, per-route overrides, and per-tab cache isolation. Keep pages alive
             across navigation or expire them automatically.</p>
@@ -117,7 +117,7 @@ export function NixIonic(): NixTemplate {
         <div class="ionic-feature-card animate-on-scroll">
           <span class="ionic-feature-icon">🧭</span>
           <h4>Core Router Integration</h4>
-          <p>Single router authority — no competing Ionic/Nix routers. <code>IonRouterOutlet</code> +
+          <p>Single router authority — no competing Ionic/Elur routers. <code>IonRouterOutlet</code> +
             <code>IonBackButton</code> + reactive <code>canGoBack</code>. Deep linking, tab stacks, and history-api
             navigation work out of the box.</p>
         </div>
@@ -129,7 +129,7 @@ export function NixIonic(): NixTemplate {
             <code>selected</code> sync via <code>ref</code> + <code>effect</code>.</p>
         </div>
         <div class="ionic-feature-card animate-on-scroll">
-          <span class="ionic-feature-icon">�</span>
+          <span class="ionic-feature-icon">💾</span>
           <h4>Page-State Persistence</h4>
           <p>Opt-in serializable state across navigation. Preserve form inputs, scroll position, and component state
             when users navigate back and forth.</p>
@@ -137,13 +137,13 @@ export function NixIonic(): NixTemplate {
         <div class="ionic-feature-card animate-on-scroll">
           <span class="ionic-feature-icon">📲</span>
           <h4>Optional Capacitor</h4>
-          <p><code>@deijose/nix-ionic/capacitor</code> subpath with zero web bundle cost (604 bytes). StatusBar,
+          <p><code>@elurjs/ionic/capacitor</code> subpath with zero web bundle cost (604 bytes). StatusBar,
             SplashScreen, Keyboard, Haptics, and App plugin wrappers with graceful web degradation (no-op on web).</p>
         </div>
         <div class="ionic-feature-card animate-on-scroll">
           <span class="ionic-feature-icon">🎭</span>
           <h4>Framework Delegate</h4>
-          <p>Mount Nix.js templates and components inside Ionic overlays (modal, popover) via a Nix.js
+          <p>Mount Elur templates and components inside Ionic overlays (modal, popover) via a Elur
             <code>FrameworkDelegate</code> — uses <code>mount()</code> to render and <code>unmount()</code> on
             dismiss.</p>
         </div>
@@ -204,27 +204,27 @@ export function NixIonic(): NixTemplate {
           Migration guide (v1.x -> v2.x — major changes)</div>
         <div class="ionic-migration-box">
           <span class="diff-cmt">// Router — no more ion-router, single authority</span><br>
-          <span class="diff-del">- import { nixIonicRouter } from "@deijose/nix-ionic";</span><br>
-          <span class="diff-del">- const r = nixIonicRouter();</span><br>
-          <span class="diff-add">+ import { nixRouter } from "@deijose/nix-js";</span><br>
-          <span class="diff-add">+ import { IonRouterOutlet, createTabsLayout } from "@deijose/nix-ionic";</span><br>
-          <span class="diff-add">+ const r = nixRouter();</span><br>
+          <span class="diff-del">- import { elurIonicRouter } from "@elurjs/ionic";</span><br>
+          <span class="diff-del">- const r = elurIonicRouter();</span><br>
+          <span class="diff-add">+ import { elurRouter } from "@elurjs/core";</span><br>
+          <span class="diff-add">+ import { IonRouterOutlet, createTabsLayout } from "@elurjs/ionic";</span><br>
+          <span class="diff-add">+ const r = elurRouter();</span><br>
           <span class="diff-add">+ const outlet = new IonRouterOutlet(routes, { tabs: ["/home", "/profile"] });</span><br><br>
           <span class="diff-cmt">// Overlays — use* renamed to create*</span><br>
           <span class="diff-del">- const toast = useToast();</span><br>
-          <span class="diff-add">+ import { createToast } from "@deijose/nix-ionic";</span><br>
+          <span class="diff-add">+ import { createToast } from "@elurjs/ionic";</span><br>
           <span class="diff-add">+ const toast = createToast();</span><br><br>
           <span class="diff-cmt">// Components — auto-registration via Vite plugin</span><br>
-          <span class="diff-del">- setupNixIonic(); // registered everything</span><br>
-          <span class="diff-add">+ import "virtual:nix-ionic/registration"; // auto from templates</span>
+          <span class="diff-del">- setupElurIonic(); // registered everything</span><br>
+          <span class="diff-add">+ import "virtual:elur-ionic/registration"; // auto from templates</span>
         </div>
 
         <div style="margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-          <a href="https://github.com/DeijoseDevelop/create-nix-app/tree/main/template-nix-ionic" target="_blank"
+          <a href="https://github.com/elurjs/create-elur-app/tree/main/template-elur-ionic" target="_blank"
             rel="noopener" class="btn-secondary" style="padding:10px 22px;font-size:0.88rem">
             Starter Template
           </a>
-          <a href="https://www.npmjs.com/package/@deijose/nix-ionic" target="_blank" rel="noopener" class="btn-primary"
+          <a href="https://www.npmjs.com/package/@elurjs/ionic" target="_blank" rel="noopener" class="btn-primary"
             style="padding:10px 22px;font-size:0.88rem">
             View on npm
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -233,7 +233,7 @@ export function NixIonic(): NixTemplate {
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <a href="https://github.com/DeijoseDevelop/nix-ionic" target="_blank" rel="noopener" class="btn-secondary"
+          <a href="https://github.com/elurjs/elur-ionic" target="_blank" rel="noopener" class="btn-secondary"
             style="padding:10px 22px;font-size:0.88rem">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
               <path

@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function QuickStart(): NixTemplate {
+export function QuickStart(): ElurTemplate {
   return raw(`
 <section class="section quickstart-section" id="quickstart">
     <div class="container">
@@ -20,14 +20,14 @@ export function QuickStart(): NixTemplate {
           <div class="step-code">
             <span style="color:var(--text-muted)"># npm</span><br>
             <span style="color:var(--green)">$</span> npm install <span
-              style="color:var(--accent-light)">@deijose/nix-js</span><br><br>
+              style="color:var(--accent-light)">@elurjs/core</span><br><br>
             <span style="color:var(--text-muted)"># or scaffold a full project</span><br>
-            <span style="color:var(--green)">$</span> npx create-nix-app <span
+            <span style="color:var(--green)">$</span> npx create-elur-app <span
               style="color:var(--accent-light)">my-app</span><br><br>
             <span style="color:var(--text-muted)"># or via ESM CDN (no install)</span><br>
             <span style="color:var(--accent-light)">import</span> { signal } <span
               style="color:var(--accent-light)">from</span><br>
-            &nbsp;&nbsp;<span style="color:var(--green)">"https://esm.sh/@deijose/nix-js@3.5.0"</span>;
+            &nbsp;&nbsp;<span style="color:var(--green)">"https://esm.sh/@elurjs/core@3.5.0"</span>;
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export function QuickStart(): NixTemplate {
           <div class="step-code">
             <span style="color:var(--accent-light)">import</span> { signal, html } <span
               style="color:var(--accent-light)">from</span> <span
-              style="color:var(--green)">"@deijose/nix-js"</span>;<br><br>
+              style="color:var(--green)">"@elurjs/core"</span>;<br><br>
             <span style="color:var(--accent-light)">function</span> <span style="color:var(--blue)">App</span>() {<br>
             &nbsp;&nbsp;<span style="color:var(--accent-light)">const</span> count = <span
               style="color:var(--blue)">signal</span>(<span style="color:var(--orange)">0</span>);<br>
@@ -66,7 +66,7 @@ export function QuickStart(): NixTemplate {
           <div class="step-code">
             <span style="color:var(--accent-light)">import</span> { mount } <span
               style="color:var(--accent-light)">from</span> <span
-              style="color:var(--green)">"@deijose/nix-js"</span>;<br><br>
+              style="color:var(--green)">"@elurjs/core"</span>;<br><br>
             <span style="color:var(--text-muted)">// index.html: &lt;div id="app"&gt;&lt;/div&gt;</span><br><br>
             <span style="color:var(--blue)">mount</span>(<span style="color:var(--blue)">App</span>(), <span
               style="color:var(--green)">"#app"</span>);<br><br>
@@ -102,8 +102,8 @@ export function QuickStart(): NixTemplate {
             <li class="flow-step-item"><span class="flow-dot"></span> Debug compiled/minified code</li>
           </ul>
         </div>
-        <div class="flow-card nix">
-          <h4>The Nix.js Way</h4>
+        <div class="flow-card elur">
+          <h4>The Elur Way</h4>
           <ul class="flow-steps">
             <li class="flow-step-item"><span class="flow-dot"></span> Create <code>index.html</code></li>
             <li class="flow-step-item"><span class="flow-dot"></span> Import via CDN or local ESM</li>
@@ -115,6 +115,6 @@ export function QuickStart(): NixTemplate {
     </div>
   </section>
 
-  <!-- Why Nix -->
+  <!-- Why Elur -->
   `);
 }

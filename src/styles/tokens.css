@@ -1,5 +1,5 @@
 /* ============================================================================
-   Nix.js Landing — design tokens (dark theme)
+   Elur Landing — design tokens (dark theme)
    ============================================================================ */
 
 /* ── Self-hosted fonts (latin subset, variable woff2) ── */
@@ -20,37 +20,42 @@
 }
 
 --bg-primary: #0a0a0f;
-      --bg-secondary: #12121a;
-      --bg-card: #16161f;
-      --bg-card-hover: #1c1c28;
-      --border: #2a2a3a;
-      --border-light: #3a3a4a;
-      --text-primary: #f0f0f5;
-      --text-secondary: #a0a0b5;
-      --text-muted: #6a6a80;
-      --accent: #3432c8;
-      --accent-light: #2bc7f0;
-      --accent-glow: rgba(52, 50, 200, 0.3);
-      --accent-subtle: rgba(52, 50, 200, 0.08);
-      --green: #34d399;
-      --green-glow: rgba(52, 211, 153, 0.15);
-      --orange: #fb923c;
-      --blue: #60a5fa;
-      --pink: #f472b6;
-      --cyan: #22d3ee;
-      --red: #f87171;
-      --yellow: #fbbf24;
+--bg-secondary: #12121a;
+--bg-card: #16161f;
+--bg-card-hover: #1c1c28;
+--border: #2a2a3a;
+--border-light: #3a3a4a;
+--text-primary: #f0f0f5;
+--text-secondary: #a0a0b5;
+--text-muted: #6a6a80;
+--accent: #3432c8;
+--accent-light: #2bc7f0;
+--accent-glow: rgba(52, 50, 200, 0.3);
+--accent-subtle: rgba(52, 50, 200, 0.08);
+--green: #34d399;
+--green-glow: rgba(52, 211, 153, 0.15);
+--orange: #fb923c;
+--blue: #60a5fa;
+--pink: #f472b6;
+--cyan: #22d3ee;
+--red: #f87171;
+--yellow: #fbbf24;
 
-      /* Colores framework para benchmarks */
-      --van-col: #e8d84a;
-      --so-col: #76b3e1;
-      --sv-col: #ff6b35;
-      --v-col: #42b883;
-      --r-col: #61dafb;
-      --an-col: #ff6b8a;
+/* Colores framework para benchmarks */
+--van-col: #e8d84a;
+--so-col: #76b3e1;
+--sv-col: #ff6b35;
+--v-col: #42b883;
+--r-col: #61dafb;
+--an-col: #ff6b8a;
 
-      --gradient-hero: linear-gradient(135deg, #3432c8 0%, #256fe1 40%, #2bc7f0 100%);
-      --gradient-accent: linear-gradient(135deg, #3432c8, #2bc7f0);
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    }
+--gradient-hero: linear-gradient(135deg, #3432c8 0%, #256fe1 40%, #2bc7f0 100%);
+--gradient-accent: linear-gradient(135deg, #3432c8, #2bc7f0);
+--font-sans: 'Inter',
+-apple-system,
+BlinkMacSystemFont,
+sans-serif;
+--font-mono: 'JetBrains Mono',
+'Fira Code',
+monospace;
+}

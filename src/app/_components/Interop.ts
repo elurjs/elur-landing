@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Interop(): NixTemplate {
+export function Interop(): ElurTemplate {
   return raw(`
 <section class="section interop-section" id="interop">
     <div class="container">
@@ -17,7 +17,7 @@ export function Interop(): NixTemplate {
           <h3>Bring your existing stack as-is</h3>
           <p>
             Teams often reject frameworks when integration with existing JS libraries is painful.
-            Nix.js keeps the native DOM model, so you can plug in charting, maps, grids, editors, and media players
+            Elur keeps the native DOM model, so you can plug in charting, maps, grids, editors, and media players
             directly.
           </p>
           <div class="interop-libs">
@@ -68,10 +68,10 @@ export function Interop(): NixTemplate {
             <span class="code-filename">chart-integration.ts</span>
           </div>
           <div class="code-body">
-            <pre><span class="kw">import</span> { NixComponent, html, signal, effect, ref } <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
+            <pre><span class="kw">import</span> { ElurComponent, html, signal, effect, ref } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 <span class="kw">import</span> { Chart } <span class="kw">from</span> <span class="str">"chart.js/auto"</span>;
 
-<span class="kw">class</span> <span class="fn">SalesChart</span> <span class="kw">extends</span> <span class="fn">NixComponent</span> {
+<span class="kw">class</span> <span class="fn">SalesChart</span> <span class="kw">extends</span> <span class="fn">ElurComponent</span> {
   <span class="kw">private</span> canvasRef = <span class="fn">ref</span>&lt;HTMLCanvasElement&gt;();
   <span class="kw">private</span> points = <span class="fn">signal</span>([12, 19, 7]);
   <span class="kw">private</span> chart = <span class="kw">null</span>;

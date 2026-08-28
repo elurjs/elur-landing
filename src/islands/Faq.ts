@@ -3,7 +3,7 @@
  * click handling onto the server-rendered markup.
  */
 
-import { html } from "@deijose/nix-js";
+import { html } from "@elurjs/core";
 
 function Faq() {
   if (typeof document === "undefined") return null;

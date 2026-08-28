@@ -3,7 +3,7 @@
  * static navbar markup. Renders nothing.
  */
 
-import { html } from "@deijose/nix-js";
+import { html } from "@elurjs/core";
 
 function Navbar() {
   if (typeof document === "undefined") return null;

@@ -3,10 +3,10 @@
  * wired by the Faq island.
  */
 
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Faq(): NixTemplate {
+export function Faq(): ElurTemplate {
   return raw(`
 <section class="section faq-section" id="faq">
     <div class="container">
@@ -18,7 +18,7 @@ export function Faq(): NixTemplate {
         <div class="faq-sidebar animate-on-scroll">
           <h3>Still have questions?</h3>
           <p>Browse the full documentation or open an issue on GitHub. The community is small but growing fast.</p>
-          <a href="https://github.com/DeijoseDevelop/nix-js" target="_blank" rel="noopener" class="faq-contact">
+          <a href="https://github.com/elurjs/elur" target="_blank" rel="noopener" class="faq-contact">
             Open an issue on GitHub
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
@@ -32,7 +32,7 @@ export function Faq(): NixTemplate {
 
           <div class="faq-item">
             <button class="faq-question">
-              What's new in Nix.js 3.5.0?
+              What's new in Elur 3.5.0?
               <span class="faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -42,15 +42,15 @@ export function Faq(): NixTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Nix.js 3.5.0 adds an optional build-time compiler (<code>@deijose/nix-js-compiler</code>) that
+                Elur 3.5.0 adds an optional build-time compiler (<code>@elurjs/core-compiler</code>) that
                 generates direct DOM manipulation code, eliminating runtime TreeWalker and detectContext overhead
-                (-28% average, up to -44% faster renders). The Vite plugin (<code>@deijose/vite-plugin-nix-js</code> >= 2.0.2) uses
+                (-28% average, up to -44% faster renders). The Vite plugin (<code>@elurjs/vite-plugin-elur</code> >= 2.0.2) uses
                 the compiler automatically — no manual setup needed.
-                Nix.js Kit 2.4.4 adds client-only islands (<code>directive: "only"</code>, <code>ssr: false</code>),
+                Elur Kit 2.4.4 adds client-only islands (<code>directive: "only"</code>, <code>ssr: false</code>),
                 <code>fallback</code> content, <code>isSSR()</code> for environment reads, and fixes hydration
                 for islands without SSR DOM.
-                The ecosystem packages <code>@deijose/nix-query</code> 1.5.1, <code>@deijose/nix-ionic</code> 2.0.7,
-                <code>@deijose/nix-js-auth</code> 1.2.2, and <code>@deijose/nix-i18n</code> 1.3.2 are aligned.
+                The ecosystem packages <code>@elurjs/query</code> 1.5.1, <code>@elurjs/ionic</code> 2.0.7,
+                <code>@elurjs/auth</code> 1.2.2, and <code>@elurjs/i18n</code> 1.3.2 are aligned.
               </div>
             </div>
           </div>
@@ -67,10 +67,10 @@ export function Faq(): NixTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                No. Nix.js works with zero build step — templates are standard JavaScript tagged template literals
-                that run natively via ESM/import maps. The build-time compiler (<code>@deijose/nix-js-compiler</code>)
+                No. Elur works with zero build step — templates are standard JavaScript tagged template literals
+                that run natively via ESM/import maps. The build-time compiler (<code>@elurjs/core-compiler</code>)
                 is <strong>optional</strong> and only improves performance by -28% on average (up to -44%) on rendering benchmarks.
-                The Vite plugin enables it automatically when installed, but you can use Nix.js without any
+                The Vite plugin enables it automatically when installed, but you can use Elur without any
                 bundler at all.
               </div>
             </div>
@@ -78,7 +78,7 @@ export function Faq(): NixTemplate {
 
           <div class="faq-item">
             <button class="faq-question">
-              Is Nix.js production-ready?
+              Is Elur production-ready?
               <span class="faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -106,7 +106,7 @@ export function Faq(): NixTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Yes. Nix.js works directly with DOM-first libraries like <code>Chart.js</code>, <code>Leaflet</code>,
+                Yes. Elur works directly with DOM-first libraries like <code>Chart.js</code>, <code>Leaflet</code>,
                 and <code>AG Grid</code> without wrappers. If it runs in browser JavaScript, you can integrate it.
               </div>
             </div>
@@ -124,16 +124,16 @@ export function Faq(): NixTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Use <code>@deijose/nix-query</code> for async requests, query cache, retries, and invalidation.
+                Use <code>@elurjs/query</code> for async requests, query cache, retries, and invalidation.
                 It is platform-agnostic and works in both web and mobile stacks. Start with:
-                <code>npm install @deijose/nix-js @deijose/nix-query</code>.
+                <code>npm install @elurjs/core @elurjs/query</code>.
               </div>
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-question">
-              Can I build mobile apps with Nix.js?
+              Can I build mobile apps with Elur?
               <span class="faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -143,7 +143,7 @@ export function Faq(): NixTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Yes. Use <code>@deijose/nix-ionic@2.0.7</code> with Ionic Core for routing + native-style UI, then wrap
+                Yes. Use <code>@elurjs/ionic@2.0.7</code> with Ionic Core for routing + native-style UI, then wrap
                 with Capacitor for Android/iOS deployment using the same codebase.
               </div>
             </div>
@@ -151,7 +151,7 @@ export function Faq(): NixTemplate {
 
           <div class="faq-item">
             <button class="faq-question">
-              Do I need migration changes from Nix.js 1.x?
+              Do I need migration changes from Elur 1.x?
               <span class="faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -171,6 +171,6 @@ export function Faq(): NixTemplate {
       </div>
     </div>
   </section>
-    <div data-nix-js-island="Faq" data-directive="load" data-props="{}"></div>
+    <div data-elur-island="Faq" data-directive="load" data-props="{}"></div>
   `);
 }

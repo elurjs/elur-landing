@@ -1,4 +1,4 @@
-import { html, signal, computed, repeat } from "@deijose/nix-js";
+import { html, signal, computed, repeat } from "@elurjs/core";
 
 interface Todo {
   id: number;
@@ -8,7 +8,7 @@ interface Todo {
 
 function TodoDemo() {
   const todos = signal<Todo[]>([
-    { id: 1, text: "Learn Nix.js signals", done: signal(true) },
+    { id: 1, text: "Learn Elur signals", done: signal(true) },
     { id: 2, text: "Build a reactive app", done: signal(false) },
     { id: 3, text: "Deploy to production", done: signal(false) },
   ]);
@@ -56,9 +56,9 @@ function TodoDemo() {
         </div>
         <ul class="demo-todo-list">
             ${() => repeat(
-        todos.value,
-        (t) => t.id,
-        (t) => html`
+      todos.value,
+      (t) => t.id,
+      (t) => html`
                     <li class=${() => `demo-todo-item${t.done.value ? " done" : ""}`}>
                         <span>${t.text}</span>
                         <div class="demo-todo-item-actions">
@@ -69,7 +69,7 @@ function TodoDemo() {
                         </div>
                     </li>
                 `,
-      )}
+    )}
         </ul>
         <div class="demo-todo-stats">
             <span class="signal-dot active"></span>

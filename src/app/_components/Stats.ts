@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Stats(): NixTemplate {
+export function Stats(): ElurTemplate {
   return raw(`
 <div class="stats container animate-on-scroll">
     <div class="stats-grid">

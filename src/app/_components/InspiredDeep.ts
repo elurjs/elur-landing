@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function InspiredDeep(): NixTemplate {
+export function InspiredDeep(): ElurTemplate {
   return raw(`
 <section class="section inspired-section" id="inspired-deep">
     <div class="container">
@@ -9,7 +9,7 @@ export function InspiredDeep(): NixTemplate {
         <div class="section-label">✦ Technical Inspiration Deep Dive</div>
         <h2 class="section-title">Inspired by the best.<br><span class="gradient-text">Refined into one.</span></h2>
         <p class="section-desc">
-          Nix.js didn't emerge in a vacuum. It distills battle-tested ideas from the frameworks that shaped modern UI
+          Elur didn't emerge in a vacuum. It distills battle-tested ideas from the frameworks that shaped modern UI
           development — taking what works, discarding the overhead.
         </p>
       </div>
@@ -32,7 +32,7 @@ export function InspiredDeep(): NixTemplate {
           </div>
           <p class="inspired-card-desc">
             Lit pioneered the idea of using JavaScript's native <strong>tagged template literals</strong> to define HTML
-            templates — no compiler, no JSX, no virtual DOM. Nix.js adopts this exact approach: the <code
+            templates — no compiler, no JSX, no virtual DOM. Elur adopts this exact approach: the <code
               style="color:var(--accent-light);font-size:0.8em">html\`\`</code> tag parses templates once and wires live
             bindings directly to real DOM nodes.
           </p>
@@ -41,10 +41,10 @@ export function InspiredDeep(): NixTemplate {
             <span style="color:var(--accent-light)">import</span> { html } <span
               style="color:var(--accent-light)">from</span> <span style="color:var(--green)">'lit'</span>;<br>
             html<span style="color:var(--green)">\`&lt;p&gt;Hello \${name}&lt;/p&gt;\`</span>;<br><br>
-            <span style="color:var(--text-muted)">// Nix.js takes the same approach</span><br>
+            <span style="color:var(--text-muted)">// Elur takes the same approach</span><br>
             <span style="color:var(--accent-light)">import</span> { html } <span
               style="color:var(--accent-light)">from</span> <span
-              style="color:var(--green)">'@deijose/nix-js'</span>;<br>
+              style="color:var(--green)">'@elurjs/core'</span>;<br>
             html<span style="color:var(--green)">\`&lt;p&gt;\${() => name.value}&lt;/p&gt;\`</span>;
           </div>
           <a href="https://lit.dev" target="_blank" rel="noopener" class="inspired-card-link" style="color: #4d94ff;">
@@ -73,7 +73,7 @@ export function InspiredDeep(): NixTemplate {
           </div>
           <p class="inspired-card-desc">
             Solid.js proved that <strong>signal-based fine-grained reactivity</strong> doesn't need a virtual DOM — just
-            wire effects directly to DOM nodes. Nix.js adopts the same reactive core: <code
+            wire effects directly to DOM nodes. Elur adopts the same reactive core: <code
               style="color:var(--accent-light);font-size:0.8em">signal()</code>, <code
               style="color:var(--accent-light);font-size:0.8em">computed()</code>, and <code
               style="color:var(--accent-light);font-size:0.8em">effect()</code> are the three primitives that power
@@ -85,7 +85,7 @@ export function InspiredDeep(): NixTemplate {
               style="color:var(--blue)">createSignal</span>(<span style="color:var(--orange)">0</span>);<br>
             <span style="color:var(--blue)">createEffect</span>(() => console.<span
               style="color:var(--blue)">log</span>(count()));<br><br>
-            <span style="color:var(--text-muted)">// Nix.js — same concept, unified API</span><br>
+            <span style="color:var(--text-muted)">// Elur — same concept, unified API</span><br>
             <span style="color:var(--accent-light)">const</span> count = <span
               style="color:var(--blue)">signal</span>(<span style="color:var(--orange)">0</span>);<br>
             <span style="color:var(--blue)">effect</span>(() => console.<span
@@ -119,7 +119,7 @@ export function InspiredDeep(): NixTemplate {
           <p class="inspired-card-desc">
             Vue 3's Composition API introduced <strong>provide/inject</strong>, <code
               style="color:var(--accent-light);font-size:0.8em">watch()</code>, and typed lifecycle hooks as first-class
-            citizens. Nix.js mirrors this exactly: typed injection keys via <code
+            citizens. Elur mirrors this exactly: typed injection keys via <code
               style="color:var(--accent-light);font-size:0.8em">createInjectionKey()</code>, <code
               style="color:var(--accent-light);font-size:0.8em">watch()</code> with immediate/once options, and <code
               style="color:var(--accent-light);font-size:0.8em">onMount</code> / <code
@@ -131,7 +131,7 @@ export function InspiredDeep(): NixTemplate {
               style="color:var(--blue)">ref</span>(<span style="color:var(--green)">'dark'</span>));<br>
             <span style="color:var(--accent-light)">const</span> theme = <span
               style="color:var(--blue)">inject</span>(<span style="color:var(--green)">'theme'</span>);<br><br>
-            <span style="color:var(--text-muted)">// Nix.js — typed keys</span><br>
+            <span style="color:var(--text-muted)">// Elur — typed keys</span><br>
             <span style="color:var(--accent-light)">const</span> THEME = <span
               style="color:var(--blue)">createInjectionKey</span>&lt;Signal&lt;<span
               style="color:var(--yellow)">string</span>&gt;&gt;(<span style="color:var(--green)">'theme'</span>);<br>
@@ -164,9 +164,9 @@ export function InspiredDeep(): NixTemplate {
           </div>
           <p class="inspired-card-desc">
             React proved that <strong>function components with colocated state</strong> are more composable than
-            class-only patterns. Nix.js supports both: function components (plain functions + <code
+            class-only patterns. Elur supports both: function components (plain functions + <code
               style="color:var(--accent-light);font-size:0.8em">html\`\`</code>, zero boilerplate) and class components
-            (<code style="color:var(--accent-light);font-size:0.8em">NixComponent</code>) only when lifecycle hooks are
+            (<code style="color:var(--accent-light);font-size:0.8em">ElurComponent</code>) only when lifecycle hooks are
             needed.
           </p>
           <div class="inspired-card-code">
@@ -178,9 +178,9 @@ export function InspiredDeep(): NixTemplate {
             &nbsp;&nbsp;<span style="color:var(--accent-light)">return</span> &lt;button onClick={() =>
             setN(n+1)}&gt;{n}&lt;/button&gt;;<br>
             }<br><br>
-            <span style="color:var(--text-muted)">// Nix.js — no JSX, no compiler</span><br>
+            <span style="color:var(--text-muted)">// Elur — no JSX, no compiler</span><br>
             <span style="color:var(--accent-light)">function</span> <span style="color:var(--blue)">Counter</span>():
-            <span style="color:var(--yellow)">NixTemplate</span> {<br>
+            <span style="color:var(--yellow)">ElurTemplate</span> {<br>
             &nbsp;&nbsp;<span style="color:var(--accent-light)">const</span> n = <span
               style="color:var(--blue)">signal</span>(<span style="color:var(--orange)">0</span>);<br>
             &nbsp;&nbsp;<span style="color:var(--accent-light)">return</span> html<span
@@ -215,7 +215,7 @@ export function InspiredDeep(): NixTemplate {
           </div>
           <p class="inspired-card-desc">
             Svelte's built-in <code style="color:var(--accent-light);font-size:0.8em">transition:</code> directive made
-            animations a first-class concern — without a separate animation library. Nix.js's <code
+            animations a first-class concern — without a separate animation library. Elur's <code
               style="color:var(--accent-light);font-size:0.8em">transition()</code> brings the same mental model: CSS
             class-based enter/leave lifecycle with optional JS hooks and <code
               style="color:var(--accent-light);font-size:0.8em">appear</code> on first render.
@@ -223,7 +223,7 @@ export function InspiredDeep(): NixTemplate {
           <div class="inspired-card-code">
             <span style="color:var(--text-muted)">// Svelte — transition directive</span><br>
             &lt;div <span style="color:var(--blue)">transition:fade</span>&gt;Hello!&lt;/div&gt;<br><br>
-            <span style="color:var(--text-muted)">// Nix.js — same idea, no compiler</span><br>
+            <span style="color:var(--text-muted)">// Elur — same idea, no compiler</span><br>
             <span style="color:var(--blue)">transition</span>(<br>
             &nbsp;&nbsp;() => show.value ? html<span style="color:var(--green)">\`&lt;p&gt;Hello!&lt;/p&gt;\`</span> :
             <span style="color:var(--accent-light)">null</span>,<br>
@@ -259,12 +259,12 @@ export function InspiredDeep(): NixTemplate {
             MobX introduced <strong>transparent reactive tracking</strong> — read a value inside a reaction, and you're
             automatically subscribed, no boilerplate. S.js formalized this into a dependency graph with <code
               style="color:var(--accent-light);font-size:0.8em">batch()</code> and <code
-              style="color:var(--accent-light);font-size:0.8em">untrack()</code>. Nix.js inherits both: effects
+              style="color:var(--accent-light);font-size:0.8em">untrack()</code>. Elur inherits both: effects
             auto-track their dependencies and <code style="color:var(--accent-light);font-size:0.8em">untrack()</code>
             lets you opt out selectively.
           </p>
           <div class="inspired-card-code">
-            <span style="color:var(--text-muted)">// Nix.js batch + untrack — from MobX/S.js</span><br>
+            <span style="color:var(--text-muted)">// Elur batch + untrack — from MobX/S.js</span><br>
             <span style="color:var(--blue)">batch</span>(() => {<br>
             &nbsp;&nbsp;price.value = <span style="color:var(--orange)">20</span>;&nbsp;&nbsp;<span
               style="color:var(--text-muted)">// writes queued</span><br>
@@ -297,18 +297,18 @@ export function InspiredDeep(): NixTemplate {
       <div class="inspired-quote animate-on-scroll">
         <p>
           The best frameworks aren't built from scratch — they're built on the shoulders of great ideas.
-          Nix.js studies what works across the ecosystem and brings it together: <strong>tagged templates from
+          Elur studies what works across the ecosystem and brings it together: <strong>tagged templates from
             Lit</strong>,
           <strong>fine-grained signals from Solid</strong>, <strong>provide/inject from Vue</strong>,
           <strong>function components from React</strong>, <strong>CSS transitions from Svelte</strong>,
           and <strong>transparent auto-tracking from MobX</strong> — unified into a single, zero-dependency,
           compiler-free package that respects your time and your bundle size.
         </p>
-        <div class="inspired-quote-source">— Design philosophy of Nix.js</div>
+        <div class="inspired-quote-source">— Design philosophy of Elur</div>
       </div>
     </div>
   </section>
 
-  <!-- Nix-Ionic Section -->
+  <!-- Elur-Ionic Section -->
   `);
 }

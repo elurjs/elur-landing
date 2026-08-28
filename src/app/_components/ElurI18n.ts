@@ -1,39 +1,39 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function NixI18n(): NixTemplate {
+export function ElurI18n(): ElurTemplate {
   return raw(`
-<section class="section nix-i18n-section" id="nix-i18n">
+<section class="section elur-i18n-section" id="elur-i18n">
     <div class="container">
       <div class="section-header animate-on-scroll">
-        <div class="section-label">🌐 Nix i18n</div>
+        <div class="section-label">🌐 Elur i18n</div>
         <h2 class="section-title">Type-safe internationalization.<br><span class="gradient-text">Reactive by
             default.</span>
         </h2>
-        <p class="section-desc">The official i18n library for Nix.js. Built on signals, zero runtime dependencies, and
+        <p class="section-desc">The official i18n library for Elur. Built on signals, zero runtime dependencies, and
           designed for real-world apps.</p>
       </div>
 
-      <div class="nix-i18n-layout">
-        <div class="nix-i18n-copy animate-on-scroll">
-          <p><strong>@deijose/nix-i18n</strong> gives your Nix.js apps first-class internationalization:</p>
-          <ul class="nix-i18n-points">
-            <li><span class="nix-i18n-check">✓</span> <span><strong>Type-safe keys</strong> and interpolation
+      <div class="elur-i18n-layout">
+        <div class="elur-i18n-copy animate-on-scroll">
+          <p><strong>@elurjs/i18n</strong> gives your Elur apps first-class internationalization:</p>
+          <ul class="elur-i18n-points">
+            <li><span class="elur-i18n-check">✓</span> <span><strong>Type-safe keys</strong> and interpolation
                 parameters with autocompletion.</span></li>
-            <li><span class="nix-i18n-check">✓</span> <span><strong>Reactive translations</strong> powered by Nix.js
+            <li><span class="elur-i18n-check">✓</span> <span><strong>Reactive translations</strong> powered by Elur
                 signals.</span></li>
-            <li><span class="nix-i18n-check">✓</span> <span><strong>Plugins</strong> for persistence, locale detection,
+            <li><span class="elur-i18n-check">✓</span> <span><strong>Plugins</strong> for persistence, locale detection,
                 router sync, head tags, forms, ICU pluralization, and dev overlay.</span></li>
-            <li><span class="nix-i18n-check">✓</span> <span><strong>Backends</strong> for inline messages, JSON files,
+            <li><span class="elur-i18n-check">✓</span> <span><strong>Backends</strong> for inline messages, JSON files,
                 and custom APIs.</span></li>
           </ul>
 
-          <div class="nix-i18n-callout">
+          <div class="elur-i18n-callout">
             v1.3.2 fixes 8 critical issues: no caching of failed requests, AST-based CLI
             extraction, and a plugin composition pipeline.
           </div>
 
-          <a href="https://github.com/DeijoseDevelop/nix-i18n" class="btn-primary" target="_blank" rel="noopener">
+          <a href="https://github.com/elurjs/elur-i18n" class="btn-primary" target="_blank" rel="noopener">
             View docs on GitHub
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
@@ -49,8 +49,8 @@ export function NixI18n(): NixTemplate {
             <span class="code-filename">i18n.ts</span>
           </div>
           <div class="code-body">
-            <pre><span class="kw">import</span> { createI18n } <span class="kw">from</span> <span class="str">"@deijose/nix-i18n"</span>;
-<span class="kw">import</span> { headPlugin } <span class="kw">from</span> <span class="str">"@deijose/nix-i18n/plugins/head"</span>;
+            <pre><span class="kw">import</span> { createI18n } <span class="kw">from</span> <span class="str">"@elurjs/i18n"</span>;
+<span class="kw">import</span> { headPlugin } <span class="kw">from</span> <span class="str">"@elurjs/i18n/plugins/head"</span>;
 
 <span class="kw">const</span> i18n = <span class="fn">createI18n</span>({
   locale: <span class="str">"es"</span>,

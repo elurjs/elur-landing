@@ -1,18 +1,18 @@
 {
-  "name": "nix-js-landing",
+  "name": "elur-landing",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nix-js-kit dev",
-    "build": "nix-js-kit build --lang en && bun run scripts/gen-sitemap.ts",
-    "preview": "nix-js-kit preview",
-    "start": "nix-js-kit start",
+    "dev": "elur-kit dev",
+    "build": "elur-kit build --lang en && bun run scripts/gen-sitemap.ts",
+    "preview": "elur-kit preview",
+    "start": "elur-kit start",
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@deijose/nix-js": "3.2.1",
-    "@deijose/nix-js-kit": "2.1.1"
+    "@elurjs/core": "^3.5.0",
+    "@elurjs/kit": "^2.4.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

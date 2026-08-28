@@ -1,14 +1,14 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Playground(): NixTemplate {
+export function Playground(): ElurTemplate {
   return raw(`
 <section class="section playground-section" id="playground">
     <div class="container">
       <div class="section-header animate-on-scroll">
         <div class="section-label">🎮 Try It Live</div>
         <h2 class="section-title">See the reactivity<br><span class="gradient-text">in action.</span></h2>
-        <p class="section-desc">These demos simulate how Nix.js signals, computed values, and effects work. Interact
+        <p class="section-desc">These demos simulate how Elur signals, computed values, and effects work. Interact
           with them to see fine-grained reactivity.</p>
       </div>
 
@@ -37,7 +37,7 @@ export function Playground(): NixTemplate {
               style="color:var(--green)">"positive"</span> : <span style="color:var(--green)">"negative"</span><br>
             );
           </div>
-          <div data-nix-js-island="CounterDemo" data-directive="load" data-props="{}"></div>
+          <div data-elur-island="CounterDemo" data-directive="load" data-props="{}"></div>
         </div>
 
         <!-- Demo 2: Reactive Todo List -->
@@ -62,7 +62,7 @@ export function Playground(): NixTemplate {
               ...)</span><br>
             <span style="color:var(--green)">&lt;/ul&gt;\`</span>;
           </div>
-          <div data-nix-js-island="TodoDemo" data-directive="load" data-props="{}"></div>
+          <div data-elur-island="TodoDemo" data-directive="load" data-props="{}"></div>
         </div>
 
         <!-- Demo 3: Live Clock (effect + onMount) -->
@@ -76,7 +76,7 @@ export function Playground(): NixTemplate {
           </div>
           <div class="playground-code">
             <span style="color:var(--accent-light)">class</span> <span style="color:var(--blue)">Clock</span> <span
-              style="color:var(--accent-light)">extends</span> <span style="color:var(--yellow)">NixComponent</span>
+              style="color:var(--accent-light)">extends</span> <span style="color:var(--yellow)">ElurComponent</span>
             {<br>
             &nbsp;&nbsp;time = <span style="color:var(--blue)">signal</span>(<span
               style="color:var(--green)">""</span>);<br><br>
@@ -93,7 +93,7 @@ export function Playground(): NixTemplate {
             &nbsp;&nbsp;}<br>
             }
           </div>
-          <div data-nix-js-island="ClockDemo" data-directive="load" data-props="{}"></div>
+          <div data-elur-island="ClockDemo" data-directive="load" data-props="{}"></div>
         </div>
       </div>
     </div>

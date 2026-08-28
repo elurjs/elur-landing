@@ -1,14 +1,14 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Comparison(): NixTemplate {
+export function Comparison(): ElurTemplate {
   return raw(`
 <section class="section comparison" id="comparison">
     <div class="container">
       <div class="section-header animate-on-scroll">
         <div class="section-label">📊 Performance Benchmarks</div>
         <h2 class="section-title">Raw speed. Zero compiler.</h2>
-        <p class="section-desc">We benchmarked Nix.js with 1,000-row scenarios using the js-framework-benchmark style
+        <p class="section-desc">We benchmarked Elur with 1,000-row scenarios using the js-framework-benchmark style
           workflow, reporting both JS-only and full-render timing so results are easier to interpret.</p>
       </div>
 
@@ -41,8 +41,8 @@ export function Comparison(): NixTemplate {
           <thead>
             <tr>
               <th class="th-op" rowspan="2">Operation (1k rows)</th>
-              <th class="th-nix-old fw-group" colspan="2" title="Versión estable anterior">Nix.js 1.3.0</th>
-              <th class="th-nix fw-group" colspan="2">Nix.js 3.5.0 🚀</th>
+              <th class="th-elur-old fw-group" colspan="2" title="Versión estable anterior">Elur 1.3.0</th>
+              <th class="th-elur fw-group" colspan="2">Elur 3.5.0 🚀</th>
               <th class="th-van fw-group" colspan="2">Vanilla JS</th>
               <th class="th-solid fw-group" colspan="2">Solid.js</th>
               <th class="th-svelte fw-group" colspan="2">Svelte 5</th>
@@ -74,14 +74,14 @@ export function Comparison(): NixTemplate {
                 <span class="op-sub">Initial render</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">220.2ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">603.9ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">21.83ms <span class="bench-badge b-win">WIN</span></span>
                   <div class="mini-bar-wrap">
@@ -89,7 +89,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">109.84ms</span></div>
               </td>
 
@@ -146,20 +146,20 @@ export function Comparison(): NixTemplate {
             </tr>
 
             <!-- REPLACE -->
-            <tr class="nix-row">
+            <tr class="elur-row">
               <td class="op-cell">
                 <span class="op-name">Replace rows</span>
                 <span class="op-sub">Full array swap</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">286.5ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">567.5ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">29.99ms <span class="bench-badge b-win">WIN</span></span>
                   <div class="mini-bar-wrap">
@@ -167,7 +167,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">121.01ms</span></div>
               </td>
 
@@ -230,14 +230,14 @@ export function Comparison(): NixTemplate {
                 <span class="op-sub">Fine-grained text update</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">0.8ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">40.1ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">0.21ms <span class="bench-badge b-top">TOP</span></span>
                   <div class="mini-bar-wrap">
@@ -245,7 +245,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">31.66ms</span></div>
               </td>
 
@@ -302,20 +302,20 @@ export function Comparison(): NixTemplate {
             </tr>
 
             <!-- SELECT -->
-            <tr class="nix-row">
+            <tr class="elur-row">
               <td class="op-cell">
                 <span class="op-name">Select row</span>
                 <span class="op-sub">Highlight 1 element</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">0.3ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">21.6ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">0.02ms <span class="bench-badge b-top">TOP</span></span>
                   <div class="mini-bar-wrap">
@@ -323,7 +323,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">30.62ms</span></div>
               </td>
 
@@ -386,14 +386,14 @@ export function Comparison(): NixTemplate {
                 <span class="op-sub">Swap index 2 and 998</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">53.3ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">380.5ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">0.86ms <span class="bench-badge b-top">TOP</span></span>
                   <div class="mini-bar-wrap">
@@ -401,7 +401,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">31.18ms</span></div>
               </td>
 
@@ -459,20 +459,20 @@ export function Comparison(): NixTemplate {
             </tr>
 
             <!-- CLEAR -->
-            <tr class="nix-row">
+            <tr class="elur-row">
               <td class="op-cell">
                 <span class="op-name">Clear rows</span>
                 <span class="op-sub">Range.deleteContents()</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">43.2ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">307.5ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">15.31ms <span class="bench-badge b-win">WIN</span></span>
                   <div class="mini-bar-wrap">
@@ -480,7 +480,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">31.85ms</span></div>
               </td>
 
@@ -543,14 +543,14 @@ export function Comparison(): NixTemplate {
                 <span class="op-sub">Eliminar 1 fila</span>
               </td>
               <!-- 1.3.0 -->
-              <td class="val-cell nix-old-cell fw-group">
+              <td class="val-cell elur-old-cell fw-group">
                 <div class="cell-inner"><span class="v-js strike-time">1.9ms</span></div>
               </td>
-              <td class="val-cell nix-old-cell">
+              <td class="val-cell elur-old-cell">
                 <div class="cell-inner"><span class="v-full">44.8ms</span></div>
               </td>
               <!-- 3.4.0 -->
-              <td class="val-cell nix-cell fw-group">
+              <td class="val-cell elur-cell fw-group">
                 <div class="cell-inner">
                   <span class="v-js">0.76ms <span class="bench-badge b-top">TOP</span></span>
                   <div class="mini-bar-wrap">
@@ -558,7 +558,7 @@ export function Comparison(): NixTemplate {
                   </div>
                 </div>
               </td>
-              <td class="val-cell nix-cell">
+              <td class="val-cell elur-cell">
                 <div class="cell-inner"><span class="v-full">26.03ms</span></div>
               </td>
 
@@ -620,11 +620,11 @@ export function Comparison(): NixTemplate {
                 <span class="op-name">Gzipped Size</span>
                 <span class="op-sub">Library footprint</span>
               </td>
-              <td class="val-cell nix-old-cell fw-group" colspan="2">
+              <td class="val-cell elur-old-cell fw-group" colspan="2">
                 <div class="bundle-size" style="color:var(--text-secondary)">~10 KB</div>
                 <div class="bundle-note">v1.3.0</div>
               </td>
-              <td class="val-cell nix-cell fw-group" colspan="2">
+              <td class="val-cell elur-cell fw-group" colspan="2">
                 <div class="bundle-size" style="color:var(--green)">~15 KB <span class="bench-badge b-win">WIN</span>
                 </div>
                 <div class="bundle-note">Router + Stores included</div>
@@ -668,7 +668,7 @@ export function Comparison(): NixTemplate {
             <thead>
               <tr>
                 <th>Feature</th>
-                <th class="nix-col">Nix.js</th>
+                <th class="elur-col">Elur</th>
                 <th>React</th>
                 <th>Vue</th>
                 <th>Solid</th>
@@ -678,7 +678,7 @@ export function Comparison(): NixTemplate {
             <tbody>
               <tr>
                 <td>Router</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="x-cell">react-router</td>
                 <td class="x-cell">vue-router</td>
                 <td class="x-cell">@solidjs/router</td>
@@ -686,7 +686,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Form Validation</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="x-cell">react-hook-form</td>
                 <td class="x-cell">vee-validate</td>
                 <td class="x-cell">—</td>
@@ -694,7 +694,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Global Stores</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="x-cell">zustand / redux</td>
                 <td class="x-cell">pinia</td>
                 <td class="check-cell">Built-in ✓</td>
@@ -702,7 +702,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Dependency Injection</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="x-cell">React Context</td>
                 <td class="check-cell">Built-in ✓</td>
                 <td class="x-cell">createContext</td>
@@ -710,7 +710,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Portals</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="check-cell">Built-in ✓</td>
                 <td class="check-cell">Teleport ✓</td>
                 <td class="check-cell">Built-in ✓</td>
@@ -718,7 +718,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Error Boundaries</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="check-cell">Built-in ✓</td>
                 <td class="x-cell">errorHandler</td>
                 <td class="check-cell">Built-in ✓</td>
@@ -726,7 +726,7 @@ export function Comparison(): NixTemplate {
               </tr>
               <tr>
                 <td>Transitions</td>
-                <td class="nix-col check-cell">Built-in ✓</td>
+                <td class="elur-col check-cell">Built-in ✓</td>
                 <td class="x-cell">—</td>
                 <td class="check-cell">Built-in ✓</td>
                 <td class="x-cell">—</td>

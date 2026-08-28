@@ -1,4 +1,4 @@
-import { html, signal, effect } from "@deijose/nix-js";
+import { html, signal, effect } from "@elurjs/core";
 
 function ClockDemo() {
   const currentDate = new Date();

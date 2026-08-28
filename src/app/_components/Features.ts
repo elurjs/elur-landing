@@ -1,12 +1,12 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Features(): NixTemplate {
+export function Features(): ElurTemplate {
   return raw(`
 <section class="section" id="features">
     <div class="container">
       <div class="section-header animate-on-scroll">
-        <div class="section-label">⚡ Why Nix.js</div>
+        <div class="section-label">⚡ Why Elur</div>
         <h2 class="section-title">Everything you need,<br>nothing you don't.</h2>
         <p class="section-desc">
           A complete UI framework that fits in a single import. No virtual DOM overhead,
@@ -35,7 +35,7 @@ export function Features(): NixTemplate {
           </div>
           <h3>No Compiler Required</h3>
           <p>Templates are standard JavaScript tagged template literals. No JSX transform, no SFC compiler, no
-            build-time magic needed. An optional build-time compiler (<code>@deijose/nix-js-compiler</code>) is available for up to -44% faster renders when you want maximum performance.</p>
+            build-time magic needed. An optional build-time compiler (<code>@elurjs/core-compiler</code>) is available for up to -44% faster renders when you want maximum performance.</p>
         </div>
         <div class="why-card animate-on-scroll">
           <div class="why-icon orange">

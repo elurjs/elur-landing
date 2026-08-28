@@ -1,6 +1,6 @@
-import { generateSitemap, generateRobots } from "@deijose/nix-js-kit/seo";
+import { generateSitemap, generateRobots } from "@elurjs/kit/seo";
 
-const SITE_URL = "https://nix-js.dev";
+const SITE_URL = "https://elur.dev";
 
 await generateSitemap({
   siteUrl: SITE_URL,

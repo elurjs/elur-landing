@@ -1,15 +1,15 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function Ecosystem(): NixTemplate {
+export function Ecosystem(): ElurTemplate {
   return raw(`
 <section class="section" id="ecosystem">
     <div class="container">
       <div class="section-header animate-on-scroll">
         <div class="section-label">📦 Built-In Ecosystem</div>
         <h2 class="section-title">One core.<br>Official packages.</h2>
-        <p class="section-desc">Build with a minimal reactive core and scale with first-party tools like Nix Query,
-          Nix Ionic, and Nix UI without dependency roulette.</p>
+        <p class="section-desc">Build with a minimal reactive core and scale with first-party tools like Elur Query,
+          Elur Ionic, and Elur UI without dependency roulette.</p>
       </div>
       <div class="features-grid">
         <div class="feature-card animate-on-scroll">
@@ -17,7 +17,7 @@ export function Ecosystem(): NixTemplate {
             <span class="feature-card-icon">📋</span>
             <h3>Form Management</h3>
           </div>
-          <p>Built-in field validation, dynamic arrays, and Zod/Valibot interop. Now includes <code>nixFieldArray</code>
+          <p>Built-in field validation, dynamic arrays, and Zod/Valibot interop. Now includes <code>elurFieldArray</code>
             for dynamic lists.
           </p>
           <code><span style="color:var(--accent-light)">const</span> form = <span
@@ -80,7 +80,7 @@ export function Ecosystem(): NixTemplate {
             <span class="feature-card-icon">⏳</span>
             <h3>Async & Suspense</h3>
           </div>
-          <p>suspend() for async views, lazy() for code-splitting, and Nix Query for robust async requests, retries,
+          <p>suspend() for async views, lazy() for code-splitting, and Elur Query for robust async requests, retries,
             and query cache invalidation.</p>
           <code><span style="color:var(--blue)">suspend</span>(
             () => <span style="color:var(--blue)">fetch</span>(<span

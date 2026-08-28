@@ -29,8 +29,8 @@ test("islands hydrate (Navbar, CounterDemo, Faq, ScrollReveal)", async ({ page }
   await page.goto("/");
   await page.waitForTimeout(800);
   const hydrated = await page.evaluate(() =>
-    Array.from(document.querySelectorAll("[data-nix-js-island]")).filter(
-      (el) => (el as HTMLElement).__nix_js_island_dispose,
+    Array.from(document.querySelectorAll("[data-elur-island]")).filter(
+      (el) => (el as HTMLElement).__elur_island_dispose,
     ).length,
   );
   expect(hydrated).toBeGreaterThanOrEqual(6);
@@ -47,7 +47,7 @@ test("islands hydrate (Navbar, CounterDemo, Faq, ScrollReveal)", async ({ page }
 test("sitemap.xml and robots.txt are served", async ({ page }) => {
   const sitemap = await page.request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
-  expect(await sitemap.text()).toContain("https://nix-js.dev");
+  expect(await sitemap.text()).toContain("https://elur.dev");
   const robots = await page.request.get("/robots.txt");
   expect(robots.status()).toBe(200);
 });

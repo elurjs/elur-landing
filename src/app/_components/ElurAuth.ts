@@ -1,41 +1,41 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function NixAuth(): NixTemplate {
+export function ElurAuth(): ElurTemplate {
   return raw(`
-<section class="section nix-auth-section" id="nix-auth">
+<section class="section elur-auth-section" id="elur-auth">
     <div class="container">
       <div class="section-header animate-on-scroll">
-        <div class="section-label">🔐 Nix Auth</div>
-        <h2 class="section-title">Authentication and authorization<br><span class="gradient-text">built for Nix.js.
+        <div class="section-label">🔐 Elur Auth</div>
+        <h2 class="section-title">Authentication and authorization<br><span class="gradient-text">built for Elur.
           </span>
         </h2>
         <p class="section-desc">Driver-based auth with reactive signals. JWT, session cookies, API keys, and OIDC — all
           share the same policy engine and router guards.</p>
       </div>
 
-      <div class="nix-auth-layout">
-        <div class="nix-auth-copy animate-on-scroll">
-          <p><strong>@deijose/nix-js-auth</strong> is the official auth layer for the Nix.js ecosystem:</p>
-          <ul class="nix-auth-points">
-            <li><span class="nix-auth-check">✓</span> <span><strong>createAuth</strong> with reactive session, user,
+      <div class="elur-auth-layout">
+        <div class="elur-auth-copy animate-on-scroll">
+          <p><strong>@elurjs/auth</strong> is the official auth layer for the Elur ecosystem:</p>
+          <ul class="elur-auth-points">
+            <li><span class="elur-auth-check">✓</span> <span><strong>createAuth</strong> with reactive session, user,
                 token, and isAuthenticated signals.</span></li>
-            <li><span class="nix-auth-check">✓</span> <span><strong>Drivers</strong> for JWT, session cookies, API keys,
+            <li><span class="elur-auth-check">✓</span> <span><strong>Drivers</strong> for JWT, session cookies, API keys,
                 and OIDC with PKCE.</span></li>
-            <li><span class="nix-auth-check">✓</span> <span><strong>Policy engine</strong> with RBAC, tenant-aware
+            <li><span class="elur-auth-check">✓</span> <span><strong>Policy engine</strong> with RBAC, tenant-aware
                 resolvers, and custom guards.</span></li>
-            <li><span class="nix-auth-check">✓</span> <span><strong>Router integration</strong> via declarative
+            <li><span class="elur-auth-check">✓</span> <span><strong>Router integration</strong> via declarative
                 <code>meta.auth</code> DSL and standalone guards.</span></li>
           </ul>
 
-          <div class="nix-auth-callout">
+          <div class="elur-auth-callout">
             v1.2.2 adds transient error retry in <strong>refresh()</strong>, multi-tab sync via
             <strong>BroadcastChannel</strong>, and a reactive <strong>useAuth()</strong>.
           </div>
 
-          <a href="https://www.npmjs.com/package/@deijose/nix-js-auth" class="btn-primary" target="_blank"
+          <a href="https://www.npmjs.com/package/@elurjs/auth" class="btn-primary" target="_blank"
             rel="noopener">
-            View Nix Auth on npm
+            View Elur Auth on npm
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -50,7 +50,7 @@ export function NixAuth(): NixTemplate {
             <span class="code-filename">auth.ts</span>
           </div>
           <div class="code-body">
-            <pre><span class="kw">import</span> { createAuth, jwtDriver, rbacPolicy } <span class="kw">from</span> <span class="str">"@deijose/nix-js-auth"</span>;
+            <pre><span class="kw">import</span> { createAuth, jwtDriver, rbacPolicy } <span class="kw">from</span> <span class="str">"@elurjs/auth"</span>;
 
 <span class="kw">const</span> auth = <span class="fn">createAuth</span>({
   driver: <span class="fn">jwtDriver</span>({ loginUrl: <span class="str">"/api/login"</span> }),

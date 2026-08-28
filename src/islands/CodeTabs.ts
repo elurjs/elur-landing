@@ -1,23 +1,23 @@
-import { html, signal } from "@deijose/nix-js";
+import { html, signal } from "@elurjs/core";
 
 const TABS = [
-  { id: "reactivity", label: "Reactivity" },
-  { id: "component", label: "Component" },
-  { id: "router", label: "Router" },
-  { id: "store", label: "Store" },
-  { id: "forms", label: "Forms" },
+    { id: "reactivity", label: "Reactivity" },
+    { id: "component", label: "Component" },
+    { id: "router", label: "Router" },
+    { id: "store", label: "Store" },
+    { id: "forms", label: "Forms" },
 ];
 
 function CodeTabs() {
-  const active = signal("reactivity");
+    const active = signal("reactivity");
 
-  const select = (id: string) => {
-    active.value = id;
-    document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
-    document.getElementById(`tab-${id}`)?.classList.add("active");
-  };
+    const select = (id: string) => {
+        active.value = id;
+        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        document.getElementById(`tab-${id}`)?.classList.add("active");
+    };
 
-  return html`
+    return html`
         <div class="code-tabs">
             ${TABS.map((tab) => html`
                 <button

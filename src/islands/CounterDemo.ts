@@ -1,16 +1,16 @@
-import { html, signal, computed } from "@deijose/nix-js";
+import { html, signal, computed } from "@elurjs/core";
 
 function CounterDemo() {
-  const count = signal(0);
-  const doubled = computed(() => count.value * 2);
-  const label = computed(() =>
-    count.value === 0 ? "zero" : count.value > 0 ? "positive" : "negative",
-  );
-  const labelColor = computed(() =>
-    count.value === 0 ? "var(--yellow)" : count.value > 0 ? "var(--green)" : "var(--red)",
-  );
+    const count = signal(0);
+    const doubled = computed(() => count.value * 2);
+    const label = computed(() =>
+        count.value === 0 ? "zero" : count.value > 0 ? "positive" : "negative",
+    );
+    const labelColor = computed(() =>
+        count.value === 0 ? "var(--yellow)" : count.value > 0 ? "var(--green)" : "var(--red)",
+    );
 
-  return html`
+    return html`
         <div class="playground-output">
             <div class="playground-output-label">Output</div>
         <div class="demo-counter-value">${() => count.value}</div>

@@ -2,26 +2,26 @@
  * Root layout: announcement bar, navbar, main content, and footer.
  */
 
-import { html } from "@deijose/nix-js";
-import { raw } from "@deijose/nix-js-kit/content";
-import type { LayoutProps } from "@deijose/nix-js-kit";
-import { island } from "@deijose/nix-js-kit";
+import { html } from "@elurjs/core";
+import { raw } from "@elurjs/kit/content";
+import type { LayoutProps } from "@elurjs/kit";
+import { island } from "@elurjs/kit";
 import Navbar from "../islands/Navbar.ts";
 import ScrollReveal from "../islands/ScrollReveal.ts";
 
 const announcement = `<div class="announcement-bar">
     <span>New:</span>
-    <a href="https://kit.nix-js.dev/" target="_blank" rel="noopener">Nix.js Kit 2.4.4</a>
+    <a href="https://kit.elur.dev/" target="_blank" rel="noopener">Elur Kit 2.4.4</a>
     <span class="ab-sep">—</span>
     <span>Client-only islands, optional build-time compiler, and zero client JS by default.</span>
-    <a href="https://kit.nix-js.dev/" target="_blank" rel="noopener">Explore →</a>
+    <a href="https://kit.elur.dev/" target="_blank" rel="noopener">Explore →</a>
   </div>`;
 
 const navbar = `<nav class="navbar" id="navbar">
     <div class="container">
       <a href="/" class="nav-logo">
-        <picture><source srcset="/images/nix-js-logo-112.webp" type="image/webp" /><img src="/images/nix-js-logo-112.png" height="48px" width="48px" alt="Nix.js Logo" /></picture>
-        Nix.js
+        <picture><source srcset="/images/elur-logo-112.webp" type="image/webp" /><img src="/images/elur-logo-112.png" height="48px" width="48px" alt="Elur Logo" /></picture>
+        Elur
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#features">Features</a></li>
@@ -35,11 +35,11 @@ const navbar = `<nav class="navbar" id="navbar">
             </svg>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="https://docs.nix-js.dev/" target="_blank" rel="noopener"
+            <li><a href="https://docs.elur.dev/" target="_blank" rel="noopener"
                 style="font-weight: 700; color: var(--accent-light);">Full API Reference →</a></li>
             <li><a href="#quickstart">Quick Start Guide</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#nix-query">Nix Query</a></li>
+            <li><a href="#elur-query">Elur Query</a></li>
             <li><a href="#inspired">Inspired By</a></li>
             <li><a href="#comparison">Comparison</a></li>
             <li><a href="#faq">FAQ</a></li>
@@ -54,21 +54,21 @@ const navbar = `<nav class="navbar" id="navbar">
             </svg>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="https://kit.nix-js.dev/" target="_blank" rel="noopener">Nix.js Kit
+            <li><a href="https://kit.elur.dev/" target="_blank" rel="noopener">Elur Kit
                 <span class="badge-new">New</span></a></li>
-            <li><a href="https://www.npmjs.com/package/@deijose/nix-query" target="_blank" rel="noopener">Nix Query
+            <li><a href="https://www.npmjs.com/package/@elurjs/query" target="_blank" rel="noopener">Elur Query
                 <span class="badge-new">New</span></a></li>
-            <li><a href="https://www.npmjs.com/package/@deijose/nix-i18n" target="_blank" rel="noopener">Nix i18n
+            <li><a href="https://www.npmjs.com/package/@elurjs/i18n" target="_blank" rel="noopener">Elur i18n
                 <span class="badge-new">New</span></a></li>
-            <li><a href="https://www.npmjs.com/package/@deijose/nix-js-auth" target="_blank" rel="noopener">Nix Auth
+            <li><a href="https://www.npmjs.com/package/@elurjs/auth" target="_blank" rel="noopener">Elur Auth
                 <span class="badge-new">New</span></a></li>
-            <li><a href="https://ui.nix-js.dev/" target="_blank" rel="noopener">Nix-UI</a></li>
-            <li><a href="#nix-ionic" rel="noopener">Nix-Ionic</a></li>
-            <li><a href="#showcases">Built with Nix.js</a></li>
+            <li><a href="https://ui.elur.dev/" target="_blank" rel="noopener">Elur-UI</a></li>
+            <li><a href="#elur-ionic" rel="noopener">Elur-Ionic</a></li>
+            <li><a href="#showcases">Built with Elur</a></li>
           </ul>
         </li>
         <li>
-          <a href="https://github.com/DeijoseDevelop/nix-js" class="nav-cta" target="_blank" rel="noopener">
+          <a href="https://github.com/elurjs/elur" class="nav-cta" target="_blank" rel="noopener">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -92,17 +92,17 @@ const footer = `<footer class="footer">
     <div class="container">
       <div class="footer-left">
         <span class="footer-logo">
-          <picture><source srcset="/images/nix-js-logo-112.webp" type="image/webp" /><img src="/images/nix-js-logo-112.png" height="28px" width="28px" alt="Nix.js" style="object-fit:contain" /></picture>
-          Nix.js
+          <picture><source srcset="/images/elur-logo-112.webp" type="image/webp" /><img src="/images/elur-logo-112.png" height="28px" width="28px" alt="Elur" style="object-fit:contain" /></picture>
+          Elur
         </span>
         <span class="footer-text">MIT License · Built with TypeScript</span>
       </div>
       <ul class="footer-links">
-        <li><a href="https://www.npmjs.com/package/@deijose/nix-js" target="_blank" rel="noopener">npm</a></li>
-        <li><a href="https://github.com/DeijoseDevelop/nix-js" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://github.com/DeijoseDevelop/nix-js#readme" target="_blank" rel="noopener">Docs</a></li>
-        <li><a href="https://github.com/DeijoseDevelop/nix-i18n" target="_blank" rel="noopener">Nix i18n</a></li>
-        <li><a href="https://github.com/DeijoseDevelop/nix-js/blob/main/LICENSE" target="_blank"
+        <li><a href="https://www.npmjs.com/package/@elurjs/core" target="_blank" rel="noopener">npm</a></li>
+        <li><a href="https://github.com/elurjs/elur" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://github.com/elurjs/elur#readme" target="_blank" rel="noopener">Docs</a></li>
+        <li><a href="https://github.com/elurjs/elur-i18n" target="_blank" rel="noopener">Elur i18n</a></li>
+        <li><a href="https://github.com/elurjs/elur/blob/main/LICENSE" target="_blank"
             rel="noopener">License</a></li>
       </ul>
     </div>

@@ -1,14 +1,14 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function HowItWorks(): NixTemplate {
+export function HowItWorks(): ElurTemplate {
   return raw(`
 <section class="section how-section" id="how-it-works">
     <div class="container">
       <div class="section-header animate-on-scroll">
         <div class="section-label">⚙️ How It Works</div>
         <h2 class="section-title">One change. One update.<br><span class="gradient-text">Zero overhead.</span></h2>
-        <p class="section-desc">Under the hood, Nix.js is a four-layer stack. Each layer does exactly one job — signal,
+        <p class="section-desc">Under the hood, Elur is a four-layer stack. Each layer does exactly one job — signal,
           compute, bind, render.</p>
       </div>
 

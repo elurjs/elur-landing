@@ -24,11 +24,11 @@ async function main() {
   }
 
   // Logo → 112px webp + png fallback (topbar/footer use it)
-  const logo = join(publicDir, "images", "nix-js-logo.png");
+  const logo = join(publicDir, "images", "elur-logo.png");
   const base = sharp(logo).resize(112, 75, { fit: "inside" });
-  await base.webp({ quality: 85 }).toFile(join(publicDir, "images", "nix-js-logo-112.webp"));
-  await base.png({ compressionLevel: 9 }).toFile(join(publicDir, "images", "nix-js-logo-112.png"));
-  console.log("logo → nix-js-logo-112.webp/png");
+  await base.webp({ quality: 85 }).toFile(join(publicDir, "images", "elur-logo-112.webp"));
+  await base.png({ compressionLevel: 9 }).toFile(join(publicDir, "images", "elur-logo-112.png"));
+  console.log("logo → elur-logo-112.webp/png");
 }
 
 main().catch((err) => {

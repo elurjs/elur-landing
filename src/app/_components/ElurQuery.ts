@@ -1,63 +1,63 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function NixQuery(): NixTemplate {
+export function ElurQuery(): ElurTemplate {
   return raw(`
-<section class="section nix-query-section" id="nix-query">
+<section class="section elur-query-section" id="elur-query">
     <div class="container">
       <div class="section-header animate-on-scroll">
-        <div class="section-label">🛰️ Nix Query</div>
-        <h2 class="section-title">Nix Query goes beyond fetch + cache.<br><span class="gradient-text">Queues,
+        <div class="section-label">🛰️ Elur Query</div>
+        <h2 class="section-title">Elur Query goes beyond fetch + cache.<br><span class="gradient-text">Queues,
             offline mode, and command orchestration.</span>
         </h2>
         <p class="section-desc">Built for real app workflows: command modes, retries, optimistic updates, and
           offline replay with a custom queue adapter.</p>
       </div>
 
-      <div class="nix-query-layout">
-        <div class="nix-query-copy animate-on-scroll">
-          <p><strong>@deijose/nix-query</strong> is CQRS-style state orchestration for Nix.js:</p>
-          <div class="nix-query-modes">
-            <span class="nix-query-mode">latest</span>
-            <span class="nix-query-mode">queue</span>
-            <span class="nix-query-mode">parallel</span>
-            <span class="nix-query-mode">queueOffline</span>
+      <div class="elur-query-layout">
+        <div class="elur-query-copy animate-on-scroll">
+          <p><strong>@elurjs/query</strong> is CQRS-style state orchestration for Elur:</p>
+          <div class="elur-query-modes">
+            <span class="elur-query-mode">latest</span>
+            <span class="elur-query-mode">queue</span>
+            <span class="elur-query-mode">parallel</span>
+            <span class="elur-query-mode">queueOffline</span>
           </div>
-          <ul class="nix-query-points">
-            <li><span class="nix-query-check">✓</span> <span><strong>createQuery</strong> for read operations with
+          <ul class="elur-query-points">
+            <li><span class="elur-query-check">✓</span> <span><strong>createQuery</strong> for read operations with
                 status/data/error signals.</span></li>
-            <li><span class="nix-query-check">✓</span> <span><strong>createCommand</strong> for mutations with
+            <li><span class="elur-query-check">✓</span> <span><strong>createCommand</strong> for mutations with
                 retries, dedupe, invalidation, and optimistic rollback.</span></li>
-            <li><span class="nix-query-check">✓</span> <span>Cache utilities like <strong>getQueryData</strong>,
+            <li><span class="elur-query-check">✓</span> <span>Cache utilities like <strong>getQueryData</strong>,
                 <strong>setQueryData</strong>, and <strong>updateQueryData</strong>.</span></li>
           </ul>
 
-          <div class="nix-query-wow-grid">
-            <div class="nix-query-wow-card">
+          <div class="elur-query-wow-grid">
+            <div class="elur-query-wow-card">
               <strong>Offline Queue + Replay</strong>
               Queue commands while offline and replay on reconnect.
             </div>
-            <div class="nix-query-wow-card">
+            <div class="elur-query-wow-card">
               <strong>CommandQueuedError</strong>
               Distinguish queued-offline from real command failures.
             </div>
-            <div class="nix-query-wow-card">
+            <div class="elur-query-wow-card">
               <strong>Optimistic Rollback</strong>
               Use onMutate/onError to keep UI fast and safe.
             </div>
-            <div class="nix-query-wow-card">
+            <div class="elur-query-wow-card">
               <strong>Retry + Backoff</strong>
               Fine-grained retry policy per command.
             </div>
           </div>
 
-          <div class="nix-query-callout">
+          <div class="elur-query-callout">
             v1.5.1 adds single-flight request dedup, <code>keepPreviousData</code>, <code>dispose()</code>,
             and a robust stableStringify.
           </div>
 
-          <a href="https://www.npmjs.com/package/@deijose/nix-query" class="btn-primary" target="_blank" rel="noopener">
-            View Nix Query on npm
+          <a href="https://www.npmjs.com/package/@elurjs/query" class="btn-primary" target="_blank" rel="noopener">
+            View Elur Query on npm
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -72,7 +72,7 @@ export function NixQuery(): NixTemplate {
             <span class="code-filename">orders-command.ts</span>
           </div>
           <div class="code-body">
-            <pre><span class="kw">import</span> { createCommand, CommandQueuedError, getQueryData, setQueryData } <span class="kw">from</span> <span class="str">"@deijose/nix-query"</span>;
+            <pre><span class="kw">import</span> { createCommand, CommandQueuedError, getQueryData, setQueryData } <span class="kw">from</span> <span class="str">"@elurjs/query"</span>;
 
 <span class="kw">const</span> saveOrder = <span class="fn">createCommand</span>(<span class="str">"orders/save"</span>,
   <span class="kw">async</span> (payload, { signal }) => {

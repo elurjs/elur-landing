@@ -1,6 +1,6 @@
-import { html, signal } from "@deijose/nix-js";
+import { html, signal } from "@elurjs/core";
 
-const COMMAND = "npm create nix-app@latest";
+const COMMAND = "npm create elur-app@latest";
 
 function CopyInstall() {
   const tooltip = signal(false);
@@ -22,7 +22,7 @@ function CopyInstall() {
 
   return html`
         <div class="install-cmd" title="Click to copy" @click=${copy}>
-            <span><span class="dollar">$</span> npm create <span class="pkg">nix-app@latest</span></span>
+            <span><span class="dollar">$</span> npm create <span class="pkg">elur-app@latest</span></span>
             <span class="copy-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">

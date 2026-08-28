@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function CodeShowcase(): NixTemplate {
+export function CodeShowcase(): ElurTemplate {
   return raw(`
 <section class="section code-section" id="code">
     <div class="container">
@@ -11,7 +11,7 @@ export function CodeShowcase(): NixTemplate {
         <p class="section-desc">Clean, readable code that does exactly what you'd expect. No magic, no surprises.</p>
       </div>
 
-      <div data-nix-js-island="CodeTabs" data-directive="load" data-props="{}"></div>
+      <div data-elur-island="CodeTabs" data-directive="load" data-props="{}"></div>
 
       <!-- Reactivity Tab -->
       <div class="tab-panel active" id="tab-reactivity">
@@ -41,7 +41,7 @@ export function CodeShowcase(): NixTemplate {
               <span class="code-filename">counter.ts</span>
             </div>
             <div class="code-body">
-              <pre><span class="kw">import</span> { signal, computed, effect } <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
+              <pre><span class="kw">import</span> { signal, computed, effect } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="cmt">// Reactive state</span>
 <span class="kw">const</span> <span class="fn">count</span> = <span class="fn">signal</span>(<span class="num">0</span>);
@@ -89,7 +89,7 @@ export function CodeShowcase(): NixTemplate {
             </div>
             <div class="code-body">
               <pre><span class="cmt">// Function component — simple & clean</span>
-<span class="kw">function</span> <span class="fn">Counter</span>(): <span class="type">NixTemplate</span> {
+<span class="kw">function</span> <span class="fn">Counter</span>(): <span class="type">ElurTemplate</span> {
   <span class="kw">const</span> count = <span class="fn">signal</span>(<span class="num">0</span>);
   <span class="kw">return</span> <span class="fn">html</span><span class="str">\`
     &lt;<span class="tag">p</span>&gt;\${() => count.value}&lt;/<span class="tag">p</span>&gt;
@@ -100,7 +100,7 @@ export function CodeShowcase(): NixTemplate {
 }
 
 <span class="cmt">// Class component — with lifecycle</span>
-<span class="kw">class</span> <span class="fn">Clock</span> <span class="kw">extends</span> <span class="type">NixComponent</span> {
+<span class="kw">class</span> <span class="fn">Clock</span> <span class="kw">extends</span> <span class="type">ElurComponent</span> {
   time = <span class="fn">signal</span>(<span class="kw">new</span> Date().<span class="fn">toLocaleTimeString</span>());
 
   <span class="fn">onMount</span>() {
@@ -144,7 +144,7 @@ export function CodeShowcase(): NixTemplate {
             </div>
             <div class="code-body">
               <pre><span class="kw">import</span> { createRouter, RouterView, Link, lazy }
-  <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
+  <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="kw">const</span> router = <span class="fn">createRouter</span>([
   { path: <span class="str">"/"</span>,     component: () => <span class="fn">HomePage</span>() },
@@ -202,7 +202,7 @@ router.<span class="fn">beforeEach</span>((to) => {
               <span class="code-filename">store.ts</span>
             </div>
             <div class="code-body">
-              <pre><span class="kw">import</span> { createStore, computed } <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
+              <pre><span class="kw">import</span> { createStore, computed } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="kw">const</span> cart = <span class="fn">createStore</span>(
   {
@@ -252,7 +252,7 @@ cart.hasItems.value;  <span class="cmt">// true</span></pre>
               <li><span class="check">✓</span> Typed field validation (Zod/Valibot)</li>
               <li><span class="check">✓</span> Dot-path validators for nested fields</li>
               <li><span class="check">✓</span> Cross-field validators with allValues</li>
-              <li><span class="check">✓</span> nixFieldArray for dynamic lists</li>
+              <li><span class="check">✓</span> elurFieldArray for dynamic lists</li>
               <li><span class="check">✓</span> validateOn: 'blur' | 'input' | 'submit'</li>
               <li><span class="check">✓</span> isSubmitting & submitCount tracking</li>
             </ul>
@@ -263,8 +263,8 @@ cart.hasItems.value;  <span class="cmt">// true</span></pre>
               <span class="code-filename">forms.ts</span>
             </div>
             <div class="code-body">
-              <pre><span class="kw">import</span> { createForm, nixFieldArray, required, email, minLength } 
-  <span class="kw">from</span> <span class="str">"@deijose/nix-js"</span>;
+              <pre><span class="kw">import</span> { createForm, elurFieldArray, required, email, minLength } 
+  <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="kw">const</span> form = <span class="fn">createForm</span>({
   profile: { email: <span class="str">""</span> },
@@ -284,7 +284,7 @@ cart.hasItems.value;  <span class="cmt">// true</span></pre>
 });
 
 <span class="cmt">// Dynamic field array</span>
-<span class="kw">const</span> { fields, append, remove } = <span class="fn">nixFieldArray</span>(
+<span class="kw">const</span> { fields, append, remove } = <span class="fn">elurFieldArray</span>(
   [{ value: <span class="str">""</span> }],
   { value: [<span class="fn">required</span>(), <span class="fn">email</span>()] }
 );

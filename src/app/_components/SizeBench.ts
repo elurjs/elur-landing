@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function SizeBench(): NixTemplate {
+export function SizeBench(): ElurTemplate {
   return raw(`
 <section class="size-bench-section">
     <div class="container animate-on-scroll">
@@ -30,9 +30,9 @@ export function SizeBench(): NixTemplate {
             </div>
             <div class="size-value">~34 KB</div>
           </div>
-          <!-- Nix.js -->
+          <!-- Elur -->
           <div class="size-bar-item">
-            <div class="size-label">Nix.js (Total)</div>
+            <div class="size-label">Elur (Total)</div>
             <div class="size-bar-wrapper">
               <div class="size-bar"
                 style="width: 28%; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow);"></div>

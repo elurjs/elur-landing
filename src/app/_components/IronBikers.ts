@@ -1,7 +1,7 @@
-import { raw } from "@deijose/nix-js-kit/content";
-import type { NixTemplate } from "@deijose/nix-js";
+import { raw } from "@elurjs/kit/content";
+import type { ElurTemplate } from "@elurjs/core";
 
-export function IronBikers(): NixTemplate {
+export function IronBikers(): ElurTemplate {
   return raw(`
 <section id="iron-bikers" class="section case-study-section">
     <div class="container">
@@ -11,13 +11,13 @@ export function IronBikers(): NixTemplate {
           <h2 class="case-title">BikerOS: <span class="gradient-text">the OS for motorcycle clubs</span></h2>
           <p class="case-text">
             A full-stack platform for motorcycle clubs — live GPS tracking, SOS emergencies, route management,
-            events, and a web admin panel. Built entirely on the Nix.js ecosystem across 4 apps.
+            events, and a web admin panel. Built entirely on the Elur ecosystem across 4 apps.
           </p>
 
           <div class="case-tags">
-            <span class="case-tag">Nix-Ionic (Mobile)</span>
-            <span class="case-tag">Nix.js Kit (Landing + Web)</span>
-            <span class="case-tag">Nix Query (Data)</span>
+            <span class="case-tag">Elur-Ionic (Mobile)</span>
+            <span class="case-tag">Elur Kit (Landing + Web)</span>
+            <span class="case-tag">Elur Query (Data)</span>
             <span class="case-tag">SSG + SSR</span>
             <span class="case-tag">Offline-first</span>
             <span class="case-tag">White-label ready</span>
@@ -38,7 +38,7 @@ export function IronBikers(): NixTemplate {
             </div>
             <div class="case-metric">
               <strong>100%</strong>
-              <span>Nix.js ecosystem</span>
+              <span>Elur ecosystem</span>
             </div>
           </div>
 
@@ -88,22 +88,22 @@ export function IronBikers(): NixTemplate {
 
       <!-- Architecture breakdown -->
       <div class="case-architecture animate-on-scroll" style="margin-top:48px">
-        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--text-primary)">Built on the Nix.js ecosystem</h3>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;color:var(--text-primary)">Built on the Elur ecosystem</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
           <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg)">
             <div style="font-size:0.75rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Mobile App</div>
             <strong style="display:block;margin-bottom:6px">BikerOS App</strong>
-            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Nix-Ionic + Nix Query. SOS emergencies, live GPS tracking, offline routes, ICE medical info, event RSVP.</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Elur-Ionic + Elur Query. SOS emergencies, live GPS tracking, offline routes, ICE medical info, event RSVP.</p>
           </div>
           <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg)">
             <div style="font-size:0.75rem;font-weight:700;color:var(--accent-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Landing Page</div>
             <strong style="display:block;margin-bottom:6px">bikeros.co</strong>
-            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Nix.js Kit with SSG, islands, SEO, sitemap, and content collections. Pricing, features, FAQ.</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Elur Kit with SSG, islands, SEO, sitemap, and content collections. Pricing, features, FAQ.</p>
           </div>
           <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg)">
             <div style="font-size:0.75rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Admin Panel</div>
             <strong style="display:block;margin-bottom:6px">BikerOS Web</strong>
-            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Nix.js + Nix Query. Member management, route builder with map, event dashboard, billing and invoicing.</p>
+            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.5">Elur + Elur Query. Member management, route builder with map, event dashboard, billing and invoicing.</p>
           </div>
           <div style="padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card-bg)">
             <div style="font-size:0.75rem;font-weight:700;color:#10b981;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">White-label</div>
