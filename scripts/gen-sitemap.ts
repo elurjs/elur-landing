@@ -1,6 +1,6 @@
 import { generateSitemap, generateRobots } from "@elurjs/kit/seo";
 
-const SITE_URL = "https://elur.dev";
+const SITE_URL = "https://www.elur.dev";
 
 await generateSitemap({
   siteUrl: SITE_URL,

@@ -47,7 +47,7 @@ test("islands hydrate (Navbar, CounterDemo, Faq, ScrollReveal)", async ({ page }
 test("sitemap.xml and robots.txt are served", async ({ page }) => {
   const sitemap = await page.request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
-  expect(await sitemap.text()).toContain("https://elur.dev");
+  expect(await sitemap.text()).toContain("https://www.elur.dev");
   const robots = await page.request.get("/robots.txt");
   expect(robots.status()).toBe(200);
 });

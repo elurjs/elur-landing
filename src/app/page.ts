@@ -52,6 +52,10 @@ export const generateMetadata = (): PageMetadata => ({
     image: "https://www.elur.dev/og-image.jpg",
     imageAlt: "Elur — lightweight reactive framework for JavaScript",
   },
+  other: {
+    "twitter:site": "@elurjs",
+    "twitter:creator": "@elurjs",
+  },
 });
 
 export default function HomePage() {
