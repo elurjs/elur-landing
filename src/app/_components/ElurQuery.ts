@@ -52,8 +52,8 @@ export function ElurQuery(): ElurTemplate {
           </div>
 
           <div class="elur-query-callout">
-            v1.5.1 adds single-flight request dedup, <code>keepPreviousData</code>, <code>dispose()</code>,
-            and a robust stableStringify.
+            v1.6.0 adds a DevTools plugin for inspecting query cache freshness, subscribers, in-flight requests,
+            and command queues during development, with no production overhead.
           </div>
 
           <a href="https://www.npmjs.com/package/@elurjs/query" class="btn-primary" target="_blank" rel="noopener">

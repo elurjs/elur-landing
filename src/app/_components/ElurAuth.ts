@@ -29,8 +29,8 @@ export function ElurAuth(): ElurTemplate {
           </ul>
 
           <div class="elur-auth-callout">
-            v1.2.2 adds transient error retry in <strong>refresh()</strong>, multi-tab sync via
-            <strong>BroadcastChannel</strong>, and a reactive <strong>useAuth()</strong>.
+            v1.3.0 adds a credential-safe DevTools plugin for inspecting live auth instances, providers,
+            session state, and user previews during development.
           </div>
 
           <a href="https://www.npmjs.com/package/@elurjs/auth" class="btn-primary" target="_blank"

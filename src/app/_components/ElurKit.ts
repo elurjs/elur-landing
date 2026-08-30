@@ -84,10 +84,9 @@ export function ElurKit(): ElurTemplate {
           </div>
 
           <div class="elur-kit-callout">
-            v2.4.4 — client-only islands (<code>directive: "only"</code>, <code>ssr: false</code>),
-            <code>fallback</code> content, <code>isSSR()</code>, and hydration fix for islands without SSR DOM.
-            Config file renamed to <code>elur.config.*</code>. Happy-dom fully removed — SSR uses the core's
-            DOM-free <code>renderToString</code> directly.
+            v2.4.6 aligns the shared SSR state with <code>@elurjs/core</code> 3.6.0, so <code>isSSR()</code>
+            reliably reports server rendering. Client-only islands (<code>directive: "only"</code>,
+            <code>ssr: false</code>), fallback content, and DOM-free <code>renderToString</code> remain built in.
           </div>
 
           <a href="https://kit.elur.dev/" class="btn-primary" target="_blank" rel="noopener">

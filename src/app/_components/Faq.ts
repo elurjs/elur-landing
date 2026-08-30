@@ -32,7 +32,7 @@ export function Faq(): ElurTemplate {
 
           <div class="faq-item">
             <button class="faq-question">
-              What's new in Elur 3.5.0?
+              What's new in Elur 3.6.0?
               <span class="faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -42,15 +42,16 @@ export function Faq(): ElurTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Elur 3.5.0 adds an optional build-time compiler (<code>@elurjs/core-compiler</code>) that
-                generates direct DOM manipulation code, eliminating runtime TreeWalker and detectContext overhead
-                (-28% average, up to -44% faster renders). The Vite plugin (<code>@elurjs/vite-plugin-elur</code> >= 2.0.2) uses
-                the compiler automatically — no manual setup needed.
-                Elur Kit 2.4.4 adds client-only islands (<code>directive: "only"</code>, <code>ssr: false</code>),
-                <code>fallback</code> content, <code>isSSR()</code> for environment reads, and fixes hydration
-                for islands without SSR DOM.
-                The ecosystem packages <code>@elurjs/query</code> 1.6.0, <code>@elurjs/ionic</code> 2.1.0,
-                <code>@elurjs/auth</code> 1.3.0, and <code>@elurjs/i18n</code> 1.4.0 are aligned.
+                Elur 3.6.0 adds multi-subscriber signal and component debug hooks so the in-page overlay,
+                browser extension backend, and test tooling can coexist without replacing one another.
+                Component debug hooks now use shared global reactivity state, remaining reliable even when
+                <code>@elurjs/core</code> is duplicated in a bundle.
+                Elur Kit 2.4.6 aligns its SSR state with <code>@elurjs/core</code> 3.6.0 so <code>isSSR()</code>
+                reports the correct value during server rendering.
+                The latest ecosystem packages are <code>@elurjs/core-compiler</code> 1.0.0,
+                <code>@elurjs/vite-plugin-elur</code> 2.1.0, <code>@elurjs/query</code> 1.6.0,
+                <code>@elurjs/ionic</code> 2.1.0, <code>@elurjs/auth</code> 1.3.0,
+                and <code>@elurjs/i18n</code> 1.4.0.
               </div>
             </div>
           </div>

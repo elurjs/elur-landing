@@ -6,14 +6,14 @@ import { html } from "@elurjs/core";
 import { raw } from "@elurjs/kit/content";
 import type { LayoutProps } from "@elurjs/kit";
 import { island } from "@elurjs/kit";
-import Navbar from "../islands/Navbar.ts";
-import ScrollReveal from "../islands/ScrollReveal.ts";
+import Navbar from "../islands/Navbar";
+import ScrollReveal from "../islands/ScrollReveal";
 
 const announcement = `<div class="announcement-bar">
     <span>New:</span>
-    <a href="https://kit.elur.dev/" target="_blank" rel="noopener">Elur Kit 2.4.4</a>
+    <a href="https://kit.elur.dev/" target="_blank" rel="noopener">Elur Kit 2.4.6</a>
     <span class="ab-sep">—</span>
-    <span>Client-only islands, optional build-time compiler, and zero client JS by default.</span>
+    <span>Reliable SSR detection, client-only islands, and zero client JS by default.</span>
     <a href="https://kit.elur.dev/" target="_blank" rel="noopener">Explore →</a>
   </div>`;
 

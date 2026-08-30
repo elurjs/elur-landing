@@ -29,8 +29,8 @@ export function ElurI18n(): ElurTemplate {
           </ul>
 
           <div class="elur-i18n-callout">
-            v1.3.2 fixes 8 critical issues: no caching of failed requests, AST-based CLI
-            extraction, and a plugin composition pipeline.
+            v1.4.0 adds a DevTools plugin for inspecting live locales, fallbacks, loaded namespaces,
+            and message key counts during development, with no production overhead.
           </div>
 
           <a href="https://github.com/elurjs/elur-i18n" class="btn-primary" target="_blank" rel="noopener">

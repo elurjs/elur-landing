@@ -10,13 +10,13 @@ export function Hero(): ElurTemplate {
     <div class="hero-content">
       <div class="hero-badge">
         <span class="dot"></span>
-        v3.5.0 — Optional build-time compiler, client-only islands, leaner core
+        v3.6.0 — Multi-subscriber debug hooks and stronger DevTools interoperability
       </div>
       <a href="https://kit.elur.dev/" target="_blank" rel="noopener"
         style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:linear-gradient(90deg,rgba(52,50,200,0.15),rgba(43,199,240,0.15));border:1px solid rgba(43,199,240,0.3);font-size:0.8rem;font-weight:600;color:#2bc7f0;margin-bottom:32px;margin-left:10px;animation:fadeInUp 0.6s ease-out 0.1s both;text-decoration:none;">
         <span
           style="width:6px;height:6px;border-radius:50%;background:#2bc7f0;animation:blink 2s ease-in-out infinite"></span>
-        Elur Kit 2.4.4 — Full-stack meta-framework →
+        Elur Kit 2.4.6 — Full-stack meta-framework →
       </a>
       <h1>
         <span class="gradient-text">Elur</span>: build reactive JavaScript UIs<br>
@@ -55,9 +55,9 @@ export function Hero(): ElurTemplate {
             style="background:#10b981;box-shadow:0 0 10px rgba(16, 185, 129,0.5)"></span> 92.9% Coverage</span>
         <span class="eco-badge"><span class="eco-dot size"></span> ~15 KB gzipped</span>
         <span class="eco-badge"><span class="eco-dot" style="background:#60a5fa"></span> Elur UI</span>
-        <span class="eco-badge"><span class="eco-dot" style="background:#fb923c"></span> Elur Query 1.5.1</span>
-        <span class="eco-badge"><span class="eco-dot" style="background:#f472b6"></span> Elur Auth 1.2.2</span>
-        <span class="eco-badge"><span class="eco-dot" style="background:#3432c8"></span> Elur Kit 2.4.4</span>
+        <span class="eco-badge"><span class="eco-dot" style="background:#fb923c"></span> Elur Query 1.6.0</span>
+        <span class="eco-badge"><span class="eco-dot" style="background:#f472b6"></span> Elur Auth 1.3.0</span>
+        <span class="eco-badge"><span class="eco-dot" style="background:#3432c8"></span> Elur Kit 2.4.6</span>
         <span class="eco-badge"><span class="eco-dot" style="background:#a78bfa"></span> VS Code Extension</span>
         <span class="eco-badge"><span class="eco-dot zero"></span> Zero dependencies</span>
       </div>
