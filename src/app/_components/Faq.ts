@@ -49,8 +49,8 @@ export function Faq(): ElurTemplate {
                 Elur Kit 2.4.4 adds client-only islands (<code>directive: "only"</code>, <code>ssr: false</code>),
                 <code>fallback</code> content, <code>isSSR()</code> for environment reads, and fixes hydration
                 for islands without SSR DOM.
-                The ecosystem packages <code>@elurjs/query</code> 1.5.1, <code>@elurjs/ionic</code> 2.0.7,
-                <code>@elurjs/auth</code> 1.2.2, and <code>@elurjs/i18n</code> 1.3.2 are aligned.
+                The ecosystem packages <code>@elurjs/query</code> 1.6.0, <code>@elurjs/ionic</code> 2.1.0,
+                <code>@elurjs/auth</code> 1.3.0, and <code>@elurjs/i18n</code> 1.4.0 are aligned.
               </div>
             </div>
           </div>
@@ -143,7 +143,7 @@ export function Faq(): ElurTemplate {
             </button>
             <div class="faq-answer">
               <div class="faq-answer-inner">
-                Yes. Use <code>@elurjs/ionic@2.0.7</code> with Ionic Core for routing + native-style UI, then wrap
+                Yes. Use <code>@elurjs/ionic@2.1.0</code> with Ionic Core for routing + native-style UI, then wrap
                 with Capacitor for Android/iOS deployment using the same codebase.
               </div>
             </div>
