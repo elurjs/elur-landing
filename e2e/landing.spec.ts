@@ -19,10 +19,20 @@ test.afterEach(async ({ page }) => {
 
 test("home renders SSG content", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("h1").first()).toContainText("Build reactive UIs");
+  await expect(page.locator("h1").first()).toContainText("Elur");
+  await expect(page.locator("h1").first()).toContainText("reactive JavaScript UIs");
   await expect(page.locator("section.hero").first()).toBeVisible();
   // Sections render.
   expect(await page.locator("section, .section").count()).toBeGreaterThan(10);
+});
+
+test("home exposes indexable ElurJS metadata", async ({ page }) => {
+  await page.goto("/");
+  await expect(page).toHaveTitle(/Elur.*JavaScript Framework.*ElurJS/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /ElurJS.*reactive JavaScript framework/i);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /index, follow/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://www.elur.dev/");
+  expect(await page.locator('script[type="application/ld+json"]').textContent()).toContain("ElurJS");
 });
 
 test("islands hydrate (Navbar, CounterDemo, Faq, ScrollReveal)", async ({ page }) => {
@@ -30,7 +40,7 @@ test("islands hydrate (Navbar, CounterDemo, Faq, ScrollReveal)", async ({ page }
   await page.waitForTimeout(800);
   const hydrated = await page.evaluate(() =>
     Array.from(document.querySelectorAll("[data-elur-island]")).filter(
-      (el) => (el as HTMLElement).__elur_island_dispose,
+      (el) => (el as HTMLElement).__elur_js_island_dispose,
     ).length,
   );
   expect(hydrated).toBeGreaterThanOrEqual(6);

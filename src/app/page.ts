@@ -26,19 +26,20 @@ import { Cta } from "./_components/Cta";
 import { Contribute } from "./_components/Contribute";
 
 export const generateMetadata = (): PageMetadata => ({
-  title: "Elur — Lightweight Reactive Framework for JavaScript",
+  title: "Elur — Lightweight Reactive JavaScript Framework | ElurJS",
   description:
-    "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler. ~15 KB gzipped, zero dependencies.",
+    "ElurJS is a lightweight reactive JavaScript framework with fine-grained signals, direct DOM updates, no virtual DOM, zero dependencies, and no build step.",
   canonical: "https://www.elur.dev/",
+  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   openGraph: {
     type: "website",
-    title: "Elur — Lightweight Reactive Framework for JavaScript",
+    title: "Elur — Lightweight Reactive JavaScript Framework",
     description:
-      "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler.",
-    siteName: "Elur",
+      "Build fast reactive JavaScript interfaces with ElurJS signals, direct DOM updates, zero dependencies, and no required build step.",
+    siteName: "ElurJS",
     url: "https://www.elur.dev/",
     image: "https://www.elur.dev/og-image.jpg",
-    imageAlt: "Elur — lightweight reactive framework for JavaScript",
+    imageAlt: "ElurJS — lightweight reactive JavaScript framework",
     imageWidth: 1730,
     imageHeight: 909,
     imageType: "image/jpeg",
@@ -46,13 +47,16 @@ export const generateMetadata = (): PageMetadata => ({
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elur — Lightweight Reactive Framework for JavaScript",
+    title: "Elur — Lightweight Reactive JavaScript Framework",
     description:
-      "Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler.",
+      "Build fast reactive JavaScript interfaces with ElurJS signals, direct DOM updates, zero dependencies, and no required build step.",
     image: "https://www.elur.dev/og-image.jpg",
-    imageAlt: "Elur — lightweight reactive framework for JavaScript",
+    imageAlt: "ElurJS — lightweight reactive JavaScript framework",
   },
   other: {
+    keywords:
+      "Elur, ElurJS, Elur framework, Elur JavaScript, reactive JavaScript framework, lightweight JavaScript framework, signal-based framework, fine-grained reactivity, no virtual DOM, TypeScript framework",
+    googlebot: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     "twitter:site": "@elurjs",
     "twitter:creator": "@elurjs",
   },

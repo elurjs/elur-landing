@@ -19,12 +19,12 @@ export function Hero(): ElurTemplate {
         Elur Kit 2.4.4 — Full-stack meta-framework →
       </a>
       <h1>
-        Build reactive UIs in the browser<br>
-        <span class="gradient-text">with no build step.</span>
+        <span class="gradient-text">Elur</span>: build reactive JavaScript UIs<br>
+        with no build step.
       </h1>
       <p class="hero-subtitle">
-        Signal-based reactivity that runs natively with ESM/import maps. No virtual DOM. No compiler required — but an optional build-time compiler gives up to -44% faster renders.
-        <strong>Use DOM-first JS libraries directly (Chart.js, Leaflet, AG Grid) and pick your path: web with Elur-UI
+        ElurJS is a lightweight reactive JavaScript framework with fine-grained signals that runs natively with ESM and import maps. No virtual DOM. No compiler required — but an optional build-time compiler gives up to -44% faster renders.
+        <strong>Use DOM-first JavaScript libraries directly (Chart.js, Leaflet, AG Grid) and pick your path: web with Elur-UI
           or mobile with Elur-Ionic. Elur Query works in both.</strong>
       </p>
       <div class="hero-actions">
