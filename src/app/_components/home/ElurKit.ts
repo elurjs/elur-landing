@@ -84,7 +84,7 @@ export function ElurKit(): ElurTemplate {
           </div>
 
           <div class="home-elur-kit-callout">
-            v2.4.8 aligns the shared SSR state with <code>@elurjs/core</code> 3.6.2, so <code>isSSR()</code>
+            v2.4.9 aligns the shared SSR state with <code>@elurjs/core</code> 3.6.2, so <code>isSSR()</code>
             reliably reports server rendering. Client-only islands (<code>directive: "only"</code>,
             <code>ssr: false</code>), fallback content, and DOM-free <code>renderToString</code> remain built in.
           </div>

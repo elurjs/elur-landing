@@ -46,7 +46,7 @@ export function Faq(): ElurTemplate {
                 browser extension backend, and test tooling can coexist without replacing one another.
                 Component debug hooks now use shared global reactivity state, remaining reliable even when
                 <code>@elurjs/core</code> is duplicated in a bundle.
-                Elur Kit 2.4.8 aligns its SSR state with <code>@elurjs/core</code> 3.6.2 so <code>isSSR()</code>
+                Elur Kit 2.4.9 aligns its SSR state with <code>@elurjs/core</code> 3.6.2 so <code>isSSR()</code>
                 reports the correct value during server rendering.
                 The latest ecosystem packages are <code>@elurjs/core-compiler</code> 1.0.0,
                 <code>@elurjs/vite-plugin-elur</code> 2.1.0, <code>@elurjs/query</code> 1.6.0,

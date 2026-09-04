@@ -16,7 +16,7 @@ export function Hero(): ElurTemplate {
         style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:linear-gradient(90deg,rgba(52,50,200,0.15),rgba(43,199,240,0.15));border:1px solid rgba(43,199,240,0.3);font-size:0.8rem;font-weight:600;color:#2bc7f0;margin-bottom:32px;margin-left:10px;animation:fadeInUp 0.6s ease-out 0.1s both;text-decoration:none;">
         <span
           style="width:6px;height:6px;border-radius:50%;background:#2bc7f0;animation:blink 2s ease-in-out infinite"></span>
-        Elur Kit 2.4.8 — Full-stack meta-framework →
+        Elur Kit 2.4.9 — Full-stack meta-framework →
       </a>
       <h1>
         <span class="home-gradient-text">Elur</span>: build reactive JavaScript UIs<br>
@@ -56,7 +56,7 @@ export function Hero(): ElurTemplate {
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#60a5fa"></span> Elur UI</span>
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#fb923c"></span> Elur Query 1.6.0</span>
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#f472b6"></span> Elur Auth 1.3.0</span>
-        <span class="home-eco-badge"><span class="home-eco-dot" style="background:#3432c8"></span> Elur Kit 2.4.8</span>
+        <span class="home-eco-badge"><span class="home-eco-dot" style="background:#3432c8"></span> Elur Kit 2.4.9</span>
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#a78bfa"></span> VS Code Extension</span>
         <span class="home-eco-badge"><span class="home-eco-dot zero"></span> Zero dependencies</span>
       </div>
