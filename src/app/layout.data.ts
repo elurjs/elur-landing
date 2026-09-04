@@ -28,6 +28,8 @@ export const load: PageDataLoad = async () => {
 
   const headLinks: string[] = [
     `<style>${safeCss}</style>`,
+    '<link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />',
+    '<link rel="preload" href="/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />',
     '<link rel="icon" type="image/x-icon" href="/images/ico/favicon.ico" />',
     '<link rel="icon" type="image/png" sizes="32x32" href="/images/ico/favicon-32x32.png" />',
     '<link rel="icon" type="image/png" sizes="16x16" href="/images/ico/favicon-16x16.png" />',

@@ -24,5 +24,19 @@ export async function getInlineCss(): Promise<string> {
     }
   }
 
-  return parts.join("\n\n");
+  return minifyCss(parts.join("\n\n"));
+}
+
+function minifyCss(css: string): string {
+  return css
+    // Remove comments
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    // Collapse whitespace
+    .replace(/\s+/g, " ")
+    // Remove spaces around selectors and braces
+    .replace(/\s*([{}:;,>~+])\s*/g, "$1")
+    // Remove trailing semicolons before }
+    .replace(/;}/g, "}")
+    // Trim
+    .trim();
 }
