@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "elur-kit dev",
-    "build": "elur-kit build --lang en && bun run scripts/gen-sitemap.ts",
+    "build": "bun run scripts/gen-deferred-css.ts && elur-kit build --lang en && bun run scripts/gen-sitemap.ts",
     "preview": "elur-kit preview",
     "start": "elur-kit start"
   },

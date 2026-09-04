@@ -9,3 +9,6 @@ dist
 test-results/
 playwright-report/
 .dist.tmp*
+
+# Generated deferred CSS
+public/css/

@@ -23,11 +23,12 @@ export const load: PageDataLoad = async () => {
     "(function(){try{var t=localStorage.getItem('elur-gallery-theme');if(t){document.documentElement.setAttribute('data-theme',t)}}catch(e){}})();",
   ];
 
-  const inlineCss = await getInlineCss();
-  const safeCss = inlineCss.replace(/<\/style>/gi, "<\\/style>");
+  const css = await getInlineCss();
+  const safeCss = css.inline.replace(/<\/style>/gi, "<\\/style>");
 
   const headLinks: string[] = [
     `<style>${safeCss}</style>`,
+    css.deferredLink,
     '<link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />',
     '<link rel="preload" href="/fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin />',
     '<link rel="icon" type="image/x-icon" href="/images/ico/favicon.ico" />',
@@ -44,7 +45,8 @@ export const load: PageDataLoad = async () => {
     '<link rel="apple-touch-icon" sizes="152x152" href="/images/ico/apple-icon-152x152.png" />',
     '<link rel="apple-touch-icon" sizes="180x180" href="/images/ico/apple-icon-180x180.png" />',
     '<link rel="manifest" href="/images/ico/manifest.json" />',
-    '<meta name="theme-color" content="#0a0a0f" />',
+    '<meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />',
+    '<meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)" />',
     '<meta name="application-name" content="Elur" />',
     '<meta name="apple-mobile-web-app-title" content="Elur" />',
     '<meta name="apple-mobile-web-app-capable" content="yes" />',
