@@ -3,20 +3,20 @@
    Uses the site's semantic tokens so it follows the dark/light theme.
    ============================================================================ */
 .home-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
 .home-badge-new {
-      font-size: 0.65rem;
-      background: var(--c-accent);
-      color: white;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
+  font-size: 0.65rem;
+  background: var(--c-accent);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
 
 .home-hero {
   position: relative;
@@ -100,7 +100,6 @@
   font-weight: 600;
   color: var(--c-accent-3);
   margin-bottom: 32px;
-  animation: fadeInUp 0.6s ease-out;
 }
 
 .home-hero-badge .dot {
@@ -129,7 +128,6 @@
   line-height: 1.08;
   letter-spacing: -2px;
   margin-bottom: 24px;
-  animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
 .home-hero h1 .home-gradient-text {
@@ -145,7 +143,6 @@
   max-width: 600px;
   margin: 0 auto 40px;
   line-height: 1.7;
-  animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .home-hero-actions {
@@ -154,7 +151,6 @@
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
-  animation: fadeInUp 0.6s ease-out 0.3s both;
 }
 
 .home-btn-primary {
@@ -215,7 +211,6 @@
 
 .home-hero-install {
   margin-top: 40px;
-  animation: fadeInUp 0.6s ease-out 0.4s both;
 }
 
 .home-install-cmd {
@@ -1162,7 +1157,7 @@
 }
 
 @media (max-width: 768px) {
-.home-steps-grid {
+  .home-steps-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -1286,33 +1281,33 @@
 }
 
 @media (max-width: 1024px) {
-.home-how-features {
+  .home-how-features {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-.home-pipeline {
+  .home-pipeline {
     justify-content: flex-start;
     /* SOLUCIÓN: Inicia desde la izquierda para que el scroll funcione bien */
     padding-bottom: 16px;
     /* Espacio visual para la barra de desplazamiento */
   }
 
-.home-pipeline-step {
+  .home-pipeline-step {
     min-width: 120px;
     /* Un poco más de espacio */
     flex: 0 0 auto;
     /* Obliga a mantener su tamaño y permite el scroll correcto */
   }
 
-.home-pipeline-icon {
+  .home-pipeline-icon {
     width: 50px;
     height: 50px;
     font-size: 1.2rem;
   }
 
-.home-how-features {
+  .home-how-features {
     grid-template-columns: 1fr;
   }
 }
@@ -1452,7 +1447,7 @@
 }
 
 @media (max-width: 1024px) {
-.home-faq-layout {
+  .home-faq-layout {
     grid-template-columns: 1fr;
     gap: 40px;
   }
@@ -1690,29 +1685,29 @@
 }
 
 @media (max-width: 1024px) {
-.home-case-study-grid {
+  .home-case-study-grid {
     grid-template-columns: 1fr;
   }
 
-.home-case-phones {
+  .home-case-phones {
     margin-top: 8px;
   }
 }
 
 @media (max-width: 768px) {
-.home-case-metrics {
+  .home-case-metrics {
     grid-template-columns: 1fr;
   }
 
-.home-case-phone-shell {
+  .home-case-phone-shell {
     width: 280px;
   }
 
-.home-case-phone-screen {
+  .home-case-phone-screen {
     height: 560px;
   }
 
-.home-case-phone-secondary {
+  .home-case-phone-secondary {
     display: none;
   }
 }
@@ -1822,7 +1817,7 @@
 }
 
 @media (max-width: 768px) {
-.home-showcases-grid {
+  .home-showcases-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -2016,17 +2011,17 @@
 }
 
 @media (max-width: 1024px) {
-.home-inspired-grid {
+  .home-inspired-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-.home-inspired-grid {
+  .home-inspired-grid {
     grid-template-columns: 1fr;
   }
 
-.home-inspired-quote {
+  .home-inspired-quote {
     padding: 24px;
   }
 }
@@ -2520,7 +2515,7 @@
 }
 
 @media (max-width: 768px) {
-.home-elur-kit-layout {
+  .home-elur-kit-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -2698,7 +2693,7 @@
 }
 
 @media (max-width: 768px) {
-.home-elur-i18n-layout {
+  .home-elur-i18n-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -2772,7 +2767,7 @@
 }
 
 @media (max-width: 768px) {
-.home-elur-auth-layout {
+  .home-elur-auth-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -3065,30 +3060,30 @@
 }
 
 @media (max-width: 1024px) {
-.home-ionic-hero-layout {
+  .home-ionic-hero-layout {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
-.home-ionic-features-grid {
+  .home-ionic-features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-.home-ionic-bundles-grid {
+  .home-ionic-bundles-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-.home-ionic-features-grid {
+  .home-ionic-features-grid {
     grid-template-columns: 1fr;
   }
 
-.home-ionic-bundles-grid {
+  .home-ionic-bundles-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-.home-ionic-bundle-section {
+  .home-ionic-bundle-section {
     padding: 24px;
   }
 }
@@ -3276,7 +3271,7 @@
 }
 
 @media (max-width: 768px) {
-.home-flow-comparison {
+  .home-flow-comparison {
     grid-template-columns: 1fr;
   }
 }
@@ -3286,83 +3281,83 @@
 }
 
 @media (max-width: 1024px) {
-.home-why-grid {
+  .home-why-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-.home-interop-grid,
-.home-elur-query-layout {
+  .home-interop-grid,
+  .home-elur-query-layout {
     grid-template-columns: 1fr;
   }
 
-.home-code-layout {
+  .home-code-layout {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
-.home-features-grid {
+  .home-features-grid {
     grid-template-columns: 1fr;
   }
 
-.home-playground-grid {
+  .home-playground-grid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-.home-why-grid {
+  .home-why-grid {
     grid-template-columns: 1fr;
   }
 
-.home-stats-grid {
+  .home-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-.home-playground-grid {
+  .home-playground-grid {
     grid-template-columns: 1fr;
   }
 
-.home-container {
+  .home-container {
     padding: 0 16px;
   }
 
-.home-hero {
+  .home-hero {
     padding: 100px 16px 60px;
     min-height: auto;
   }
 
-.home-section {
+  .home-section {
     padding: 80px 16px;
   }
 
-.home-section-title {
+  .home-section-title {
     font-size: 2.2rem;
   }
 
-.home-hero-actions {
+  .home-hero-actions {
     flex-direction: column;
     width: 100%;
   }
 
-.home-btn-primary,
-.home-btn-secondary {
+  .home-btn-primary,
+  .home-btn-secondary {
     width: 100%;
     justify-content: center;
   }
 
-.home-hero-paths {
+  .home-hero-paths {
     grid-template-columns: 1fr;
   }
 
-.home-interop-libs {
+  .home-interop-libs {
     grid-template-columns: 1fr;
   }
 
-.home-elur-query-wow-grid {
+  .home-elur-query-wow-grid {
     grid-template-columns: 1fr;
   }
 
-.home-code-tabs {
+  .home-code-tabs {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3371,7 +3366,7 @@
     padding: 4px;
   }
 
-.home-code-tab {
+  .home-code-tab {
     width: 100%;
     padding: 10px;
     font-size: 0.8rem;
@@ -3518,15 +3513,30 @@
   transition: width 0.6s ease;
 }
 
-.benchmark-bar.vanilla { background: #555; }
-.benchmark-bar.solid { background: #2c4f7c; }
+.benchmark-bar.vanilla {
+  background: #555;
+}
+
+.benchmark-bar.solid {
+  background: #2c4f7c;
+}
+
 .benchmark-bar.elur {
   background: var(--c-accent-3);
   box-shadow: 0 0 12px var(--c-accent-glow);
 }
-.benchmark-bar.svelte { background: #ff3e00; }
-.benchmark-bar.vue { background: #42b883; }
-.benchmark-bar.react { background: #61dafb; }
+
+.benchmark-bar.svelte {
+  background: #ff3e00;
+}
+
+.benchmark-bar.vue {
+  background: #42b883;
+}
+
+.benchmark-bar.react {
+  background: #61dafb;
+}
 
 .benchmark-bar-value {
   font-size: 0.85rem;
