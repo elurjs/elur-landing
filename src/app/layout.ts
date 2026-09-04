@@ -1,6 +1,6 @@
 import { html } from "@elurjs/core";
 import type { LayoutProps } from "@elurjs/kit";
-import { island } from "@elurjs/kit";
+import { island, image } from "@elurjs/kit";
 import type { SiteLayoutData } from "./layout.data.ts";
 import NavDropdown from "../islands/NavDropdown.ts";
 import MobileMenu from "../islands/MobileMenu.ts";
@@ -36,10 +36,14 @@ export default function SiteLayout({ children, data }: LayoutProps<SiteLayoutDat
       <!-- Navbar -->
       <nav class="site-nav">
         <a href="/" class="nav-brand">
-          <picture>
-            <source srcset="/images/elur-logo-112.webp" type="image/webp" />
-            <img class="nav-brand-logo" src="/images/elur-logo-112.png" alt="Elur" />
-          </picture>
+          ${image({
+    src: "/images/elur-logo-112.png",
+    alt: "Elur",
+    width: 112,
+    height: 75,
+    priority: true,
+    class: "nav-brand-logo",
+  })}
           <span class="nav-brand-name">Elur</span>
         </a>
 
@@ -110,10 +114,13 @@ export default function SiteLayout({ children, data }: LayoutProps<SiteLayoutDat
         <div class="footer-inner">
           <div>
             <div class="footer-brand">
-              <picture>
-                <source srcset="/images/elur-logo-112.webp" type="image/webp" />
-                <img class="footer-brand-logo" src="/images/elur-logo-112.png" alt="Elur" />
-              </picture>
+              ${image({
+    src: "/images/elur-logo-112.png",
+    alt: "Elur",
+    width: 112,
+    height: 75,
+    class: "footer-brand-logo",
+  })}
               Elur
             </div>
             <p class="footer-desc">

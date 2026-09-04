@@ -1,8 +1,9 @@
-import { raw } from "@elurjs/kit/content";
+import { html } from "@elurjs/core";
+import { image } from "@elurjs/kit";
 import type { ElurTemplate } from "@elurjs/core";
 
 export function Showcases(): ElurTemplate {
-  return raw(`
+  return html`
 <section class="home-section home-showcases-section" id="showcases">
     <div class="home-container">
       <div class="home-section-header animate-on-scroll">
@@ -16,12 +17,15 @@ export function Showcases(): ElurTemplate {
         <a href="https://www.bikeros.co/" target="_blank" rel="noopener"
           class="home-showcase-card animate-on-scroll">
           <div class="home-showcase-image">
-            <picture>
-            <source srcset="/images/showcases/bikeros-landing.webp" type="image/webp" />
-            <img loading="lazy" src="/images/showcases/bikeros-landing.webp"
-              alt="BikerOS landing page — built with Elur Kit (SSG, islands, SEO)"
-              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'>
-          </picture><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%2316161f\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23a0a0b5\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' font-family=\\'sans-serif\\' font-weight=\\'bold\\' font-size=\\'1.5rem\\'>BikerOS Landing</text></svg>'">
+            ${image({
+    src: "/images/showcases/bikeros-landing.webp",
+    alt: "BikerOS landing page — built with Elur Kit (SSG, islands, SEO)",
+    width: 1280,
+    height: 800,
+    widths: [640, 1280],
+    sizes: "(min-width: 768px) 50vw, 100vw",
+    class: "home-showcase-img",
+  })}
           </div>
           <div class="home-showcase-content">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -44,12 +48,15 @@ export function Showcases(): ElurTemplate {
         <!-- BikerOS App -->
         <div class="home-showcase-card animate-on-scroll" style="cursor:default">
           <div class="home-showcase-image">
-            <picture>
-            <source srcset="/images/showcases/sos.webp" type="image/webp" />
-            <img loading="lazy" src="/images/showcases/sos.webp"
-              alt="BikerOS mobile app — built with Elur-Ionic and Elur Query"
-              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'>
-          </picture><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%2316161f\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23a0a0b5\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' font-family=\\'sans-serif\\' font-weight=\\'bold\\' font-size=\\'1.5rem\\'>BikerOS App</text></svg>'">
+            ${image({
+    src: "/images/showcases/sos.webp",
+    alt: "BikerOS mobile app — built with Elur-Ionic and Elur Query",
+    width: 1080,
+    height: 2400,
+    widths: [540, 1080],
+    sizes: "(min-width: 768px) 25vw, 50vw",
+    class: "home-showcase-img",
+  })}
           </div>
           <div class="home-showcase-content">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -73,12 +80,15 @@ export function Showcases(): ElurTemplate {
         <!-- BikerOS Web Admin -->
         <div class="home-showcase-card animate-on-scroll" style="cursor:default">
           <div class="home-showcase-image">
-            <picture>
-            <source srcset="/images/showcases/panel_admin.webp" type="image/webp" />
-            <img loading="lazy" src="/images/showcases/panel_admin.webp"
-              alt="BikerOS admin panel — built with Elur and Elur Query"
-              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'>
-          </picture><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%2316161f\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23a0a0b5\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' font-family=\\'sans-serif\\' font-weight=\\'bold\\' font-size=\\'1.5rem\\'>BikerOS Admin</text></svg>'">
+            ${image({
+    src: "/images/showcases/panel_admin.webp",
+    alt: "BikerOS admin panel — built with Elur and Elur Query",
+    width: 1080,
+    height: 2400,
+    widths: [540, 1080],
+    sizes: "(min-width: 768px) 25vw, 50vw",
+    class: "home-showcase-img",
+  })}
           </div>
           <div class="home-showcase-content">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -101,12 +111,15 @@ export function Showcases(): ElurTemplate {
         <!-- Elur Kit Docs -->
         <a href="/docs/ecosystem/kit/overview/" class="home-showcase-card animate-on-scroll">
           <div class="home-showcase-image">
-            <picture>
-            <source srcset="/images/showcases/elur-kit-docs.webp" type="image/webp" />
-            <img loading="lazy" src="/images/showcases/elur-kit-docs.png"
-              alt="Elur Kit documentation site — built with Elur Kit itself (dogfooding)"
-              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'>
-          </picture><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%2316161f\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23a0a0b5\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' font-family=\\'sans-serif\\' font-weight=\\'bold\\' font-size=\\'1.5rem\\'>Elur Kit Docs</text></svg>'">
+            ${image({
+    src: "/images/showcases/elur-kit-docs.png",
+    alt: "Elur Kit documentation site — built with Elur Kit itself (dogfooding)",
+    width: 2560,
+    height: 1600,
+    widths: [640, 1280, 2560],
+    sizes: "(min-width: 768px) 50vw, 100vw",
+    class: "home-showcase-img",
+  })}
           </div>
           <div class="home-showcase-content">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -130,12 +143,15 @@ export function Showcases(): ElurTemplate {
         <a href="https://parcial-1-analisis-2-unicolombo.vercel.app/home" target="_blank" rel="noopener"
           class="home-showcase-card animate-on-scroll">
           <div class="home-showcase-image">
-            <picture>
-            <source srcset="/images/showcases/elur-student-library.webp" type="image/webp" />
-            <img loading="lazy" src="/images/showcases/elur-student-library.png"
-              alt="Academic Management System built using Elur and Elur-UI components"
-              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100%\\'>
-          </picture><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%2316161f\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23a0a0b5\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\' font-family=\\'sans-serif\\' font-weight=\\'bold\\' font-size=\\'1.5rem\\'>Academic System</text></svg>'">
+            ${image({
+    src: "/images/showcases/elur-student-library.png",
+    alt: "Academic Management System built using Elur and Elur-UI components",
+    width: 1918,
+    height: 972,
+    widths: [640, 1280, 1918],
+    sizes: "(min-width: 768px) 50vw, 100vw",
+    class: "home-showcase-img",
+  })}
           </div>
           <div class="home-showcase-content">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -157,5 +173,5 @@ export function Showcases(): ElurTemplate {
       </div>
     </div>
   </section>
-  `);
+  `;
 }

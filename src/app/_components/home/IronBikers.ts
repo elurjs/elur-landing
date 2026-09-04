@@ -1,8 +1,9 @@
-import { raw } from "@elurjs/kit/content";
+import { html } from "@elurjs/core";
+import { image } from "@elurjs/kit";
 import type { ElurTemplate } from "@elurjs/core";
 
 export function IronBikers(): ElurTemplate {
-  return raw(`
+  return html`
 <section id="iron-bikers" class="home-section home-case-study-section">
     <div class="home-container">
       <div class="home-case-study-grid">
@@ -61,12 +62,30 @@ export function IronBikers(): ElurTemplate {
                 <div class="home-case-phone-notch"></div>
                 <div class="home-case-phone-screen">
                   <div class="home-ib-slider">
-                    <img src="/images/bikeros-sos.webp" alt="BikerOS App — SOS Emergency" width="300" height="600" loading="lazy"
-                      decoding="async">
-                    <img src="/images/bikeros-home.webp" alt="BikerOS App — Home Dashboard" width="300" height="600"
-                      loading="lazy" decoding="async">
-                    <img src="/images/bikeros-eventos.webp" alt="BikerOS App — Events & Rides" width="300" height="600"
-                      loading="lazy" decoding="async">
+                    ${image({
+    src: "/images/bikeros-sos.webp",
+    alt: "BikerOS App — SOS Emergency",
+    width: 300,
+    height: 600,
+    widths: [300],
+    class: "home-ib-slide-img",
+  })}
+                    ${image({
+    src: "/images/bikeros-home.webp",
+    alt: "BikerOS App — Home Dashboard",
+    width: 300,
+    height: 600,
+    widths: [300],
+    class: "home-ib-slide-img",
+  })}
+                    ${image({
+    src: "/images/bikeros-eventos.webp",
+    alt: "BikerOS App — Events & Rides",
+    width: 300,
+    height: 600,
+    widths: [300],
+    class: "home-ib-slide-img",
+  })}
                   </div>
                 </div>
               </div>
@@ -77,8 +96,14 @@ export function IronBikers(): ElurTemplate {
               <div class="home-case-phone-shell">
                 <div class="home-case-phone-notch"></div>
                 <div class="home-case-phone-screen">
-                  <img src="/images/bikeros-perfil.webp" alt="BikerOS App — Pilot Profile" width="260" height="560" loading="lazy"
-                    decoding="async">
+                  ${image({
+    src: "/images/bikeros-perfil.webp",
+    alt: "BikerOS App — Pilot Profile",
+    width: 260,
+    height: 560,
+    widths: [260],
+    class: "home-ib-slide-img",
+  })}
                 </div>
               </div>
             </div>
@@ -114,5 +139,5 @@ export function IronBikers(): ElurTemplate {
       </div>
     </div>
   </section>
-  `);
+  `;
 }
