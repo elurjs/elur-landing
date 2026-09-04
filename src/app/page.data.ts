@@ -37,6 +37,15 @@ const structuredData = jsonLd({
       ],
     },
     {
+      "@type": "Person",
+      "@id": "https://www.elur.dev/#person-deiver-vasquez",
+      "name": "Deiver Vasquez",
+      "url": "https://www.elur.dev/",
+      "sameAs": [
+        "https://github.com/DeijoseDevelop",
+      ],
+    },
+    {
       "@type": ["SoftwareApplication", "SoftwareSourceCode"],
       "@id": "https://www.elur.dev/#software",
       "name": "Elur",
@@ -52,7 +61,9 @@ const structuredData = jsonLd({
         "Elur, ElurJS, reactive JavaScript framework, signals, fine-grained reactivity, no virtual DOM, TypeScript framework",
       "license": "https://github.com/elurjs/elur/blob/main/LICENSE",
       "url": "https://www.elur.dev/",
-      "author": { "@id": "https://www.elur.dev/#organization" },
+      "author": { "@id": "https://www.elur.dev/#person-deiver-vasquez" },
+      "creator": { "@id": "https://www.elur.dev/#person-deiver-vasquez" },
+      "publisher": { "@id": "https://www.elur.dev/#organization" },
     },
   ],
 });
