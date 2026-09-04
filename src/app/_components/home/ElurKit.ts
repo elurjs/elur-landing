@@ -104,7 +104,7 @@ export function ElurKit(): ElurTemplate {
             <div class="home-code-dots"><span></span><span></span><span></span></div>
             <span class="home-code-filename">src/app/page.ts</span>
           </div>
-          <div class="home-code-body">
+          <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
             <pre><span class="kw">import</span> { html } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 <span class="kw">import</span> type { PageProps } <span class="kw">from</span> <span class="str">"@elurjs/kit"</span>;
 <span class="kw">import</span> { island } <span class="kw">from</span> <span class="str">"@elurjs/kit"</span>;

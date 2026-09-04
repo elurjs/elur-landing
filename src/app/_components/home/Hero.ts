@@ -64,20 +64,20 @@ export function Hero(): ElurTemplate {
       <div class="home-hero-paths">
         <a class="home-hero-path-card" href="/docs/ecosystem/kit/overview/">
           <span class="home-hero-path-tag">Meta-framework</span>
-          <h3>Build full-stack apps with Elur Kit</h3>
+          <h2>Build full-stack apps with Elur Kit</h2>
           <p>File-based routing, SSG, SSR, ISR, islands, content collections, and zero client JS by default. Next.js
             conventions with Astro-style islands.</p>
           <span class="home-hero-path-action">Explore Elur Kit -></span>
         </a>
         <a class="home-hero-path-card" href="/docs/ecosystem/overview/">
           <span class="home-hero-path-tag">Web Path</span>
-          <h3>Build web products with Elur + Elur-UI</h3>
+          <h2>Build web products with Elur + Elur-UI</h2>
           <p>Compose interfaces with Elur-UI, and plug Elur Query when you need server-state, retries, and cache.</p>
           <span class="home-hero-path-action">Launch web apps -></span>
         </a>
         <a class="home-hero-path-card" href="#elur-ionic" rel="noopener">
           <span class="home-hero-path-tag">Mobile Path</span>
-          <h3>Ship mobile with Elur-Ionic</h3>
+          <h2>Ship mobile with Elur-Ionic</h2>
           <p>Ionic routing + Elur reactivity for one codebase targeting web, Android, and iOS, with optional Elur
             Query data layer.</p>
           <span class="home-hero-path-action">Launch mobile apps -></span>

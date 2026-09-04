@@ -46,7 +46,7 @@ html`
     <p style="margin-top:12px;font-size:1.1rem;font-weight:600">
       ${() => labels[displayValue()]}
     </p>
-    <p style="color:#6a6a80;font-size:0.85rem">
+    <p style="color:#8484a0;font-size:0.85rem">
       ${() => rating.value} / 5 stars
     </p>
 

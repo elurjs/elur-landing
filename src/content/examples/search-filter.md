@@ -50,7 +50,7 @@ html`
       @input=${(e) => query.value = e.target.value}
     />
 
-    <p style="color:#6a6a80;font-size:0.8rem;margin-bottom:8px">
+    <p style="color:#8484a0;font-size:0.8rem;margin-bottom:8px">
       ${() => filtered.value.length} of ${languages.length} languages
     </p>
 
@@ -62,7 +62,7 @@ html`
           <li>
             <div style="flex:1">
               <div style="font-weight:600">${l.name}</div>
-              <div style="font-size:0.75rem;color:#6a6a80">${l.type} · ${l.year}</div>
+              <div style="font-size:0.75rem;color:#8484a0">${l.type} · ${l.year}</div>
             </div>
             <span class="filter-chip" style=${() => `background:${l.type === "Static" ? "rgba(52,211,153,0.15)" : "rgba(96,165,250,0.15)"};color:${l.type === "Static" ? "#34d399" : "#60a5fa"}`}>
               ${l.type}
@@ -73,7 +73,7 @@ html`
     </ul>
 
     ${() => filtered.value.length === 0
-      ? html`<p style="text-align:center;color:#6a6a80;padding:20px">No languages found</p>`
+      ? html`<p style="text-align:center;color:#8484a0;padding:20px">No languages found</p>`
       : null}
   </div>
 `.mount("#app");

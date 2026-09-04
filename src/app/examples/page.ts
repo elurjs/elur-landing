@@ -17,6 +17,11 @@ export const generateMetadata = (): PageMetadata => ({
     siteName: "Elur",
     url: "https://www.elur.dev/examples/",
   },
+  twitter: {
+    card: "summary",
+    title: "Examples — Elur",
+    description: "Interactive Elur examples with live previews and source code.",
+  },
 });
 
 export default function ExamplesIndexPage({ data }: PageProps<typeof load>) {

@@ -56,7 +56,7 @@ export function ElurIonic(): ElurTemplate {
             <div class="home-code-dots"><span></span><span></span><span></span></div>
             <span class="home-code-filename">main.ts</span>
           </div>
-          <div class="home-code-body">
+          <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
             <pre><span class="kw">import</span> { ElurComponent, html, mount, elurRouter } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 <span class="kw">import</span> { IonRouterOutlet } <span class="kw">from</span> <span class="str">"@elurjs/ionic"</span>;
 

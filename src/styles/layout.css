@@ -92,7 +92,7 @@
 }
 
 .nav-link.active {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 .nav-chevron {
@@ -312,7 +312,7 @@
   padding: var(--space-1) var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--fw-medium);
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   background: var(--c-accent-subtle);
   border: 1px solid var(--c-border-glow);
   border-radius: var(--radius-full);
@@ -625,7 +625,7 @@ html:has(.docs-shell)::-webkit-scrollbar-thumb {
 }
 
 .side-link.active {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   background: var(--c-accent-subtle);
   font-weight: var(--fw-medium);
 }
@@ -665,7 +665,7 @@ html:has(.docs-shell)::-webkit-scrollbar-thumb {
 }
 
 .toc-link.active {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   border-left-color: var(--c-accent);
 }
 
@@ -762,7 +762,7 @@ html:has(.docs-shell)::-webkit-scrollbar-thumb {
 }
 
 .lesson-rail-link.active {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   background: var(--c-accent-subtle);
   font-weight: var(--fw-semibold);
 }
@@ -775,7 +775,7 @@ html:has(.docs-shell)::-webkit-scrollbar-thumb {
 }
 
 .lesson-rail-link.active .lesson-rail-num {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 .tutorial-instructions {
@@ -891,7 +891,7 @@ body:has(.docs-shell) .site-footer {
 }
 
 .footer-col a:hover {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 .footer-bottom {

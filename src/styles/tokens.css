@@ -37,13 +37,15 @@
   /* ── Text ── */
   --c-text: #f0f0f5;
   --c-text-2: #a0a0b5;
-  --c-text-3: #6a6a80;
+  --c-text-3: #8484a0;
   --c-text-inv: #0a0a0f;
 
   /* ── Accents (Elur brand) ── */
   --c-accent: #3432c8;
   --c-accent-2: #256fe1;
   --c-accent-3: #2bc7f0;
+  /* Accent color for text on theme surfaces (passes WCAG AA in both themes). */
+  --c-accent-text: #2bc7f0;
   --c-accent-glow: rgba(52, 50, 200, 0.35);
   --c-accent-subtle: rgba(52, 50, 200, 0.08);
 
@@ -158,8 +160,17 @@
 
   --c-text: #1a1a2e;
   --c-text-2: #555568;
-  --c-text-3: #9090a0;
+  --c-text-3: #6a6a84;
   --c-text-inv: #ffffff;
+
+  --c-accent-text: #0e7490;
+  /* Status colors darkened so they pass WCAG AA on light surfaces. */
+  --c-green: #047857;
+  --c-yellow: #854d0e;
+  --c-red: #b91c1c;
+  --c-blue: #1d4ed8;
+  --c-pink: #be185d;
+  --c-cyan: #0e7490;
 
   --c-accent-glow: rgba(52, 50, 200, 0.15);
   --c-accent-subtle: rgba(52, 50, 200, 0.05);
@@ -188,8 +199,15 @@
     --c-border-light: #d0d0dc;
     --c-text: #1a1a2e;
     --c-text-2: #555568;
-    --c-text-3: #9090a0;
+    --c-text-3: #6a6a84;
     --c-text-inv: #ffffff;
+    --c-accent-text: #0e7490;
+    --c-green: #047857;
+    --c-yellow: #854d0e;
+    --c-red: #b91c1c;
+    --c-blue: #1d4ed8;
+    --c-pink: #be185d;
+    --c-cyan: #0e7490;
     --c-accent-glow: rgba(52, 50, 200, 0.15);
     --c-accent-subtle: rgba(52, 50, 200, 0.05);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);

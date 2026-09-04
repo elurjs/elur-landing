@@ -239,7 +239,7 @@
 }
 
 .home-install-cmd .dollar {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   user-select: none;
 }
 
@@ -254,7 +254,7 @@
 }
 
 .home-install-cmd:hover .home-copy-icon {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 @keyframes fadeInUp {
@@ -2209,7 +2209,7 @@
   transform: translateY(-3px);
 }
 
-.home-hero-path-card h3 {
+.home-hero-path-card h2 {
   margin: 8px 0 6px;
   font-size: 1rem;
   letter-spacing: -0.2px;

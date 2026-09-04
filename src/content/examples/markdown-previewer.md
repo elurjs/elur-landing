@@ -79,7 +79,7 @@ const app = html`
     <div style="display:flex;gap:8px;margin-bottom:8px">
       <span class="filter-chip active">Editor</span>
       <span class="filter-chip">Preview</span>
-      <span style="margin-left:auto;font-size:0.75rem;color:#6a6a80;align-self:center">
+      <span style="margin-left:auto;font-size:0.75rem;color:#8484a0;align-self:center">
         ${() => wordCount.value} words
       </span>
     </div>

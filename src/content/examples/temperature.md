@@ -43,6 +43,7 @@ html`
         <label>Celsius</label><br/>
         <input
           type="number"
+          aria-label="Celsius"
           value=${() => Math.round(celsius.value * 10) / 10}
           @input=${(e) => setCelsius(parseFloat(e.target.value) || 0)}
         />
@@ -52,6 +53,7 @@ html`
         <label>Fahrenheit</label><br/>
         <input
           type="number"
+          aria-label="Fahrenheit"
           value=${() => Math.round(fahrenheit.value * 10) / 10}
           @input=${(e) => setFahrenheit(parseFloat(e.target.value) || 0)}
         />

@@ -1,6 +1,39 @@
 import type { PageDataLoad } from "@elurjs/kit";
 import { getTutorialBySlug, getTutorialPrevNext } from "../../lib/tutorial-nav";
+import { jsonLd } from "@elurjs/kit/seo";
 import { renderMarkdown } from "../../lib/markdown";
+
+function breadcrumbLd(section: string, title: string, slug: string): string {
+  return jsonLd({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.elur.dev/",
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tutorial",
+        "item": "https://www.elur.dev/tutorial/basics/01-welcome/",
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": section,
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": title,
+        "item": `https://www.elur.dev/tutorial/${slug}/`,
+      },
+    ],
+  });
+}
 
 export const load: PageDataLoad = async ({ params }) => {
   const slugParts = (params as Record<string, unknown>).slug;
@@ -21,7 +54,9 @@ export const load: PageDataLoad = async ({ params }) => {
       currentSlug: slug,
       currentTitle: "Not Found",
       currentSection: "",
+      currentDesc: "",
       notFound: true,
+      headLinks: [] as string[],
     };
   }
 
@@ -41,6 +76,8 @@ export const load: PageDataLoad = async ({ params }) => {
     currentSlug: slug,
     currentTitle: entry.data.title,
     currentSection: entry.data.section,
+    currentDesc: entry.data.description,
     notFound: false,
+    headLinks: [breadcrumbLd(entry.data.section, entry.data.title, slug)],
   };
 };

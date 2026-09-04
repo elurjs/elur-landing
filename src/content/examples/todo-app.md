@@ -76,12 +76,13 @@ html`
             <input
               type="checkbox"
               checked=${() => t.done}
+              aria-label=${`Mark "${t.text}" as done`}
               @change=${() => toggle(t.id)}
             />
-            <span style=${() => `flex:1;text-decoration:${t.done ? "line-through" : "none"};color:${t.done ? "#6a6a80" : "#f0f0f5"}`}>
+            <span style=${() => `flex:1;text-decoration:${t.done ? "line-through" : "none"};color:${t.done ? "#8484a0" : "#f0f0f5"}`}>
               ${t.text}
             </span>
-            <button class="btn-ghost" style="padding:2px 8px;font-size:0.8rem" @click=${() => remove(t.id)}>✕</button>
+            <button class="btn-ghost" style="padding:2px 8px;font-size:0.8rem" aria-label=${`Delete "${t.text}"`} @click=${() => remove(t.id)}>✕</button>
           </li>
         `
       )}

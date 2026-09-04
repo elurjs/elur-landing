@@ -48,7 +48,7 @@ export function ElurI18n(): ElurTemplate {
             <div class="home-code-dots"><span></span><span></span><span></span></div>
             <span class="home-code-filename">i18n.ts</span>
           </div>
-          <div class="home-code-body">
+          <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
             <pre><span class="kw">import</span> { createI18n } <span class="kw">from</span> <span class="str">"@elurjs/i18n"</span>;
 <span class="kw">import</span> { headPlugin } <span class="kw">from</span> <span class="str">"@elurjs/i18n/plugins/head"</span>;
 

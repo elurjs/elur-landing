@@ -21,6 +21,7 @@ interface LessonPageData {
   currentSlug: string;
   currentTitle: string;
   currentSection: string;
+  currentDesc: string;
   notFound: boolean;
 }
 
@@ -38,16 +39,24 @@ export const generateMetadata = (ctx: {
     };
   }
   const url = `${SITE_URL}/tutorial/${d.currentSlug}/`;
+  const title = `${d.currentTitle} — Elur Tutorial`;
+  const description =
+    d.currentDesc || `${d.currentSection} — Elur interactive tutorial`;
   return {
-    title: `${d.currentTitle} — Elur Tutorial`,
-    description: `${d.currentSection} — Elur interactive tutorial`,
+    title,
+    description,
     canonical: url,
     openGraph: {
       type: "article",
-      title: `${d.currentTitle} — Elur Tutorial`,
-      description: `${d.currentSection} — Elur interactive tutorial`,
+      title,
+      description,
       url,
       siteName: "Elur",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
     },
   };
 };

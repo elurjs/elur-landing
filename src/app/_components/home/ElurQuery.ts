@@ -71,7 +71,7 @@ export function ElurQuery(): ElurTemplate {
             <div class="home-code-dots"><span></span><span></span><span></span></div>
             <span class="home-code-filename">orders-command.ts</span>
           </div>
-          <div class="home-code-body">
+          <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
             <pre><span class="kw">import</span> { createCommand, CommandQueuedError, getQueryData, setQueryData } <span class="kw">from</span> <span class="str">"@elurjs/query"</span>;
 
 <span class="kw">const</span> saveOrder = <span class="fn">createCommand</span>(<span class="str">"orders/save"</span>,

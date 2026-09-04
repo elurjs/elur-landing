@@ -71,18 +71,21 @@ html`
       <div>
         <label>Hue: ${() => hue.value}°</label>
         <input type="range" min="0" max="360" value=${() => hue.value}
+          aria-label="Hue"
           @input=${(e) => hue.value = parseInt(e.target.value)}
           style="width:100%;accent-color:#2bc7f0" />
       </div>
       <div>
         <label>Saturation: ${() => sat.value}%</label>
         <input type="range" min="0" max="100" value=${() => sat.value}
+          aria-label="Saturation"
           @input=${(e) => sat.value = parseInt(e.target.value)}
           style="width:100%;accent-color:#2bc7f0" />
       </div>
       <div>
         <label>Lightness: ${() => light.value}%</label>
         <input type="range" min="0" max="100" value=${() => light.value}
+          aria-label="Lightness"
           @input=${(e) => light.value = parseInt(e.target.value)}
           style="width:100%;accent-color:#2bc7f0" />
       </div>
@@ -96,6 +99,7 @@ html`
     <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap">
       ${presets.map((c) => html`
         <button
+          aria-label=${`Select color ${c}`}
           style=${() => `width:32px;height:32px;border-radius:8px;background:${c};border:2px solid ${hex.value === c.toUpperCase() ? "#2bc7f0" : "#2a2a3a"};cursor:pointer`}
           @click=${() => setFromHex(c)}
         ></button>

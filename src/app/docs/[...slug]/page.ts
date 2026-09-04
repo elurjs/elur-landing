@@ -15,7 +15,7 @@ export const generateMetadata = (ctx: { data?: DocPageData }): PageMetadata => {
     };
   }
   const title = `${d.currentTitle} — Elur Docs`;
-  const description = `${d.currentSection} — Elur documentation`;
+  const description = d.currentDesc || `${d.currentSection} — Elur documentation`;
   return {
     title,
     description,
@@ -26,6 +26,11 @@ export const generateMetadata = (ctx: { data?: DocPageData }): PageMetadata => {
       description,
       url: `https://www.elur.dev/docs/${d.currentSlug}/`,
       siteName: "Elur",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
     },
   };
 };

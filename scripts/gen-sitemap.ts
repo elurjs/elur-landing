@@ -1,8 +1,14 @@
-import { readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { generateSitemap, generateRobots, type SitemapEntry } from "@elurjs/kit/seo";
 
 const SITE_URL = "https://www.elur.dev";
+
+async function isDraft(path: string): Promise<boolean> {
+  const source = await readFile(path, "utf8");
+  const frontmatter = source.match(/^---\n([\s\S]*?)\n---/);
+  return frontmatter ? /^draft:\s*true\s*$/m.test(frontmatter[1]) : false;
+}
 
 async function collectUrls(dir: string, base: string): Promise<string[]> {
   const urls: string[] = [];
@@ -11,7 +17,7 @@ async function collectUrls(dir: string, base: string): Promise<string[]> {
     const path = join(dir, entry.name);
     if (entry.isDirectory()) {
       urls.push(...(await collectUrls(path, `${base}${entry.name}/`)));
-    } else if (entry.name.endsWith(".md")) {
+    } else if (entry.name.endsWith(".md") && !(await isDraft(path))) {
       urls.push(`${base}${entry.name.replace(/\.md$/, "")}/`);
     }
   }

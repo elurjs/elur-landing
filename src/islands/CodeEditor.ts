@@ -55,6 +55,7 @@ function CodeEditor({ code }: CodeEditorProps) {
       <div class="editor-gutter">${() => gutter()}</div>
       <textarea
         class="editor-input"
+        aria-label="Code editor"
         spellcheck="false"
         autocomplete="off"
         autocapitalize="off"

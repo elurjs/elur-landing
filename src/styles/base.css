@@ -71,7 +71,7 @@ h4 { font-size: var(--text-lg); margin-top: var(--space-6); }
 p { margin: var(--space-4) 0; }
 
 a {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   text-decoration: none;
   transition: color var(--ease-fast);
 }

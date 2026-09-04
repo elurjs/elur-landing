@@ -28,6 +28,11 @@ export const generateMetadata = (ctx: {
       url: `https://www.elur.dev/examples/${d.slug}/`,
       siteName: "Elur",
     },
+    twitter: {
+      card: "summary",
+      title,
+      description: d.description,
+    },
   };
 };
 

@@ -73,7 +73,7 @@
 .badge-accent {
   background: var(--c-accent-subtle);
   border-color: var(--c-border-glow);
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 .badge-green { color: var(--c-green); }
@@ -517,7 +517,7 @@
   margin-bottom: var(--space-3);
 }
 
-.playground-breadcrumb a:hover { color: var(--c-accent-3); }
+.playground-breadcrumb a:hover { color: var(--c-accent-text); }
 
 .playground-title {
   font-size: var(--text-3xl);
@@ -598,7 +598,7 @@
 .playground-tab:hover { color: var(--c-text-2); }
 
 .playground-tab.active {
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
   background: var(--c-accent-subtle);
 }
 
@@ -1023,7 +1023,7 @@ h3:hover .anchor-link { opacity: 1; }
 .lesson-hint summary {
   cursor: pointer;
   font-weight: var(--fw-semibold);
-  color: var(--c-accent-3);
+  color: var(--c-accent-text);
 }
 
 .lesson-hint-body {

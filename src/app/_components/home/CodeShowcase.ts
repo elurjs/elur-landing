@@ -40,7 +40,7 @@ export function CodeShowcase(): ElurTemplate {
               <div class="home-code-dots"><span></span><span></span><span></span></div>
               <span class="home-code-filename">counter.ts</span>
             </div>
-            <div class="home-code-body">
+            <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
               <pre><span class="kw">import</span> { signal, computed, effect } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="cmt">// Reactive state</span>
@@ -87,7 +87,7 @@ export function CodeShowcase(): ElurTemplate {
               <div class="home-code-dots"><span></span><span></span><span></span></div>
               <span class="home-code-filename">components.ts</span>
             </div>
-            <div class="home-code-body">
+            <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
               <pre><span class="cmt">// Function component — simple & clean</span>
 <span class="kw">function</span> <span class="fn">Counter</span>(): <span class="type">ElurTemplate</span> {
   <span class="kw">const</span> count = <span class="fn">signal</span>(<span class="num">0</span>);
@@ -142,7 +142,7 @@ export function CodeShowcase(): ElurTemplate {
               <div class="home-code-dots"><span></span><span></span><span></span></div>
               <span class="home-code-filename">router.ts</span>
             </div>
-            <div class="home-code-body">
+            <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
               <pre><span class="kw">import</span> { createRouter, RouterView, Link, lazy }
   <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
@@ -201,7 +201,7 @@ router.<span class="fn">beforeEach</span>((to) => {
               <div class="home-code-dots"><span></span><span></span><span></span></div>
               <span class="home-code-filename">store.ts</span>
             </div>
-            <div class="home-code-body">
+            <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
               <pre><span class="kw">import</span> { createStore, computed } <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 
 <span class="kw">const</span> cart = <span class="fn">createStore</span>(
@@ -262,7 +262,7 @@ cart.hasItems.value;  <span class="cmt">// true</span></pre>
               <div class="home-code-dots"><span></span><span></span><span></span></div>
               <span class="home-code-filename">forms.ts</span>
             </div>
-            <div class="home-code-body">
+            <div class="home-code-body" tabindex="0" role="region" aria-label="Code example">
               <pre><span class="kw">import</span> { createForm, elurFieldArray, required, email, minLength } 
   <span class="kw">from</span> <span class="str">"@elurjs/core"</span>;
 

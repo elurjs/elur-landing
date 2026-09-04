@@ -113,6 +113,22 @@ function transformHeadings(html: string, toc: TocItem[]): string {
   );
 }
 
+// A few github-light token colors fail WCAG AA (4.5:1) on the light code
+// background (#f6f8fa). Darken just those; dark theme colors are untouched.
+const LIGHT_THEME_FIXES: Record<string, string> = {
+  "#D73A49": "#CF3139", // keywords
+  "#6A737D": "#626C76", // comments
+  "#E36209": "#B84A00", // constants/numbers
+  "#22863A": "#1F7A34", // strings in diffs / inserted
+};
+
+function fixLightThemeContrast(highlighted: string): string {
+  return highlighted.replace(
+    /--shiki-light:(#[0-9A-Fa-f]{6})/g,
+    (m, hex: string) => LIGHT_THEME_FIXES[hex.toUpperCase()] ? `--shiki-light:${LIGHT_THEME_FIXES[hex.toUpperCase()]}` : m,
+  );
+}
+
 async function transformCodeBlocks(html: string): Promise<string> {
   const hl = await getHighlighter();
 
@@ -129,7 +145,7 @@ async function transformCodeBlocks(html: string): Promise<string> {
           },
           defaultColor: "dark",
         });
-        return highlighted;
+        return fixLightThemeContrast(highlighted);
       } catch {
         const escaped = code
           .replace(/&/g, "&amp;")
@@ -147,11 +163,13 @@ export async function highlightCode(
 ): Promise<string> {
   const hl = await getHighlighter();
   try {
-    return hl.codeToHtml(code, {
-      lang: lang as BundledLanguage,
-      themes: { dark: "github-dark", light: "github-light" },
-      defaultColor: "dark",
-    });
+    return fixLightThemeContrast(
+      hl.codeToHtml(code, {
+        lang: lang as BundledLanguage,
+        themes: { dark: "github-dark", light: "github-light" },
+        defaultColor: "dark",
+      }),
+    );
   } catch {
     const escaped = code
       .replace(/&/g, "&amp;")
