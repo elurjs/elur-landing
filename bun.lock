@@ -6,7 +6,7 @@
       "name": "elur-docs-new-2",
       "dependencies": {
         "@elurjs/core": "3.6.2",
-        "@elurjs/kit": "2.4.7",
+        "@elurjs/kit": "2.4.8",
         "marked": "16.4.2",
         "sharp": "^0.35.4",
         "shiki": "3.23.0",
@@ -22,7 +22,7 @@
   "packages": {
     "@elurjs/core": ["@elurjs/core@3.6.2", "", {}, "sha512-wE1pfkqIttEynO5/kn/duRLdery0IZDES82CdRn+wQUj1TjHhy/9COBdC2dMVDwQQbIenaEO6v4NF6S/KeA8yQ=="],
 
-    "@elurjs/kit": ["@elurjs/kit@2.4.7", "", { "dependencies": { "tsx": "^4.23.12" }, "peerDependencies": { "@elurjs/core": "^3.5.1", "@elurjs/vite-plugin-elur": "^2.0.2", "vite": "^7.0.0 || ^8.0.0" }, "optionalPeers": ["@elurjs/vite-plugin-elur"], "bin": { "elur-kit": "bin/elur-kit.js" } }, "sha512-SCIo+h9Anpmmn94ObEv3pnFzM719Y3EXWWA8LLJGWqA/8LCni47JykLRFKuXcdIpACcy57eY0VcqADUJgpGvhw=="],
+    "@elurjs/kit": ["@elurjs/kit@2.4.8", "", { "dependencies": { "tsx": "^4.23.12" }, "peerDependencies": { "@elurjs/core": "^3.5.1", "@elurjs/vite-plugin-elur": "^2.0.2", "vite": "^7.0.0 || ^8.0.0" }, "optionalPeers": ["@elurjs/vite-plugin-elur"], "bin": { "elur-kit": "bin/elur-kit.js" } }, "sha512-ApPS6jqx8oZbGXRwZTmurPcHCWDaDr9VD2fY/BBi9iQTmZucJTGfdbM2B1BalTecyDEFxG0d5i0eredMU5gkXw=="],
 
     "@emnapi/runtime": ["@emnapi/runtime@1.11.3", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA=="],
 
