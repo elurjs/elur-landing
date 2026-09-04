@@ -6,6 +6,7 @@ import ScrollReveal from "../islands/ScrollReveal.ts";
 import type { load } from "./page.data.ts";
 import { Hero } from "./_components/home/Hero";
 import { Stats } from "./_components/home/Stats";
+import { Benchmark } from "./_components/home/Benchmark";
 import { InspiredPreview } from "./_components/home/InspiredPreview";
 import { Interop } from "./_components/home/Interop";
 import { QuickStart } from "./_components/home/QuickStart";
@@ -70,6 +71,7 @@ export default function HomePage({ data }: PageProps<typeof load>) {
   return html`
     ${Hero()}
     ${Stats()}
+    ${Benchmark()}
     ${InspiredPreview()}
     ${Interop()}
     ${QuickStart()}
