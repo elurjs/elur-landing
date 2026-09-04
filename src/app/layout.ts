@@ -47,7 +47,7 @@ export default function SiteLayout({ children, data }: LayoutProps<SiteLayoutDat
           ${island("NavDropdown", NavDropdown, {
     label: "Docs",
     sections: docsDropdownSections,
-  }, "only")}
+  }, "load")}
 
           <a class="nav-link" href="/tutorial/basics/01-welcome/">
             Tutorial
@@ -69,7 +69,7 @@ export default function SiteLayout({ children, data }: LayoutProps<SiteLayoutDat
         ],
       },
     ],
-  }, "only")}
+  }, "load")}
         </div>
 
         <div class="nav-right">
