@@ -1,11 +1,5 @@
-/**
- * Reads all style files, minifies them, and outputs a single CSS string:
- * zero render-blocking requests, everything ships inside one `<style>`.
- */
-
 import { readFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { transform } from "esbuild";
 
 export async function getInlineCss(): Promise<string> {
   const root = resolve(process.cwd());
@@ -15,9 +9,9 @@ export async function getInlineCss(): Promise<string> {
     "tokens.css",
     "base.css",
     "layout.css",
-    "sections.css",
     "components.css",
-    "responsive.css",
+    "home.css",
+    "prose.css",
   ];
 
   const parts: string[] = [];
@@ -30,10 +24,5 @@ export async function getInlineCss(): Promise<string> {
     }
   }
 
-  // Minify to shrink the inline <style> shipped in every HTML page.
-  const { code } = await transform(parts.join("\n\n"), {
-    loader: "css",
-    minify: true,
-  });
-  return code;
+  return parts.join("\n\n");
 }

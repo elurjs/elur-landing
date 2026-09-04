@@ -1,99 +1,157 @@
 /* ============================================================================
-   Base — reset, scrollbar, document defaults
+   Base — reset, typography defaults, focus, accessibility, scrollbar
    ============================================================================ */
 
-/* ===== RESET & BASE ===== */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #12121a;
-      --bg-card: #16161f;
-      --bg-card-hover: #1c1c28;
-      --border: #2a2a3a;
-      --border-light: #3a3a4a;
-      --text-primary: #f0f0f5;
-      --text-secondary: #a0a0b5;
-      --text-muted: #6a6a80;
-      --accent: #3432c8;
-      --accent-light: #2bc7f0;
-      --accent-glow: rgba(52, 50, 200, 0.3);
-      --accent-subtle: rgba(52, 50, 200, 0.08);
-      --green: #34d399;
-      --green-glow: rgba(52, 211, 153, 0.15);
-      --orange: #fb923c;
-      --blue: #60a5fa;
-      --pink: #f472b6;
-      --cyan: #22d3ee;
-      --red: #f87171;
-      --yellow: #fbbf24;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + var(--space-6));
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-      /* Colores framework para benchmarks */
-      --van-col: #e8d84a;
-      --so-col: #76b3e1;
-      --sv-col: #ff6b35;
-      --v-col: #42b883;
-      --r-col: #61dafb;
-      --an-col: #ff6b8a;
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-      --gradient-hero: linear-gradient(135deg, #3432c8 0%, #256fe1 40%, #2bc7f0 100%);
-      --gradient-accent: linear-gradient(135deg, #3432c8, #2bc7f0);
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    }
+/* ── Grid background pattern (subtle, fixed) ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(43, 199, 240, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 199, 240, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    /* ===== SCROLLBAR STYLING ===== */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
+:root[data-theme="light"] body::before {
+  background-image:
+    linear-gradient(rgba(52, 50, 200, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 50, 200, 0.03) 1px, transparent 1px);
+}
 
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) body::before {
+    background-image:
+      linear-gradient(rgba(52, 50, 200, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52, 50, 200, 0.03) 1px, transparent 1px);
+  }
+}
 
-    ::-webkit-scrollbar-thumb {
-      background: var(--border-light);
-      border-radius: 10px;
-    }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  color: var(--c-text);
+  letter-spacing: -0.02em;
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-light);
-    }
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); margin-top: var(--space-12); }
+h3 { font-size: var(--text-xl); margin-top: var(--space-8); }
+h4 { font-size: var(--text-lg); margin-top: var(--space-6); }
 
-    * {
-      scrollbar-width: thin;
-      scrollbar-color: var(--border-light) transparent;
-    }
+p { margin: var(--space-4) 0; }
 
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 64px;
-      font-size: 16px;
-    }
+a {
+  color: var(--c-accent-3);
+  text-decoration: none;
+  transition: color var(--ease-fast);
+}
+a:hover { color: var(--c-accent-2); }
 
-    body {
-      font-family: var(--font-sans);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+strong { font-weight: var(--fw-semibold); }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+ul, ol { margin: var(--space-4) 0; padding-left: var(--space-6); }
+li { margin: var(--space-2) 0; }
+
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; background: none; border: none; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--c-border);
+  margin: var(--space-8) 0;
+}
+
+blockquote {
+  border-left: 3px solid var(--c-accent);
+  padding: var(--space-2) var(--space-5);
+  margin: var(--space-6) 0;
+  color: var(--c-text-2);
+  background: var(--c-bg-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent-3);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  z-index: var(--z-modal);
+  background: var(--c-accent);
+  color: white;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+}
+.skip-link:focus { top: var(--space-4); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--c-border-light);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--c-accent); }
+
+::selection {
+  background: var(--c-accent-glow);
+  color: var(--c-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

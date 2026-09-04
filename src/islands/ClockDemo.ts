@@ -36,21 +36,21 @@ function ClockDemo() {
   });
 
   return html`
-        <div class="playground-output">
-            <div class="playground-output-label">Output</div>
-        <div class="demo-timer-display">${() => time.value}</div>
-        <div class="demo-timer-label">
-            <span class="signal-dot active"></span>
+        <div class="home-playground-output">
+            <div class="home-playground-output-label">Output</div>
+        <div class="home-demo-timer-display">${() => time.value}</div>
+        <div class="home-demo-timer-label">
+            <span class="home-signal-dot active"></span>
             signal updates every second
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
-            <div style="font-size:0.78rem;color:var(--text-muted);">effect() runs:</div>
-            <div style="font-family:var(--font-mono);font-size:0.85rem;font-weight:700;color:var(--accent-light);">
+            <div style="font-size:0.78rem;color:var(--c-text-3);">effect() runs:</div>
+            <div style="font-family:var(--font-mono);font-size:0.85rem;font-weight:700;color:var(--c-accent-3);">
                 ${() => ticks.value}
             </div>
         </div>
-        <div class="demo-buttons">
-            <button class="demo-btn demo-btn-primary" @click=${toggle}>
+        <div class="home-demo-buttons">
+            <button class="home-demo-btn home-demo-btn-primary" @click=${toggle}>
                 ${() => (running.value ? "⏸ Pause" : "▶ Resume")}
             </button>
         </div>

@@ -1,0 +1,132 @@
+---
+title: Cache & Invalidation
+description: Cache helpers — getQueryData, setQueryData, updateQueryData, invalidateQueries, clearQueryCache, setQueryCacheTime.
+section: Elur Query
+order: 4
+---
+
+# Cache & Invalidation
+
+Elur Query maintains a global in-memory cache shared by all `createQuery`
+instances. You can read, write, and invalidate cache entries imperatively
+without creating a query.
+
+## Cache helpers
+
+```typescript
+import {
+  getQueryData, setQueryData, updateQueryData,
+  invalidateQueries, clearQueryCache, setQueryCacheTime,
+} from "@elurjs/query";
+```
+
+### `getQueryData<T>(key, options?)`
+
+Reads cached data without creating a query:
+
+```typescript
+const users = getQueryData<User[]>("users/list");
+const user = getQueryData<User>("users", { params: { id: "abc" } });
+```
+
+### `setQueryData<T>(key, data, options?)`
+
+Writes data directly into cache and updates active query signals:
+
+```typescript
+setQueryData("users/list", [...users, { id: 3, name: "Mia" }]);
+setQueryData("users", userData, { params: { id: "abc" } });
+```
+
+### `updateQueryData<T>(key, updater, options?)`
+
+Atomic cache update from previous value:
+
+```typescript
+updateQueryData("users/list", (current = []) =>
+  current.map((u) => u.id === 3 ? { ...u, name: "Mia V2" } : u)
+);
+```
+
+### `invalidateQueries(key)`
+
+Forces all active `createQuery` instances with the given key to refetch.
+Clears cached data so subsequent mounts also fetch fresh data.
+
+When queries use `params`, invalidating the base key also invalidates every
+param variant:
+
+```typescript
+invalidateQueries("posts");
+// Clears: "posts", "posts::{"page":1}", "posts::{"page":2}", etc.
+```
+
+### `clearQueryCache(key?)`
+
+Clears cache entries. Without argument, clears everything:
+
+```typescript
+clearQueryCache();           // clear all
+clearQueryCache("posts");    // clear "posts" and all param variants
+```
+
+### `setQueryCacheTime(ms)`
+
+Sets how long cache entries with zero subscribers are kept alive (default:
+5 minutes):
+
+```typescript
+setQueryCacheTime(10 * 60 * 1000); // 10 minutes
+setQueryCacheTime(Infinity);       // keep forever
+```
+
+## `QueryCacheOptions`
+
+Used by `getQueryData`, `setQueryData`, `updateQueryData`:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `params` | `unknown` | Params value to build effective key |
+| `serializeParams` | `(params: unknown) => string` | Custom serializer (must match query's) |
+
+## Invalidation flow
+
+When a command succeeds, it can auto-invalidate query keys:
+
+```typescript
+const createPost = createCommand(
+  "posts/create",
+  async (data) => {
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed");
+    return res.json();
+  },
+  {
+    invalidate: ["posts/list", "feed", "stats"],
+    onSuccess: (data) => {
+      console.log("Created post:", data.id);
+    },
+  }
+);
+
+// After createPost succeeds, all active queries with keys
+// "posts/list", "feed", and "stats" are refetched automatically.
+```
+
+## GC behavior
+
+Cache entries with zero subscribers are garbage-collected after
+`setQueryCacheTime` ms (default 5 minutes). The GC timer runs every 60
+seconds and stops when the cache is empty.
+
+This means:
+
+- If a component unmounts and remounts within the GC window, cached data is
+  still available.
+- If no component uses a query key for longer than the cache time, the entry
+  is evicted.
+- Setting `setQueryCacheTime(Infinity)` disables GC entirely.

@@ -36,11 +36,11 @@ function TodoDemo() {
   };
 
   return html`
-        <div class="playground-output">
-            <div class="playground-output-label">Output</div>
-        <div class="demo-todo-input-row">
+        <div class="home-playground-output">
+            <div class="home-playground-output-label">Output</div>
+        <div class="home-demo-todo-input-row">
             <input
-                class="demo-todo-input"
+                class="home-demo-todo-input"
                 type="text"
                 placeholder="Add a task..."
                 maxlength="30"
@@ -52,27 +52,27 @@ function TodoDemo() {
       if (e.key === "Enter") addTodo();
     }}
             />
-            <button class="demo-btn demo-btn-primary" @click=${addTodo}>Add</button>
+            <button class="home-demo-btn home-demo-btn-primary" @click=${addTodo}>Add</button>
         </div>
-        <ul class="demo-todo-list">
+        <ul class="home-demo-todo-list">
             ${() => repeat(
       todos.value,
       (t) => t.id,
       (t) => html`
-                    <li class=${() => `demo-todo-item${t.done.value ? " done" : ""}`}>
+                    <li class=${() => `home-demo-todo-item${t.done.value ? " done" : ""}`}>
                         <span>${t.text}</span>
-                        <div class="demo-todo-item-actions">
-                            <button class="demo-todo-btn demo-todo-btn-check" @click=${() => toggleTodo(t.id)}>
+                        <div class="home-demo-todo-item-actions">
+                            <button class="home-demo-todo-btn home-demo-todo-btn-check" @click=${() => toggleTodo(t.id)}>
                                 ${() => (t.done.value ? "↩" : "✓")}
                             </button>
-                            <button class="demo-todo-btn demo-todo-btn-del" @click=${() => deleteTodo(t.id)}>✕</button>
+                            <button class="home-demo-todo-btn home-demo-todo-btn-del" @click=${() => deleteTodo(t.id)}>✕</button>
                         </div>
                     </li>
                 `,
     )}
         </ul>
-        <div class="demo-todo-stats">
-            <span class="signal-dot active"></span>
+        <div class="home-demo-todo-stats">
+            <span class="home-signal-dot active"></span>
             <strong>${() => todos.value.length}</strong> tasks · <strong>${() => remaining.value}</strong> remaining
         </div>
         </div>

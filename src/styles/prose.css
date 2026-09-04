@@ -1,0 +1,193 @@
+/* ============================================================================
+   Prose — markdown content styling
+   ============================================================================ */
+
+.prose {
+  font-size: var(--text-base);
+  line-height: var(--lh-relaxed);
+  color: var(--c-text);
+}
+
+.prose h1 {
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.03em;
+}
+
+.prose h2 {
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-semibold);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.prose h3 {
+  font-size: var(--text-xl);
+  font-weight: var(--fw-semibold);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+.prose h4 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-semibold);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.prose p {
+  margin: var(--space-4) 0;
+  color: var(--c-text);
+}
+
+.prose a {
+  color: var(--c-accent-3);
+  text-decoration: underline;
+  text-decoration-color: var(--c-border-glow);
+  text-underline-offset: 2px;
+  transition: text-decoration-color var(--ease-fast);
+}
+
+.prose a:hover {
+  text-decoration-color: var(--c-accent-3);
+}
+
+.prose ul,
+.prose ol {
+  margin: var(--space-4) 0;
+  padding-left: var(--space-6);
+}
+
+.prose li { margin: var(--space-2) 0; }
+
+.prose ul li::marker { color: var(--c-accent); }
+.prose ol li::marker { color: var(--c-accent); font-weight: var(--fw-medium); }
+
+.prose code:not(pre code) {
+  background: var(--c-code-bg);
+  border: 1px solid var(--c-border);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85em;
+  color: var(--c-accent-3);
+  font-family: var(--font-mono);
+}
+
+.prose pre {
+  margin: var(--space-5) 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow-x: auto;
+  font-size: var(--text-sm);
+  line-height: var(--lh-normal);
+}
+
+.prose pre code {
+  font-family: var(--font-mono);
+  background: none;
+  padding: 0;
+  border: none;
+  color: var(--c-text);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--c-accent);
+  padding: var(--space-2) var(--space-5);
+  margin: var(--space-6) 0;
+  color: var(--c-text-2);
+  background: var(--c-bg-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.prose blockquote p { margin: var(--space-2) 0; }
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--c-border);
+  margin: var(--space-8) 0;
+}
+
+.prose img {
+  border-radius: var(--radius-md);
+  margin: var(--space-6) auto;
+  border: 1px solid var(--c-border);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-5) 0;
+  font-size: var(--text-sm);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.prose th,
+.prose td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.prose th {
+  background: var(--c-surface);
+  font-weight: var(--fw-semibold);
+}
+
+.prose tr:last-child td { border-bottom: none; }
+
+/* ── Shiki syntax highlighting ── */
+.shiki {
+  background-color: #24292e !important;
+  color: #e1e4e8 !important;
+  padding: var(--space-4) var(--space-5) !important;
+  border-radius: var(--radius-md) !important;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border: 1px solid var(--c-border);
+  margin: var(--space-5) 0;
+}
+
+.shiki code {
+  display: block;
+  font-family: var(--font-mono);
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+:root[data-theme="light"] .shiki {
+  background-color: #f6f8fa !important;
+  color: #24292e !important;
+  border-color: #d0d7de;
+}
+
+:root[data-theme="light"] .shiki span {
+  color: var(--shiki-light, inherit) !important;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .shiki {
+    background-color: #f6f8fa !important;
+    color: #24292e !important;
+    border-color: #d0d7de;
+  }
+  :root:not([data-theme]) .shiki span {
+    color: var(--shiki-light, inherit) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

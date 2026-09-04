@@ -13,15 +13,15 @@ function CodeTabs() {
 
     const select = (id: string) => {
         active.value = id;
-        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        document.querySelectorAll(".home-tab-panel").forEach((p) => p.classList.remove("active"));
         document.getElementById(`tab-${id}`)?.classList.add("active");
     };
 
     return html`
-        <div class="code-tabs">
+        <div class="home-code-tabs">
             ${TABS.map((tab) => html`
                 <button
-                    class=${() => `code-tab${active.value === tab.id ? " active" : ""}`}
+                    class=${() => `home-code-tab${active.value === tab.id ? " active" : ""}`}
                     data-tab=${tab.id}
                     @click=${() => select(tab.id)}
                 >

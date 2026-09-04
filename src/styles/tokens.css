@@ -1,8 +1,9 @@
 /* ============================================================================
-   Elur Landing — design tokens (dark theme)
+   Elur Gallery — Design Tokens
+   Dark-first, inspired by the Elur landing page with a Vue.js examples feel.
+   Variable names are intentionally distinct from the kit docs.
    ============================================================================ */
 
-/* ── Self-hosted fonts (latin subset, variable woff2) ── */
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -19,43 +20,182 @@
   src: url("/fonts/jetbrains-mono-var.woff2") format("woff2");
 }
 
---bg-primary: #0a0a0f;
---bg-secondary: #12121a;
---bg-card: #16161f;
---bg-card-hover: #1c1c28;
---border: #2a2a3a;
---border-light: #3a3a4a;
---text-primary: #f0f0f5;
---text-secondary: #a0a0b5;
---text-muted: #6a6a80;
---accent: #3432c8;
---accent-light: #2bc7f0;
---accent-glow: rgba(52, 50, 200, 0.3);
---accent-subtle: rgba(52, 50, 200, 0.08);
---green: #34d399;
---green-glow: rgba(52, 211, 153, 0.15);
---orange: #fb923c;
---blue: #60a5fa;
---pink: #f472b6;
---cyan: #22d3ee;
---red: #f87171;
---yellow: #fbbf24;
+:root {
+  /* ── Surfaces ── */
+  --c-bg: #0a0a0f;
+  --c-bg-2: #12121a;
+  --c-surface: #16161f;
+  --c-surface-2: #1c1c28;
+  --c-surface-hover: #20202e;
+  --c-code-bg: #0d0d14;
 
-/* Colores framework para benchmarks */
---van-col: #e8d84a;
---so-col: #76b3e1;
---sv-col: #ff6b35;
---v-col: #42b883;
---r-col: #61dafb;
---an-col: #ff6b8a;
+  /* ── Borders ── */
+  --c-border: #2a2a3a;
+  --c-border-light: #3a3a4a;
+  --c-border-glow: rgba(43, 199, 240, 0.2);
 
---gradient-hero: linear-gradient(135deg, #3432c8 0%, #256fe1 40%, #2bc7f0 100%);
---gradient-accent: linear-gradient(135deg, #3432c8, #2bc7f0);
---font-sans: 'Inter',
--apple-system,
-BlinkMacSystemFont,
-sans-serif;
---font-mono: 'JetBrains Mono',
-'Fira Code',
-monospace;
+  /* ── Text ── */
+  --c-text: #f0f0f5;
+  --c-text-2: #a0a0b5;
+  --c-text-3: #6a6a80;
+  --c-text-inv: #0a0a0f;
+
+  /* ── Accents (Elur brand) ── */
+  --c-accent: #3432c8;
+  --c-accent-2: #256fe1;
+  --c-accent-3: #2bc7f0;
+  --c-accent-glow: rgba(52, 50, 200, 0.35);
+  --c-accent-subtle: rgba(52, 50, 200, 0.08);
+
+  /* ── Status ── */
+  --c-green: #34d399;
+  --c-yellow: #fbbf24;
+  --c-red: #f87171;
+  --c-blue: #60a5fa;
+  --c-pink: #f472b6;
+  --c-cyan: #22d3ee;
+
+  /* ── Gradients ── */
+  --grad-hero: linear-gradient(135deg, #3432c8 0%, #256fe1 40%, #2bc7f0 100%);
+  --grad-accent: linear-gradient(135deg, #3432c8, #2bc7f0);
+  --grad-text: linear-gradient(135deg, #2bc7f0, #256fe1, #3432c8);
+
+  /* ── Callout backgrounds ── */
+  --callout-info-bg: rgba(96, 165, 250, 0.08);
+  --callout-info-bd: rgba(96, 165, 250, 0.3);
+  --callout-success-bg: rgba(52, 211, 153, 0.08);
+  --callout-success-bd: rgba(52, 211, 153, 0.3);
+  --callout-warning-bg: rgba(251, 191, 36, 0.08);
+  --callout-warning-bd: rgba(251, 191, 36, 0.3);
+  --callout-danger-bg: rgba(248, 113, 113, 0.08);
+  --callout-danger-bd: rgba(248, 113, 113, 0.3);
+
+  /* ── Typography ── */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+  --text-6xl: 4.5rem;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.75;
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ── Layout ── */
+  --nav-h: 64px;
+  --side-w: 280px;
+  --toc-w: 220px;
+  --tutorial-rail-w: 240px;
+  --content-w: 760px;
+  --page-max: 1200px;
+
+  /* ── Radii ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 32px var(--c-accent-glow);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+  /* ── Motion ── */
+  --ease-fast: 120ms ease;
+  --ease-normal: 220ms ease;
+  --ease-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Z-index ── */
+  --z-nav: 200;
+  --z-dropdown: 250;
+  --z-drawer: 300;
+  --z-overlay: 350;
+  --z-modal: 400;
+}
+
+/* ── Light theme ── */
+:root[data-theme="light"] {
+  --c-bg: #f7f7fb;
+  --c-bg-2: #ffffff;
+  --c-surface: #ffffff;
+  --c-surface-2: #f0f0f6;
+  --c-surface-hover: #e8e8f0;
+  --c-code-bg: #f4f4f8;
+
+  --c-border: #e0e0ea;
+  --c-border-light: #d0d0dc;
+  --c-border-glow: rgba(52, 50, 200, 0.2);
+
+  --c-text: #1a1a2e;
+  --c-text-2: #555568;
+  --c-text-3: #9090a0;
+  --c-text-inv: #ffffff;
+
+  --c-accent-glow: rgba(52, 50, 200, 0.15);
+  --c-accent-subtle: rgba(52, 50, 200, 0.05);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 32px rgba(52, 50, 200, 0.15);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  --callout-info-bg: rgba(96, 165, 250, 0.06);
+  --callout-success-bg: rgba(52, 211, 153, 0.06);
+  --callout-warning-bg: rgba(251, 191, 36, 0.06);
+  --callout-danger-bg: rgba(248, 113, 113, 0.06);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --c-bg: #f7f7fb;
+    --c-bg-2: #ffffff;
+    --c-surface: #ffffff;
+    --c-surface-2: #f0f0f6;
+    --c-surface-hover: #e8e8f0;
+    --c-code-bg: #f4f4f8;
+    --c-border: #e0e0ea;
+    --c-border-light: #d0d0dc;
+    --c-text: #1a1a2e;
+    --c-text-2: #555568;
+    --c-text-3: #9090a0;
+    --c-text-inv: #ffffff;
+    --c-accent-glow: rgba(52, 50, 200, 0.15);
+    --c-accent-subtle: rgba(52, 50, 200, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 32px rgba(52, 50, 200, 0.15);
+    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.06);
+  }
 }

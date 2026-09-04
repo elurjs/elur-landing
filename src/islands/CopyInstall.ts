@@ -21,9 +21,9 @@ function CopyInstall() {
   };
 
   return html`
-        <div class="install-cmd" title="Click to copy" @click=${copy}>
+        <div class="home-install-cmd" title="Click to copy" @click=${copy}>
             <span><span class="dollar">$</span> npm create <span class="pkg">elur-app@latest</span></span>
-            <span class="copy-icon">
+            <span class="home-copy-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" />
@@ -33,7 +33,7 @@ function CopyInstall() {
         </div>
         ${() =>
       tooltip.value
-        ? html`<div class="tooltip show">Copied!</div>`
+        ? html`<div class="home-tooltip show">Copied!</div>`
         : null}
     `;
 }

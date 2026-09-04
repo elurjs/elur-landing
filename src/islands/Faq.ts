@@ -7,10 +7,10 @@ import { html } from "@elurjs/core";
 
 function Faq() {
   if (typeof document === "undefined") return null;
-  const items = Array.from(document.querySelectorAll(".faq-item"));
+  const items = Array.from(document.querySelectorAll(".home-faq-item"));
 
   const toggle = (btn: HTMLElement) => {
-    const item = btn.closest(".faq-item");
+    const item = btn.closest(".home-faq-item");
     if (!item) return;
     const isOpen = item.classList.contains("open");
     items.forEach((other) => other.classList.remove("open"));
@@ -18,7 +18,7 @@ function Faq() {
   };
 
   items.forEach((item) => {
-    item.querySelector(".faq-question")?.addEventListener("click", (e) => {
+    item.querySelector(".home-faq-question")?.addEventListener("click", (e) => {
       toggle(e.currentTarget as HTMLElement);
     });
   });
