@@ -80,10 +80,67 @@ await saveProfile.executeAsync({ name: "Ada" }); // imperative (throws on error)
 | `execute(v)` | `(v: V) => void` | Fire-and-forget (errors go to `error` signal) |
 | `executeAsync(v)` | `(v: V) => Promise<R>` | Imperative (throws on error, including `CommandQueuedError`) |
 | `reset()` | `() => void` | Reset signals to idle (or queued if queue has items) |
-| `cancel()` | `() => void` | Abort all in-flight controllers |
+| `cancel()` | `() => void` | Abort all in-flight controllers (status → idle, no error set) |
 | `replayQueue()` | `() => Promise<void>` | Replay offline queue |
 | `clearQueue()` | `() => Promise<void>` | Clear offline queue |
 | `dispose()` | `() => void` | Remove listeners, cancel in-flight, clean global state |
+
+## `cancel()` and abort behavior
+
+`cancel()` aborts all in-flight AbortControllers. When a command is aborted
+(either via `cancel()` or by being superseded in `latest` mode):
+
+- The fetcher's `AbortSignal` is triggered — in-flight `fetch()` calls
+  should abort.
+- **`onError` is NOT called** — abort errors are silently swallowed.
+- **`onSettled` is NOT called** for abort errors.
+- `error` signal is **not set** — the error signal keeps its previous value.
+- `status` transitions to `"idle"` (if no other in-flight) — not `"error"`.
+- Retry delays (`_sleep`) are also cancellable — the abort rejects the
+  sleep promise immediately.
+
+```typescript
+const cmd = createCommand("search", searchFn, { mode: "latest" });
+
+cmd.execute("a"); // starts fetch
+cmd.execute("b"); // aborts "a", starts "b"
+// "a" is silently discarded — no onError, no error signal, no onSettled
+
+cmd.cancel(); // aborts "b"
+// status → "idle", error stays unchanged
+```
+
+## Callback execution order
+
+When a command succeeds, callbacks run in this order:
+
+1. `onMutate(variables)` → returns context
+2. `executeFn(variables, ctx)` → with retries if configured
+3. `data` signal set, `failureCount` reset to 0
+4. `onSuccess(data, variables, context)`
+5. `invalidate(keys)` — query keys are invalidated
+6. `onSettled(data, undefined, variables, context)`
+
+When a command fails (non-abort):
+
+1. `onMutate(variables)` → returns context
+2. `executeFn` fails after all retries
+3. `error` signal set, `status` → `"error"`
+4. `onError(error, variables, context)`
+5. `onSettled(undefined, error, variables, context)`
+
+When a command is queued offline:
+
+1. `onMutate` is **not called** (no optimistic update on offline enqueue)
+2. `status` → `"queued"`
+3. `onSettled(undefined, CommandQueuedError, variables, undefined)`
+
+> **`onMutate` runs once before the retry loop.** It is not called again on
+> retry. This means optimistic updates are applied a single time, not on
+> every retry attempt.
+
+> **`failureCount` resets to 0 on success.** After a successful execution
+> (including after retries), `failureCount` is set back to 0.
 
 ## `execute` vs `executeAsync`
 
@@ -185,12 +242,17 @@ Default: `min(1000 * 2^(failureCount-1), 30000)` — exponential backoff capped 
 
 ## `dedupeWindowMs`
 
-Prevents rapid double-execution within a time window:
+Prevents rapid double-execution within a time window. When a second call
+arrives within the window, the **same Promise object** is returned — both
+callers share the same outcome:
 
 ```typescript
 createCommand("like", likeFn, { dedupeWindowMs: 300 });
-// Clicking twice within 300ms → only one execution
+// Clicking twice within 300ms → only one execution, both calls share the same promise
 ```
+
+If the first call throws, the deduped call also throws (same promise).
+`execute()` swallows the error; `executeAsync()` propagates it.
 
 ## `serializeByKey`
 
@@ -241,7 +303,7 @@ enqueued and replayed on reconnect.
 | Field | Type | Default | Description |
 | --- | --- | --- | --- |
 | `adapter` | `CommandQueueAdapter<V>` | — | **Required** — persistence strategy |
-| `isOnline` | `() => boolean \| Promise<boolean>` | `navigator.onLine` | Online detector |
+| `isOnline` | `() => boolean \| Promise<boolean>` | `navigator.onLine` (or `true` if unavailable) | Online detector |
 | `replayOnReconnect` | `boolean` | `true` | Auto-replay on browser `online` event |
 | `maxReplayAttempts` | `number` | — | Cap replay attempts before pausing item |
 | `shouldEnqueue` | `(error, variables) => boolean` | — | Enqueue after failed execution (online path only) |
@@ -386,3 +448,35 @@ await cmd.clearQueue();   // discard all queued items
 
 Replay preserves command ordering — if one item fails, replay stops to
 maintain sequence.
+
+**Replay behavior details:**
+
+- Items are sorted by `createdAt` (oldest first).
+- Items that exceeded `maxReplayAttempts` are **skipped but not removed**
+  — they stay in the queue. Use `clearQueue()` to discard them.
+- `replayQueue()` is **globally locked per command key** — concurrent
+  calls while a replay is running are no-ops.
+- After replay, if the queue is empty and no in-flight requests remain,
+  `status` transitions to `"idle"`.
+- If `isOnline()` returns `false`, replay returns immediately without
+  processing any items.
+
+### Initial queue load
+
+When a `queueOffline` command is created, `queuedCount` is loaded from
+the adapter immediately. This means persisted items from a previous
+session are reflected on startup:
+
+```typescript
+// Previous session queued 3 items to localStorage
+const cmd = createCommand("orders/create", createOrderFn, {
+  mode: "queueOffline",
+  offline: { adapter: localStorageAdapter },
+});
+
+// queuedCount is already 3 on creation
+console.log(cmd.queuedCount.value); // 3
+
+// Replay them on startup if online
+await cmd.replayQueue();
+```

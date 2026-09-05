@@ -92,9 +92,26 @@ Used by `getQueryData`, `setQueryData`, `updateQueryData`:
 | `params` | `unknown` | Params value to build effective key |
 | `serializeParams` | `(params: unknown) => string` | Custom serializer (must match query's) |
 
-## Invalidation flow
+## `clearQueryCache` vs `invalidateQueries`
 
-When a command succeeds, it can auto-invalidate query keys:
+These two helpers look similar but behave differently:
+
+| Behavior | `invalidateQueries(key)` | `clearQueryCache(key)` |
+| --- | --- | --- |
+| Clears cache entries | Yes | Yes |
+| Clears in-flight requests | Yes | Yes |
+| Triggers refetch on active queries | **Yes** | **No** |
+| Notifies active queries | Yes (via sync + run) | Yes (via sync only) |
+
+`invalidateQueries` is the right choice after a mutation — it clears the
+cache and forces active queries to refetch immediately.
+
+`clearQueryCache` is for teardown or testing — it clears the cache and
+notifies active queries that their data is gone (status → pending, data →
+undefined/placeholder), but does **not** trigger a refetch. Active queries
+will only refetch on next mount or explicit `refetch()`.
+
+## Invalidation flow
 
 ```typescript
 const createPost = createCommand(
