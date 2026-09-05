@@ -138,7 +138,7 @@ When a command is queued offline:
 > **`onMutate` runs once before the retry loop.** It is not called again on
 > retry. This means optimistic updates are applied a single time, not on
 > every retry attempt.
-
+>
 > **`failureCount` resets to 0 on success.** After a successful execution
 > (including after retries), `failureCount` is set back to 0.
 
