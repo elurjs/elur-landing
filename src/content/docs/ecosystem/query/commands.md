@@ -85,6 +85,34 @@ await saveProfile.executeAsync({ name: "Ada" }); // imperative (throws on error)
 | `clearQueue()` | `() => Promise<void>` | Clear offline queue |
 | `dispose()` | `() => void` | Remove listeners, cancel in-flight, clean global state |
 
+### `reset()` semantics
+
+`reset()` clears `data`, `error`, `variables`, and `failureCount`. The
+`status` becomes `"queued"` if `queuedCount > 0`, otherwise `"idle"`.
+This means persisted offline items keep the command in `"queued"` state
+even after a reset:
+
+```typescript
+// With 3 queued items:
+cmd.reset();
+cmd.status.value; // "queued" (not "idle")
+cmd.queuedCount.value; // 3 (unchanged — reset doesn't touch the queue)
+```
+
+### `dispose()` cleanup
+
+`dispose()` is idempotent and removes the command from all global
+registries so it cannot interfere with other instances sharing the same
+`commandKey`:
+
+- Aborts all in-flight controllers (via `cancel()`)
+- Removes the `online` event listener (if `queueOffline`)
+- Deletes the command key from `_globalCommandQueues`
+- Deletes the command key from `_globalLatestControllers`
+- Deletes the command key from `_globalReplayLocks`
+
+After `dispose()`, other commands with the same key operate independently.
+
 ## `cancel()` and abort behavior
 
 `cancel()` aborts all in-flight AbortControllers. When a command is aborted
@@ -114,20 +142,24 @@ cmd.cancel(); // aborts "b"
 
 When a command succeeds, callbacks run in this order:
 
-1. `onMutate(variables)` → returns context
-2. `executeFn(variables, ctx)` → with retries if configured
-3. `data` signal set, `failureCount` reset to 0
-4. `onSuccess(data, variables, context)`
-5. `invalidate(keys)` — query keys are invalidated
-6. `onSettled(data, undefined, variables, context)`
+1. `variables` signal set to the input
+2. `error` signal cleared to `undefined`
+3. `onMutate(variables)` → returns context
+4. `executeFn(variables, ctx)` → with retries if configured
+5. `data` signal set, `failureCount` reset to 0
+6. `onSuccess(data, variables, context)`
+7. `invalidate(keys)` — query keys are invalidated
+8. `onSettled(data, undefined, variables, context)`
 
 When a command fails (non-abort):
 
-1. `onMutate(variables)` → returns context
-2. `executeFn` fails after all retries
-3. `error` signal set, `status` → `"error"`
-4. `onError(error, variables, context)`
-5. `onSettled(undefined, error, variables, context)`
+1. `variables` signal set to the input
+2. `error` signal cleared to `undefined`
+3. `onMutate(variables)` → returns context
+4. `executeFn` fails after all retries
+5. `error` signal set, `status` → `"error"`
+6. `onError(error, variables, context)`
+7. `onSettled(undefined, error, variables, context)`
 
 When a command is queued offline:
 
@@ -141,6 +173,14 @@ When a command is queued offline:
 >
 > **`failureCount` resets to 0 on success.** After a successful execution
 > (including after retries), `failureCount` is set back to 0.
+>
+> **`variables` is set before `onMutate`.** This means you can read
+> `cmd.variables.value` inside `onMutate` if needed, though the argument
+> is also passed directly.
+>
+> **`error` is cleared at the start of each execution**, not on success.
+> This means during a pending execution, `error.value` is `undefined`
+> until the execution fails.
 
 ## `execute` vs `executeAsync`
 
@@ -456,6 +496,9 @@ maintain sequence.
   — they stay in the queue. Use `clearQueue()` to discard them.
 - `replayQueue()` is **globally locked per command key** — concurrent
   calls while a replay is running are no-ops.
+- Replay uses `_runByMode` internally, so the command's `mode` still
+  applies. For `queueOffline`, replayed items run sequentially through
+  the queue path, preserving order.
 - After replay, if the queue is empty and no in-flight requests remain,
   `status` transitions to `"idle"`.
 - If `isOnline()` returns `false`, replay returns immediately without

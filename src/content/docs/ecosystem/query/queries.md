@@ -147,6 +147,46 @@ In-flight responses for stale params are ignored. If `page` changes from 1
 to 2 while the page=1 request is still pending, the page=1 response is
 discarded.
 
+### Batched param updates
+
+When multiple param signals change together, wrap them in `batch()` from
+`@elurjs/core` to avoid intermediate refetches. The effect tracks all
+signal reads and only fires once after the batch completes:
+
+```typescript
+import { signal, batch } from "@elurjs/core";
+
+const a = signal(1);
+const b = signal(2);
+
+const q = createQuery(
+  "calc",
+  ({ sum }) => fetch(`/api?sum=${sum}`).then((r) => r.json()),
+  { params: () => ({ sum: a.value + b.value }) }
+);
+
+// Without batch: two refetches (a=3 triggers one, b=1 triggers another)
+// With batch: one refetch with the final combined params
+batch(() => {
+  a.value = 3;
+  b.value = 1;
+});
+// → single refetch with { sum: 4 }
+```
+
+### `staleTime: Infinity`
+
+Pass `staleTime: Infinity` to mark cached data as permanently fresh. This
+is useful for data that never changes or for implementing "fetch once,
+cache forever" patterns:
+
+```typescript
+const q = createQuery("config", fetchConfig, {
+  staleTime: Infinity,
+  refetchOnMount: "stale", // never refetch on mount since data is always "fresh"
+});
+```
+
 ## `keepPreviousData` and `placeholderData`
 
 ### `keepPreviousData: true`
@@ -229,3 +269,13 @@ createQuery("posts", fn, { params: () => ({ page: 1 }) });
 Cache entries with zero subscribers are garbage-collected after
 `setQueryCacheTime` ms (default 5 minutes). The GC timer runs every 60
 seconds and stops when the cache is empty.
+
+The cache is **global**, not per-instance. Multiple `createQuery` calls
+with the same key share the same cache entry. When one query writes data,
+all other active queries with the same key receive it via sync notification.
+
+If you forget to call `dispose()`, the query's registry entries are
+cleaned up automatically via `FinalizationRegistry` when the query object
+is garbage-collected. However, relying on GC is not recommended — the
+timing is unpredictable and param signal tracking (via `effect`) will
+continue until GC runs. Always call `dispose()` explicitly.

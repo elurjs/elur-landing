@@ -22,7 +22,7 @@ import {
 
 ### `getQueryData<T>(key, options?)`
 
-Reads cached data without creating a query:
+Reads cached data without creating a query. Returns `T | undefined`:
 
 ```typescript
 const users = getQueryData<User[]>("users/list");
@@ -31,7 +31,9 @@ const user = getQueryData<User>("users", { params: { id: "abc" } });
 
 ### `setQueryData<T>(key, data, options?)`
 
-Writes data directly into cache and updates active query signals:
+Writes data directly into cache and updates active query signals. Returns
+`void`. Active queries with the same key immediately receive the new data
+via sync notification (status → `"success"`, data → new value):
 
 ```typescript
 setQueryData("users/list", [...users, { id: 3, name: "Mia" }]);
@@ -40,12 +42,13 @@ setQueryData("users", userData, { params: { id: "abc" } });
 
 ### `updateQueryData<T>(key, updater, options?)`
 
-Atomic cache update from previous value:
+Atomic cache update from previous value. Returns the new value:
 
 ```typescript
-updateQueryData("users/list", (current = []) =>
+const next = updateQueryData("users/list", (current = []) =>
   current.map((u) => u.id === 3 ? { ...u, name: "Mia V2" } : u)
 );
+console.log(next); // the updated array
 ```
 
 ### `invalidateQueries(key)`
