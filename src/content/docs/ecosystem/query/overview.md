@@ -10,8 +10,8 @@ order: 1
 `@elurjs/query` is a CQRS-style data library for Elur. It splits reads
 (`createQuery`) from writes (`createCommand`) and builds on `@elurjs/core`
 signals. Features include a global cache, single-flight deduplication,
-stale-while-revalidate, reactive params, retry policies, optimistic updates,
-and an offline queue.
+stale-while-revalidate, reactive params, retry policies, optimistic rollback
+via `onMutate`/`onError` hooks, an offline queue, and a DevTools plugin.
 
 ## Installation
 
@@ -54,7 +54,7 @@ Elur Query separates reads from writes:
 This separation means:
 
 - **Queries** are cached, deduplicated, and can be invalidated.
-- **Commands** have retry, concurrency control, and optimistic updates.
+- **Commands** have retry, concurrency control, and optimistic rollback hooks.
 - **Commands invalidate queries** on success to refresh cached data.
 
 ## Key concepts
@@ -64,10 +64,14 @@ This separation means:
 - **Stale-while-revalidate** — `staleTime` controls when data is considered fresh
 - **Reactive params** — pass a function reading signals; the query auto-refetches
 - **Invalidation** — commands can auto-invalidate query keys on success
+- **Optimistic rollback** — `onMutate` applies changes upfront; `onError` reverts
+- **Offline queue** — `queueOffline` mode persists commands for replay on reconnect
+- **DevTools** — inspect cache, in-flight requests, and command queues in dev
 
 ## Next steps
 
 - [Queries](/docs/ecosystem/query/queries/) — `createQuery` options, params, caching
 - [Commands](/docs/ecosystem/query/commands/) — `createCommand`, concurrency, retry, offline
 - [Cache & Invalidation](/docs/ecosystem/query/cache/) — cache helpers, GC, invalidation
-- [Patterns](/docs/ecosystem/query/patterns/) — optimistic updates, pagination, polling, testing
+- [Patterns](/docs/ecosystem/query/patterns/) — optimistic rollback, pagination, polling, testing
+- [DevTools](/docs/ecosystem/query/devtools/) — inspect cache and commands during development

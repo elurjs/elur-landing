@@ -185,17 +185,38 @@ const infinite = createQuery(
 
 ## Dependent queries
 
-Query B depends on query A's data:
+Query B depends on query A's data. Use a guard signal to prevent fetching
+until the dependency is ready:
 
 ```typescript
+import { signal, computed } from "@elurjs/core";
+
 const userQuery = createQuery("user/current", () => fetch("/api/me").then((r) => r.json()));
+
+// Track whether the user ID is available
+const userId = computed(() => userQuery.data.value?.id ?? 0);
 
 const ordersQuery = createQuery(
   "orders/list",
   ({ userId }) => fetch(`/api/users/${userId}/orders`).then((r) => r.json()),
   {
-    params: () => ({ userId: userQuery.data.value?.id ?? 0 }),
-    // Only fetches when userId is non-zero
+    params: () => ({ userId: userId.value }),
+  }
+);
+```
+
+The dependent query will fetch with `userId: 0` until `userQuery` resolves.
+To avoid the initial wasted request, gate the fetcher:
+
+```typescript
+const ordersQuery = createQuery(
+  "orders/list",
+  async ({ userId }) => {
+    if (!userId) return []; // skip fetch until userId is available
+    return fetch(`/api/users/${userId}/orders`).then((r) => r.json());
+  },
+  {
+    params: () => ({ userId: userId.value }),
   }
 );
 ```

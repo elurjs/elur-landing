@@ -28,13 +28,15 @@ collections, server actions, and deployment adapters.
 ### [@elurjs/query](/docs/ecosystem/query/overview/)
 
 CQRS-style data library — `createQuery` for reads, `createCommand` for
-writes, caching, deduplication, optimistic updates, and offline queue.
+writes, caching, deduplication, optimistic rollback, offline queue, and
+DevTools integration.
 
 - [Overview](/docs/ecosystem/query/overview/)
 - [Queries](/docs/ecosystem/query/queries/)
 - [Commands](/docs/ecosystem/query/commands/)
 - [Cache & Invalidation](/docs/ecosystem/query/cache/)
 - [Patterns](/docs/ecosystem/query/patterns/)
+- [DevTools](/docs/ecosystem/query/devtools/)
 
 ### [@elurjs/ionic](/docs/ecosystem/ionic/overview/)
 

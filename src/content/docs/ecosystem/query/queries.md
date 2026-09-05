@@ -75,13 +75,15 @@ class PostsPage extends ElurComponent {
 
 ### `staleTime` + `refetchOnMount` interaction
 
-| `refetchOnMount` | Cache fresh (`< staleTime`) | Cache stale | No cache |
+| `refetchOnMount` | Cache fresh (`staleTime > 0`) | Cache stale | No cache |
 | --- | --- | --- | --- |
 | `"always"` | No refetch | Refetch | Fetch |
-| `"stale"` | No refetch | No refetch | Fetch |
+| `"stale"` | No refetch | Refetch | Fetch |
 | `false` | No refetch | No refetch | Fetch |
 
-With `staleTime: 0` (default), `"always"` refetches on every mount.
+With `staleTime: 0` (default), data is never considered fresh, so both
+`"always"` and `"stale"` refetch on every mount. Use `staleTime > 0` with
+`"stale"` to skip refetches while data is fresh.
 
 ## Reactive params
 

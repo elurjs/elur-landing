@@ -270,19 +270,42 @@ class LocalStorageQueueAdapter implements CommandQueueAdapter<CreateOrderInput> 
 }
 ```
 
+### `OfflineCommandEntry<V>`
+
+Represents a queued command stored by the adapter:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | `string` | Unique ID (`"commandKey:timestamp:random"`) |
+| `commandKey` | `string` | The command key this entry belongs to |
+| `variables` | `V` | Serialized payload to replay |
+| `attempts` | `number` | Replay attempt count |
+| `createdAt` | `number` | Timestamp when enqueued |
+| `lastError` | `string` | Last replay error message (if any) |
+
 ### `CommandQueuedError`
 
 Thrown by `executeAsync` when a command is queued offline:
 
 ```typescript
+import { CommandQueuedError } from "@elurjs/query";
+
 try {
   await cmd.executeAsync({ id: "A-100", total: 42 });
 } catch (error) {
   if (error instanceof CommandQueuedError) {
     console.log("Queued:", error.entry.id);
+    console.log("Code:", error.code); // "COMMAND_QUEUED_OFFLINE"
   }
 }
 ```
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `entry` | `OfflineCommandEntry<V>` | The queued entry with variables and metadata |
+| `code` | `"COMMAND_QUEUED_OFFLINE"` | Stable error code for programmatic checks |
+| `name` | `"CommandQueuedError"` | Error name |
+| `message` | `string` | `"Command queued offline: <commandKey>"` |
 
 `execute` (fire-and-forget) does not throw — check `status.value === "queued"`
 instead.
