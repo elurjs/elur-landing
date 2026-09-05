@@ -112,6 +112,12 @@ try {
 | `"parallel"` | Runs all concurrently | Independent bulk operations |
 | `"queueOffline"` | Like `queue` + offline queue on disconnect | Mobile, unreliable networks |
 
+> **Status with concurrent executions**: `status` reflects the **last settled**
+> execution. With `parallel` mode, if execution A succeeds and B fails, the
+> final `status` depends on which finishes last. Use `inFlight` to track
+> active count and individual `data`/`error` signals for the most recent
+> result.
+
 ```typescript
 // Latest: only the last call matters
 createCommand("search", searchFn, { mode: "latest" });
@@ -142,8 +148,10 @@ createCommand("order/create", createOrderFn, {
 | `onMutate` | `(vars: V) => C \| Promise<C>` | — | Pre-mutation hook (optimistic updates) |
 | `onSuccess` | `(data: R, vars: V, ctx: C?) => void` | — | Success callback |
 | `onError` | `(err: unknown, vars: V, ctx: C?) => void` | — | Error callback |
-| `onSettled` | `(data, err, vars, ctx?) => void` | — | Always runs |
+| `onSettled` | `(data, err, vars, ctx?) => void` | — | Always runs (success, error, and queued) |
 | `offline` | `OfflineQueueOptions<V, R>` | — | Offline queue config (required for `queueOffline`) |
+
+> **Throws** if `mode: "queueOffline"` is set without `offline.adapter`.
 
 ## Retry
 
@@ -202,6 +210,13 @@ const cmdB = createCommand("sync", syncFn, { mode: "queue", serializeByKey: fals
 // cmdA and cmdB have separate queues
 ```
 
+For `latest` mode specifically:
+- `serializeByKey: true` — calling `execute` on any instance with the same
+  key aborts in-flight requests on all other instances.
+- `serializeByKey: false` — calling `execute` only aborts in-flight requests
+  within the same instance. Other instances with the same key continue
+  running.
+
 ## Invalidation
 
 Commands can auto-invalidate query keys on success:
@@ -229,10 +244,42 @@ enqueued and replayed on reconnect.
 | `isOnline` | `() => boolean \| Promise<boolean>` | `navigator.onLine` | Online detector |
 | `replayOnReconnect` | `boolean` | `true` | Auto-replay on browser `online` event |
 | `maxReplayAttempts` | `number` | — | Cap replay attempts before pausing item |
-| `shouldEnqueue` | `(error, variables) => boolean` | — | Enqueue after failed execution |
+| `shouldEnqueue` | `(error, variables) => boolean` | — | Enqueue after failed execution (online path only) |
 | `onEnqueue` | `(entry) => void` | — | Called when item is queued |
 | `onReplaySuccess` | `(data, entry) => void` | — | Called on successful replay |
 | `onReplayError` | `(error, entry) => void` | — | Called on failed replay |
+
+### Two enqueue paths
+
+There are two distinct paths to enqueueing a command in `queueOffline` mode:
+
+1. **Offline at execution time** — if `isOnline()` returns `false`, the
+   command is enqueued immediately without calling the fetcher. No
+   `shouldEnqueue` check is performed.
+
+2. **Online but execution fails after retries** — after all retry attempts
+   are exhausted, `shouldEnqueue(error, variables)` is called. If it
+   returns `true`, the command is enqueued. If omitted or `false`, the
+   error is thrown normally.
+
+```typescript
+// Path 1: offline → enqueued immediately
+await cmd.executeAsync(payload); // throws CommandQueuedError
+
+// Path 2: online, server fails 3x, shouldEnqueue returns true → enqueued
+const cmd = createCommand("orders/create", createOrderFn, {
+  mode: "queueOffline",
+  retry: 3,
+  offline: {
+    adapter: myAdapter,
+    shouldEnqueue: (err, vars) => {
+      // Only queue 5xx errors, not 4xx validation errors
+      const status = (err as { status?: number })?.status;
+      return status === undefined || status >= 500;
+    },
+  },
+});
+```
 
 ### `CommandQueueAdapter<V>`
 
@@ -309,6 +356,26 @@ try {
 
 `execute` (fire-and-forget) does not throw — check `status.value === "queued"`
 instead.
+
+When a command is queued, `onSettled` is called with `data: undefined` and
+`error: CommandQueuedError`. This lets you track queued state in a single
+callback:
+
+```typescript
+createCommand("orders/create", createOrderFn, {
+  mode: "queueOffline",
+  offline: { adapter: myAdapter },
+  onSettled: (data, error, vars) => {
+    if (error instanceof CommandQueuedError) {
+      console.log("Queued offline:", error.entry.id);
+    } else if (error) {
+      console.error("Failed:", error);
+    } else {
+      console.log("Success:", data);
+    }
+  },
+});
+```
 
 ### Manual replay
 

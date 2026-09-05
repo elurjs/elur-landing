@@ -51,7 +51,9 @@ updateQueryData("users/list", (current = []) =>
 ### `invalidateQueries(key)`
 
 Forces all active `createQuery` instances with the given key to refetch.
-Clears cached data so subsequent mounts also fetch fresh data.
+Clears cached data and in-flight requests so subscribers start a fresh
+fetch instead of sharing a stale promise that was started before the
+invalidation.
 
 When queries use `params`, invalidating the base key also invalidates every
 param variant:
@@ -63,10 +65,11 @@ invalidateQueries("posts");
 
 ### `clearQueryCache(key?)`
 
-Clears cache entries. Without argument, clears everything:
+Clears cache entries and in-flight requests. Without argument, clears
+everything and stops the GC timer:
 
 ```typescript
-clearQueryCache();           // clear all
+clearQueryCache();           // clear all + stop GC
 clearQueryCache("posts");    // clear "posts" and all param variants
 ```
 

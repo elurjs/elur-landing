@@ -47,7 +47,7 @@ q.dispose();    // clean up
 | `status` | `Signal<"pending" \| "success" \| "error">` | Current status |
 | `data` | `Signal<T \| undefined>` | Cached data |
 | `error` | `Signal<unknown>` | Last error |
-| `refetch()` | `() => void` | Force refetch (clears cache + in-flight, re-runs) |
+| `refetch()` | `() => void` | Force refetch — clears cache + in-flight, bypasses single-flight |
 | `dispose()` | `() => void` | Remove from registries, stop param tracking |
 
 `dispose()` is idempotent. Call it on component unmount:
@@ -61,6 +61,11 @@ class PostsPage extends ElurComponent {
   }
 }
 ```
+
+After `dispose()`, in-flight requests are **ignored** (not cancelled) —
+their results are discarded when they resolve. The query stops reacting
+to `invalidateQueries`, param signal changes, and `setQueryData` sync
+notifications.
 
 ## Options
 
@@ -193,6 +198,10 @@ const q1 = createQuery("users", () => fetch("/api/users").then((r) => r.json()))
 const q2 = createQuery("users", () => fetch("/api/users").then((r) => r.json()));
 // → only 1 fetch, both q1.data and q2.data resolve together
 ```
+
+`refetch()` bypasses single-flight — it deletes the in-flight entry and
+starts a new fetch immediately, even if a request for the same key is
+already in progress.
 
 ## Query keys
 
