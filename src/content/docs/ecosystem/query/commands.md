@@ -161,11 +161,24 @@ When a command fails (non-abort):
 6. `onError(error, variables, context)`
 7. `onSettled(undefined, error, variables, context)`
 
-When a command is queued offline:
+When a command is queued offline at execution time (`isOnline()` returns
+`false`):
 
 1. `onMutate` is **not called** (no optimistic update on offline enqueue)
-2. `status` → `"queued"`
-3. `onSettled(undefined, CommandQueuedError, variables, undefined)`
+2. `variables` signal set, `error` cleared, `status` → `"queued"`
+3. `onEnqueue(entry)` is called (if provided)
+4. `onSettled` is **not called** — the `CommandQueuedError` is thrown
+   before `_run` executes, so the callback chain never runs
+
+When a command fails online after all retries and `shouldEnqueue` returns
+`true`:
+
+1. `onMutate(variables)` → returns context
+2. `executeFn` fails after all retries
+3. Entry is enqueued via adapter
+4. `CommandQueuedError` is thrown (with `attempts` and `lastError` populated)
+5. `onSettled(undefined, CommandQueuedError, variables, context)` IS called
+   (because the error originates inside `_run`)
 
 > **`onMutate` runs once before the retry loop.** It is not called again on
 > retry. This means optimistic updates are applied a single time, not on
@@ -214,6 +227,17 @@ try {
 > final `status` depends on which finishes last. Use `inFlight` to track
 > active count and individual `data`/`error` signals for the most recent
 > result.
+>
+> **`status` stays `"pending"` during concurrent executions**: every new
+> execution sets `status` to `"pending"` via `_incInFlight`. The status is
+> only updated to the settled value when `inFlight` reaches 0 (the last
+> execution finishes). During parallel executions, `status` remains
+> `"pending"` throughout.
+>
+> **`latest` mode discards stale successes**: even if the fetcher resolves
+> successfully, if a newer execution has started (token mismatch), the
+> result is discarded with an abort error. This prevents a slow earlier
+> request from overwriting data from a newer one.
 
 ```typescript
 // Latest: only the last call matters
@@ -279,6 +303,11 @@ retryDelay: (failureCount) => Math.min(500 * 2 ** (failureCount - 1), 5000)
 ```
 
 Default: `min(1000 * 2^(failureCount-1), 30000)` — exponential backoff capped at 30s.
+
+Retry delays are **cancellable** — if the abort signal triggers during a
+retry delay (e.g. via `cancel()` or a newer execution in `latest` mode),
+the sleep rejects immediately with an abort error. No need to wait for
+the full delay before the command responds to cancellation.
 
 ## `dedupeWindowMs`
 
@@ -357,12 +386,14 @@ There are two distinct paths to enqueueing a command in `queueOffline` mode:
 
 1. **Offline at execution time** — if `isOnline()` returns `false`, the
    command is enqueued immediately without calling the fetcher. No
-   `shouldEnqueue` check is performed.
+   `shouldEnqueue` check is performed. `onEnqueue` is called, but
+   `onSettled` is **not** called (the error is thrown before `_run`).
 
 2. **Online but execution fails after retries** — after all retry attempts
    are exhausted, `shouldEnqueue(error, variables)` is called. If it
-   returns `true`, the command is enqueued. If omitted or `false`, the
-   error is thrown normally.
+   returns `true`, the command is enqueued with `attempts` and `lastError`
+   populated, and `onSettled` IS called with `CommandQueuedError`. If
+   omitted or `false`, the error is thrown normally.
 
 ```typescript
 // Path 1: offline → enqueued immediately
@@ -459,17 +490,29 @@ try {
 `execute` (fire-and-forget) does not throw — check `status.value === "queued"`
 instead.
 
-When a command is queued, `onSettled` is called with `data: undefined` and
-`error: CommandQueuedError`. This lets you track queued state in a single
-callback:
+> **`onSettled` and the two enqueue paths**: `onSettled` is called with
+> `CommandQueuedError` only on the `shouldEnqueue` path (online failure
+> after retries). On the offline-at-execution-time path, `onSettled` is
+> **not** called — use `onEnqueue` to track offline enqueue events.
+>
+> **`entry.attempts` and `entry.lastError`**: On the offline-at-execution-time
+> path, `attempts` is `0` and `lastError` is absent. On the `shouldEnqueue`
+> path, `attempts` is the failure count and `lastError` is the error message.
 
 ```typescript
+// onSettled receives CommandQueuedError only on the shouldEnqueue path.
+// For offline-at-execution-time, use onEnqueue instead.
 createCommand("orders/create", createOrderFn, {
   mode: "queueOffline",
-  offline: { adapter: myAdapter },
+  offline: {
+    adapter: myAdapter,
+    shouldEnqueue: (err) => isServerError(err),
+    onEnqueue: (entry) => console.log("Queued offline:", entry.id),
+  },
   onSettled: (data, error, vars) => {
     if (error instanceof CommandQueuedError) {
-      console.log("Queued offline:", error.entry.id);
+      // Only reached via shouldEnqueue path (online failure → enqueue)
+      console.log("Failed then queued:", error.entry.id, error.entry.lastError);
     } else if (error) {
       console.error("Failed:", error);
     } else {

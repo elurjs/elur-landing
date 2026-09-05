@@ -243,6 +243,51 @@ const q2 = createQuery("users", () => fetch("/api/users").then((r) => r.json()))
 starts a new fetch immediately, even if a request for the same key is
 already in progress.
 
+### `refetch()` and data visibility
+
+`refetch()` deletes the cache entry and in-flight promise, then starts a
+new fetch. The data signal is **not cleared immediately** — old data
+stays visible until the new fetch resolves:
+
+- **From `success`**: data remains visible during the refetch (flicker-free
+  by default, no need for `keepPreviousData`).
+- **From `error`**: the error remains visible during the refetch until the
+  new fetch resolves.
+- **From `pending`**: data is cleared (or placeholder/`keepPreviousData`
+  applies) since the query is already in a pending state.
+
+### Fetch errors do not clear `data`
+
+When a fetch fails, only `error` and `status` are updated. The `data`
+signal retains its previous value:
+
+```typescript
+const q = createQuery("users", fetchUsers);
+// ... fetch succeeds, q.data.value = [user1, user2]
+
+q.refetch(); // network fails
+// q.status.value === "error"
+// q.error.value === Error(...)
+// q.data.value === [user1, user2]  ← still there
+```
+
+This lets you show stale data alongside an error indicator, which is
+useful for transient network failures.
+
+### Synchronous cache hits
+
+When a query mounts and cache exists for its key, `status` is set to
+`"success"` and `data` is set to the cached value **synchronously** —
+there is no `"pending"` state. The freshness check then decides whether
+to trigger a background refetch:
+
+```typescript
+setQueryData("users", userData); // populate cache
+const q = createQuery("users", fetchUsers, { refetchOnMount: false });
+// q.status.value === "success" immediately (synchronous)
+// q.data.value === userData
+```
+
 ## Query keys
 
 Keys are **strings**, not arrays. Use bounded-context naming to avoid
