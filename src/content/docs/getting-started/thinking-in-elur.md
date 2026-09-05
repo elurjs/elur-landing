@@ -56,11 +56,16 @@ are surgical.
 
 ## Comparing to React
 
-```tsx
+```typescript
 // React: the entire component re-runs on every state change
 function Counter() {
   const [count, setCount] = useState(0);
-  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  return <button onClick={handleClick}>{count}</button>;
 }
 ```
 
