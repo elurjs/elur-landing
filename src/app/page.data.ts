@@ -68,7 +68,7 @@ const structuredData = jsonLd({
   ],
 });
 
-export const load: PageDataLoad = async (): Promise<HomeData> => {
+export const load: PageDataLoad<HomeData> = async () => {
   const allExamples = await getExamples();
   const featured = allExamples.filter((e) => e.featured).slice(0, 3);
   const featuredExamples = await Promise.all(

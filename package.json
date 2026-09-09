@@ -1,24 +1,28 @@
 {
-  "name": "elur-docs-new-2",
+  "name": "elur-landing",
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "scripts": {
     "dev": "elur-kit dev",
     "build": "elur-kit build --lang en && bun run scripts/gen-sitemap.ts",
     "preview": "elur-kit preview",
-    "start": "elur-kit start"
+    "start": "elur-kit start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@elurjs/core": "3.6.2",
+    "@elurjs/core": "^3.6.2",
     "@elurjs/kit": "^2.4.10",
-    "marked": "16.4.2",
+    "marked": "^16.4.2",
     "sharp": "^0.35.4",
-    "shiki": "3.23.0",
-    "zod": "4.5.4"
+    "shiki": "^3.23.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "vite": "8.2.2",
-    "@types/node": "26.4.1"
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "@types/node": "^26.4.1"
   }
 }

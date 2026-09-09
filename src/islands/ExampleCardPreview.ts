@@ -40,7 +40,7 @@ function ExampleCardPreview({ code }: ExampleCardPreviewProps) {
 
   // Scoped effect: collects disposers so top-level effects from the example
   // (e.g. the clock interval) are cleaned up when the card unmounts.
-  const scopedEffect = (fn: () => unknown) => {
+  const scopedEffect = (fn: () => void | (() => void)) => {
     const dispose = effect(fn);
     disposers.push(dispose);
     return dispose;
