@@ -1633,11 +1633,17 @@
   will-change: transform;
 }
 
-.home-ib-slider img {
+.home-ib-slider>img,
+.home-ib-slider>picture {
   width: calc(100% / 3);
   height: 100%;
-  object-fit: cover;
   flex-shrink: 0;
+}
+
+.home-ib-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @keyframes ib-slide {
@@ -1678,6 +1684,11 @@
 
 .home-case-phone-secondary .home-case-phone-screen {
   height: 560px;
+}
+
+.home-case-phone-secondary picture {
+  width: 100%;
+  height: 100%;
 }
 
 .home-case-phone-secondary img {
@@ -1771,6 +1782,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.home-showcase-image picture {
+  width: 100%;
+  height: 100%;
 }
 
 .home-showcase-image img {
