@@ -35,9 +35,10 @@ export function ElurKit(): ElurTemplate {
                 interactive components with <code>load</code>, <code>idle</code>, <code>visible</code>,
                 and <code>only</code> (client-only) directives. Optional <code>fallback</code>, <code>ssr: false</code>,
                 and <code>isSSR()</code> for environment reads.</span></li>
-            <li><span class="home-elur-kit-check">✓</span> <span><strong>Zero client JS by default</strong> — pages ship as
-                static HTML unless you opt into hydration. Route-level code-splitting via per-island
-                <code>import()</code> chunks.</span></li>
+            <li><span class="home-elur-kit-check">✓</span> <span><strong>Zero client JS by default</strong> — pages without
+                islands ship <strong>0 KB</strong> of JavaScript (or only the router chunk). Split
+                <code>entry-client.js</code>/<code>router.js</code> entries, per-island <code>import()</code>
+                code-splitting, and a <code>js: "legacy"</code> escape hatch.</span></li>
             <li><span class="home-elur-kit-check">✓</span> <span><strong>Content collections</strong> with typed Markdown,
                 YAML frontmatter, and Zod validation.</span></li>
             <li><span class="home-elur-kit-check">✓</span> <span><strong>Server actions</strong> with <code>elurAction()</code>
@@ -63,7 +64,8 @@ export function ElurKit(): ElurTemplate {
             </div>
             <div class="home-elur-kit-wow-card">
               <strong>SPA router</strong>
-              Client-side navigation with style hoisting and no flash.
+              Client-side navigation with lifecycle events, <code>data-elur-persist</code>, network-aware
+              prefetch, optional DOM morphing and Speculation Rules.
             </div>
             <div class="home-elur-kit-wow-card">
               <strong>Cache Adapters</strong>
@@ -84,9 +86,10 @@ export function ElurKit(): ElurTemplate {
           </div>
 
           <div class="home-elur-kit-callout">
-            v2.4.9 aligns the shared SSR state with <code>@elurjs/core</code> 3.6.2, so <code>isSSR()</code>
-            reliably reports server rendering. Client-only islands (<code>directive: "only"</code>,
-            <code>ssr: false</code>), fallback content, and DOM-free <code>renderToString</code> remain built in.
+            v2.5 ships a next-generation client router: lifecycle events (<code>elur:navigate-*</code>,
+            <code>elur:before-render</code>), <code>data-elur-persist</code> element survival, LRU prefetch
+            with Save-Data/2g awareness, optional idiomorph morphing, Speculation Rules, and a loading
+            indicator — while pages without islands emit <strong>0 KB of JavaScript</strong> per page.
           </div>
 
           <a href="/docs/ecosystem/kit/overview/" class="home-btn-primary">

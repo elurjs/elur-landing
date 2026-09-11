@@ -127,13 +127,24 @@ src/app/blog/
 
 ## SPA router
 
-The client router provides prefetch and view transitions:
+The client router intercepts internal navigation and swaps the rendered
+content without a full page load:
 
-- Links are prefetched on viewport entry (IntersectionObserver) and hover/focus
-- Prefetched pages cache for 30 seconds
+- Links are prefetched on `pointerenter`, `focus`, and `pointerdown` (tap),
+  plus opt-in viewport prefetch via `data-prefetch="viewport"`
+- Prefetched pages cache for 30 seconds in a bounded LRU (32 entries)
+- Prefetching is network-aware — it skips on `Save-Data` and
+  `effectiveType` `2g`/`slow-2g` unless you pass `data-prefetch="always"`
 - Add `data-no-prefetch` to any link to opt out
 - View Transitions API used when supported (disabled with `prefers-reduced-motion`)
 - Add `data-no-router` to any link to opt out of client-side navigation
+- `data-elur-persist="key"` keeps live DOM nodes (islands, media, canvas)
+  across navigations
+- Lifecycle events: `elur:navigate-start`, `elur:navigate-end`,
+  `elur:navigate-error`, `elur:before-render`, `elur:rendered`
+
+See [Client router](/docs/ecosystem/kit/client-router/) for the full
+reference — options, events, persistence, morphing, and per-page JavaScript.
 
 ### Programmatic navigation
 
@@ -143,27 +154,31 @@ import { navigateTo, prefetch } from "@elurjs/kit/router";
 // Navigate to a new page (pushes to history by default)
 await navigateTo("/blog/hello-world");
 
-// Replace history entry instead of pushing
+// Back/forward style navigation (replaces, marks as popstate)
 await navigateTo("/login", "", false);
 
 // Prefetch a page without navigating
 await prefetch("/blog/hello-world");
+
+// Force prefetch even on constrained networks
+await prefetch("/blog/hello-world", "", { force: true });
 ```
 
 `navigateTo(pathname, search?, push?)` returns `Promise<boolean>` — `true` if
 navigation succeeded, `false` if it was cancelled by a newer navigation.
 
-`prefetch(pathname, search?)` fetches the page payload and caches it for 30
-seconds. Subsequent navigations to the same path use the cache instantly.
+`prefetch(pathname, search?, opts?)` fetches the page payload and caches it
+for 30 seconds. Subsequent navigations to the same path use the cache
+instantly (`fromCache: true` in the lifecycle event detail).
 
 ### `startClientRouter()`
 
 Initializes the client router automatically. This is called by the generated
-client entry — you normally don't call it directly:
+router module — you normally don't call it directly:
 
 ```typescript
 import { startClientRouter } from "@elurjs/kit/router";
-startClientRouter();
+startClientRouter({ prefetch: true, morph: false, loadingIndicator: false });
 ```
 
 ## Redirects and rewrites

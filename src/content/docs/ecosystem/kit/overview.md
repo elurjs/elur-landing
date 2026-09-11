@@ -21,8 +21,13 @@ architecture, content collections, and deployment adapters to Elur.
   `load`, `idle`, `visible`, and `only` directives.
 - **Content collections** — typed Markdown with YAML frontmatter.
 - **Server actions** — type-safe mutations with progressive enhancement.
-- **Zero client JS by default** — pages ship zero JavaScript unless you
-  explicitly add islands.
+- **Zero client JS by default** — pages without islands ship **0 KB** of
+  JavaScript (or only the router chunk); per-page gating with a
+  `js: "legacy"` escape hatch.
+- **Next-generation client router** — SPA navigation with lifecycle
+  events, `data-elur-persist` element survival, network-aware LRU
+  prefetch, optional idiomorph morphing, Speculation Rules, and a loading
+  indicator.
 - **Deployment adapters** — Vercel, Netlify, Bun, Node.
 
 ## Installation
@@ -99,7 +104,7 @@ export default defineConfig({
 | Path | Key exports |
 | --- | --- |
 | `@elurjs/kit` | `build`, `island`, `defineConfig`, `renderToString`, `documentShell`, `image`, `streamBoundary`, `renderPage`, `renderStreamingPage`, `renderErrorPage`, `renderPageBody`, `createSsrServer`, `scanRoutes`, `scanActions`, `scanIslands`, `createAppManifest`, `matchRoute` |
-| `/island` | `island`, `hydrateIslands`, `scanIslands`, `lazyIsland` |
+| `/island` | `island`, `hydrateIslands`, `cleanupHydratedIslands`, `scanIslands`, `lazyIsland`, `ISLAND_MARKER_ATTR`, `PERSIST_ATTR` |
 | `/action` | `defineAction`, `elurJsAction`, `callAction`, `fail`, `redirect`, `handleActionRequest`, `verifyOrigin` |
 | `/config` | `defineConfig`, `loadElurConfig`, `ElurConfig` |
 | `/content` | `defineCollection`, `getEntry`, `getCollection`, `getEntries`, `renderMarkdown`, `renderEntryHTML`, `raw`, `parseDocument`, `parseFrontmatter`, `splitFrontmatter`, `createValidator`, `getZod` |
@@ -109,7 +114,7 @@ export default defineConfig({
 | `/adapters/netlify` | `netlifyAdapter` |
 | `/adapters/bun` | `bunAdapter` |
 | `/adapters/node` | `nodeAdapter` |
-| `/router` | `startClientRouter`, `navigateTo`, `prefetch` |
+| `/router` | `startClientRouter`, `navigateTo`, `prefetch`, `ClientRouterOptions`, `NavigationEventDetail` |
 | `/runtime` | `createWebHandler`, `RequestContext`, `serveStaticFile`, `resolveStaticFile`, `incomingMessageToRequest`, `htmlResponse`, `jsonResponse`, `textResponse`, `notFound`, `methodNotAllowed`, `serverError`, `guessContentType`, `buildSecurityHeaders`, `applySecurityHeaders` |
 | `/vite` | `elurJsKit` (Vite plugin), `elurJsInterpolationPlugin` |
 | `/manifest` | `createAppManifest`, `writeAppManifest`, `writeRouteTypes`, `validateManifestRoutes`, `assertClientImportAllowed` |
@@ -134,4 +139,5 @@ generation for fast page loads.
 - [Image & SEO](/docs/ecosystem/kit/image-seo/) — `image()`, `generateSitemap`, `jsonLd`
 - [Configuration](/docs/ecosystem/kit/config/) — `ElurConfig`, security, Vite plugin, integrations
 - [Runtime & Manifest](/docs/ecosystem/kit/runtime-manifest/) — `createWebHandler`, `RequestContext`, `AppManifest`
+- [Client router](/docs/ecosystem/kit/client-router/) — SPA navigation, lifecycle events, `data-elur-persist`, morphing, speculation
 - [Deployment](/docs/ecosystem/kit/deployment/) — Vercel, Netlify, Bun, Node adapters, capabilities

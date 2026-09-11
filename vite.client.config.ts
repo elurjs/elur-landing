@@ -6,9 +6,12 @@ export default defineConfig({
     outDir: "dist/_elur",
     emptyOutDir: false,
     rollupOptions: {
-      input: ".elur/entry-client.ts",
+      input: {
+        "entry-client": ".elur/entry-client.ts",
+        router: ".elur/router.ts",
+      },
       output: {
-        entryFileNames: "entry-client.js",
+        entryFileNames: "[name].js",
         chunkFileNames: "[name]-[hash].js",
         assetFileNames: "[name]-[hash][extname]",
       },

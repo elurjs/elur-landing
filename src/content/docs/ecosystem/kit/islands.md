@@ -1,6 +1,6 @@
 ---
 title: Islands
-description: island() directives — load, idle, visible, only, hydrateIslands, lazyIsland, and isSSR().
+description: island() directives — load, idle, visible, only, hydrateIslands, cleanupHydratedIslands, data-elur-persist, lazyIsland, and isSSR().
 section: Elur Kit
 order: 4
 ---
@@ -183,10 +183,32 @@ components or lazy loaders:
 type IslandRegistry = Record<string, IslandComponent | { load: () => Promise<IslandComponent> }>;
 ```
 
+## `cleanupHydratedIslands(options?)`
+
+Disposes every hydrated island — called by the generated entry on
+`elur:before-render`, before the router swaps `#app` (while the old DOM is
+still attached):
+
+```typescript
+import { cleanupHydratedIslands } from "@elurjs/kit/island";
+
+// Dispose everything
+cleanupHydratedIslands();
+
+// Keep islands inside persisted nodes alive across the navigation
+cleanupHydratedIslands({
+  except: document.querySelectorAll("[data-elur-persist]"),
+});
+```
+
+Islands inside `[data-elur-persist]` roots keep their state; after the swap
+they are skipped by `hydrateIslands()` and a `elur:persist-props-changed`
+event fires on the marker if the serialized props changed.
+
 ## `generateClientEntry(options)`
 
-Generates the client entry file that registers all islands and starts the
-router. Called automatically by `build()` and the Vite plugin:
+Generates the client entry file that registers all islands and (optionally)
+starts the router. Called automatically by `build()` and the Vite plugin:
 
 ```typescript
 import { generateClientEntry } from "@elurjs/kit";
@@ -198,6 +220,9 @@ await generateClientEntry({
   outFile: "./.elur/entry-client.ts",
   hydrateImport: "@elurjs/kit/island",
   routerImport: "@elurjs/kit/router",
+  router: { enabled: true, separate: true, prefetch: true,
+            morph: false, loadingIndicator: false,
+            outFile: "./.elur/router.ts" },
 });
 ```
 
@@ -209,8 +234,25 @@ await generateClientEntry({
 | `outFile` | `string` | Absolute path for the generated entry |
 | `hydrateImport` | `string?` | Import specifier for `hydrateIslands` (default `@elurjs/kit/island`) |
 | `routerImport` | `string?` | Import specifier for `startClientRouter` (default `@elurjs/kit/router`) |
+| `router` | `RouterEntryOptions?` | Router inclusion — omit for the legacy combined entry |
 
-## `buildEntrySource(islands, outFile, hydrateImport?, routerImport?)`
+### `RouterEntryOptions`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | `boolean` | Include SPA router code — `false` generates a hydrate-only entry and a no-op router module |
+| `separate` | `boolean` | Split mode: router lives in its own generated module (`router.outFile`) — what lets pages without islands load only the router |
+| `prefetch` | `boolean` | Forwarded to `startClientRouter({ prefetch })` |
+| `morph` | `boolean` | Forwarded to `startClientRouter({ morph })` (idiomorph swap) |
+| `loadingIndicator` | `boolean` | Forwarded to `startClientRouter({ loadingIndicator })` |
+| `outFile` | `string?` | Absolute path of the generated router module (when `separate`) |
+
+The generated entry calls `hydrateIslands()` immediately — `load`/`only`
+hydrate on load, `idle`/`visible` keep their deferred scheduling. It wires
+cleanup on `elur:before-render` (excluding persisted islands) and
+re-hydration on `elur:rendered`.
+
+## `buildEntrySource(islands, outFile, hydrateImport?, routerImport?, router?)`
 
 Builds the source code of the client entry module as a string (without
 writing to disk). Used internally by `generateClientEntry`:
@@ -220,3 +262,29 @@ import { buildEntrySource } from "@elurjs/kit";
 
 const source = buildEntrySource(islands, "./.elur/entry-client.ts");
 ```
+
+## `buildRouterEntrySource(routerImport?, options?)`
+
+Builds the source of the standalone router module emitted in split builds.
+Only non-default flags are baked in:
+
+```typescript
+import { buildRouterEntrySource } from "@elurjs/kit";
+
+const source = buildRouterEntrySource("@elurjs/kit/router", {
+  prefetch: true, morph: true,
+});
+```
+
+## Per-page JavaScript emission
+
+Since v2.5 the emitted scripts depend on the rendered page:
+
+- **No islands, `router.enabled: false`** → 0 KB of JS.
+- **No islands, router enabled** → only `router.js`.
+- **Islands present** → `entry-client.js` (+ `router.js` when enabled).
+
+Both entries get `<link rel="modulepreload">`. Use
+`defineConfig({ js: "legacy" })` to restore the unconditional combined
+entry. See [Configuration — `js`](/docs/ecosystem/kit/config/) and
+[Client router](/docs/ecosystem/kit/client-router/).

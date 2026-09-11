@@ -35,7 +35,9 @@ export default defineConfig({
       referrerPolicy: "strict-origin-when-cross-origin",
     },
   },
-  router: { enabled: true, prefetch: true },
+  router: { enabled: true, prefetch: true, morph: false,
+            loadingIndicator: false, speculation: "prefetch" },
+  js: "modern",
   integrations: [],
 });
 ```
@@ -58,7 +60,10 @@ export default defineConfig({
 | `images` | `object` | — | Image optimization config |
 | `cache` | `object` | — | Cache config |
 | `security` | `object` | — | Security config |
-| `router` | `object` | — | Router config |
+| `router` | `object` | — | Router config (see below) |
+| `js` | `"modern" \| "legacy"` | `"modern"` | Client JS emission mode |
+| `logger` | `object` | — | Structured logger config (`level`) |
+| `streaming` | `boolean` | `false` | Enable streaming SSR (`renderStreamingPage`) |
 | `integrations` | `ElurKitIntegration[]` | `[]` | Integration hooks |
 
 ## Output modes
@@ -128,10 +133,45 @@ Set `headers: false` to disable all default security headers.
 
 ```typescript
 router: {
-  enabled: true,    // enable SPA client router
-  prefetch: true,   // prefetch links on viewport entry and hover
+  enabled: true,           // SPA client router (false → 0 KB JS without islands)
+  prefetch: true,          // prefetch on pointerenter/focus/pointerdown (+ opt-in viewport)
+  morph: false,            // idiomorph-based DOM morphing instead of full #app swap (experimental)
+  loadingIndicator: false, // top progress bar on navigations > ~200 ms
+  speculation: "prefetch", // Speculation Rules API on static pages: "prefetch" | "prerender" | "off"
 }
 ```
+
+All flags are opt-in where noted — `enabled` and `prefetch` default to
+`true`, `morph`/`loadingIndicator` to `false`, `speculation` to `"off"`.
+
+- **`enabled: false`** disables SPA navigation entirely. With no islands on
+  a page, that page ships **0 KB of JavaScript**.
+- **`prefetch: false`** disables link prefetching (programmatic
+  `prefetch()` still works).
+- **`morph: true`** uses [idiomorph](https://github.com/bigskysoftware/idiomorph)
+  to morph `#app` instead of replacing it — preserves transient state
+  (form values, `<details>` open, scroll) outside islands too. Experimental.
+- **`loadingIndicator: true`** shows a thin progress bar when a navigation
+  takes longer than ~200 ms (never on cache hits; static under
+  `prefers-reduced-motion`).
+- **`speculation`** emits `<script type="speculationrules">` with
+  `eagerness: "moderate"` — the browser prefetches/prerenders internal
+  pages before the click. Only emitted on static/hybrid-prerendered
+  pages; safe exclusions included (`/__elur-js/*`, `a[download]`,
+  `a[target]`, `data-no-router`, `data-no-speculation`).
+
+## `js` — client JS emission mode
+
+```typescript
+js: "modern"   // default — per-page gating + split entry/router
+js: "legacy"   // unconditional combined entry (pre-2.5 behavior)
+```
+
+- **`"modern"`**: the document shell emits `entry-client.js` only when the
+  rendered page contains islands, and `router.js` only when
+  `router.enabled`. Both get `<link rel="modulepreload">`.
+- **`"legacy"`**: restores the single combined entry emitted on every page
+  — escape hatch if the new emission breaks an existing setup.
 
 ## `loadElurConfig(options?)`
 
@@ -306,6 +346,7 @@ export default defineConfig({
 | `lang` | `string` | `es` | HTML lang attribute |
 | `hydrateImport` | `string?` | `@elurjs/kit/island` | Import specifier for `hydrateIslands` |
 | `routerImport` | `string?` | `@elurjs/kit/router` | Import specifier for `startClientRouter` |
+| `router` | `object?` | — | Router flags (`enabled`, `prefetch`, `morph`, `loadingIndicator`) baked into the dev entry |
 | `actionSecurity` | `ActionSecurityOptions?` | — | CSRF/origin policy for actions in dev |
 | `interpolation` | `InterpolationMode` | `auto` | `"auto"` \| `"legacy"` \| `"off"` |
 
