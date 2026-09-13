@@ -14,7 +14,7 @@ A real-time digital clock that updates every second. This example demonstrates
 the `now` signal every second.
 
 ```elur
-import { html, signal, computed, effect } from "https://esm.sh/@elurjs/core@4.0.0";
+import { html, signal, computed, effect } from "https://esm.sh/@elurjs/core@4.0.1";
 
 const now = signal(new Date());
 

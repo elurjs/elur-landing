@@ -32,7 +32,7 @@ export function Faq(): ElurTemplate {
 
           <div class="home-faq-item">
             <button class="home-faq-question">
-              What's new in Elur 4.0.0?
+              What's new in Elur 4?
               <span class="home-faq-chevron">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -42,7 +42,7 @@ export function Faq(): ElurTemplate {
             </button>
             <div class="home-faq-answer">
               <div class="home-faq-answer-inner">
-                Elur 4.0.0 is a ground-up engine redesign: push-pull versioned reactivity that is
+                Elur 4 is a ground-up engine redesign: push-pull versioned reactivity that is
                 <strong>glitch-free</strong> (diamond graphs never observe torn state), lazy computeds that
                 cost nothing until read, and real ownership via <code>createRoot</code>/<code>onCleanup</code>
                 for deterministic cleanup. Elur Kit 2.6.0 ships a next-generation router and emits

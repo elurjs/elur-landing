@@ -13,7 +13,7 @@ box. The results update in real-time as you type. Demonstrates `computed()`
 for derived filtered state and reactive input binding.
 
 ```elur
-import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@4.0.0";
+import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@4.0.1";
 
 const query = signal("");
 

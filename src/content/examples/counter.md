@@ -14,7 +14,7 @@ decrement, and reset buttons. This example demonstrates signals, reactive text
 interpolation, and event handling.
 
 ```elur
-import { html, signal, computed } from "https://esm.sh/@elurjs/core@4.0.0";
+import { html, signal, computed } from "https://esm.sh/@elurjs/core@4.0.1";
 
 const count = signal(0);
 const doubled = computed(() => count.value * 2);

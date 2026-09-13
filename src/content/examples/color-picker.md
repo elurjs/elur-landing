@@ -14,7 +14,7 @@ a live preview swatch and the color in hex and RGB formats. Demonstrates
 multiple signals feeding into a computed value.
 
 ```elur
-import { html, signal, computed } from "https://esm.sh/@elurjs/core@4.0.0";
+import { html, signal, computed } from "https://esm.sh/@elurjs/core@4.0.1";
 
 const hue = signal(220);
 const sat = signal(80);

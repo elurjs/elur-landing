@@ -10,7 +10,7 @@ export function Hero(): ElurTemplate {
     <div class="home-hero-content">
       <div class="home-hero-badge">
         <span class="dot"></span>
-        v4.0.0 — New reactive engine: glitch-free diamonds, lazy computeds, real ownership
+        v4.0.1 — New reactive engine: glitch-free diamonds, lazy computeds, real ownership
       </div>
       <a href="/docs/ecosystem/kit/overview/"
         style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:linear-gradient(90deg,rgba(52,50,200,0.15),rgba(43,199,240,0.15));border:1px solid rgba(43,199,240,0.3);font-size:0.8rem;font-weight:600;color:#2bc7f0;margin-bottom:32px;margin-left:10px;animation:fadeInUp 0.6s ease-out 0.1s both;text-decoration:none;">
