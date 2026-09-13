@@ -13,9 +13,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@elurjs/core": "^3.7.0-beta.1",
-    "@elurjs/kit": "^2.6.0-beta.0",
-    "@elurjs/vite-plugin-elur": "^2.2.0-beta.0",
+    "@elurjs/core": "^4.0.0",
+    "@elurjs/kit": "^2.6.0",
+    "@elurjs/vite-plugin-elur": "^2.2.0",
     "marked": "^18.0.12",
     "sharp": "^0.35.4",
     "shiki": "^4.4.3",

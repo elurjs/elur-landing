@@ -5,9 +5,9 @@
     "": {
       "name": "elur-docs-new-2",
       "dependencies": {
-        "@elurjs/core": "^3.7.0-beta.1",
-        "@elurjs/kit": "^2.6.0-beta.0",
-        "@elurjs/vite-plugin-elur": "^2.2.0-beta.0",
+        "@elurjs/core": "^4.0.0",
+        "@elurjs/kit": "^2.6.0",
+        "@elurjs/vite-plugin-elur": "^2.2.0",
         "marked": "^18.0.12",
         "sharp": "^0.35.4",
         "shiki": "^4.4.3",
@@ -53,13 +53,13 @@
 
     "@babel/types": ["@babel/types@7.29.8", "", { "dependencies": { "@babel/helper-string-parser": "^7.29.7", "@babel/helper-validator-identifier": "^7.29.7" } }, "sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg=="],
 
-    "@elurjs/core": ["@elurjs/core@3.7.0-beta.1", "", {}, "sha512-jABur3Dz6tIBuxYh+293K5pUNZOicmNEscSOXSUN7xN8wzrY+VxrHMtl5zEZLdZQdT6MGfnN8uzk/ikdwTMsFg=="],
+    "@elurjs/core": ["@elurjs/core@4.0.0", "", {}, "sha512-ma6Jkod2DruzjFt5E2ZGknk4ELLQC1L3WfbnJ3pSUS7/9mlF3LFr8l6aEBy20v69qU5XyeuFAedPx/wBCjMK+A=="],
 
     "@elurjs/core-compiler": ["@elurjs/core-compiler@1.0.0", "", {}, "sha512-PG2wWeI9kpRw4oWvtYqIenZn9K7aqkPXkqOjvzVoSS//tkMCy1HOBRd1a6xNiLzSlAZVgyNBl8gyh742yq9PdA=="],
 
-    "@elurjs/kit": ["@elurjs/kit@2.6.0-beta.0", "", { "dependencies": { "idiomorph": "^0.7.4", "tsx": "^4.23.12" }, "peerDependencies": { "@elurjs/core": "^3.6.2 || ^3.7.0-beta.0", "@elurjs/vite-plugin-elur": "^2.1.0 || ^2.2.0-beta.0", "marked": "^16.0.0 || ^17.0.0 || ^18.0.0", "sharp": "^0.33.0 || ^0.34.0 || ^0.35.0", "vite": "^7.0.0 || ^8.0.0", "zod": "^4.0.0" }, "optionalPeers": ["@elurjs/vite-plugin-elur", "marked", "sharp", "zod"], "bin": { "elur-kit": "bin/elur-kit.js" } }, "sha512-sLvxg1fyX6JDO02LcjmZN4xJZsQQUkQUd1Y3fSlN+aiB5u/4fQwBWzm7zs5fHsDzsDPWJs/E/+5lwPcqBj5v6w=="],
+    "@elurjs/kit": ["@elurjs/kit@2.6.0", "", { "dependencies": { "idiomorph": "^0.7.4", "tsx": "^4.23.12" }, "peerDependencies": { "@elurjs/core": "^3.6.2 || ^3.7.0-beta.0 || ^4.0.0", "@elurjs/vite-plugin-elur": "^2.1.0 || ^2.2.0-beta.0", "marked": "^16.0.0 || ^17.0.0 || ^18.0.0", "sharp": "^0.33.0 || ^0.34.0 || ^0.35.0", "vite": "^7.0.0 || ^8.0.0", "zod": "^4.0.0" }, "optionalPeers": ["@elurjs/vite-plugin-elur", "marked", "sharp", "zod"], "bin": { "elur-kit": "bin/elur-kit.js" } }, "sha512-7sjv+U8BJUTShwPfwot+PXrGpFmGuTGLzul9qriFJ+f8oFFqL5HOLzi2+L5D7kkFzYRyA6QZBFwpKL4xYtcXBg=="],
 
-    "@elurjs/vite-plugin-elur": ["@elurjs/vite-plugin-elur@2.2.0-beta.0", "", { "dependencies": { "@babel/core": "^7.26.0", "@babel/generator": "^7.26.0", "@babel/parser": "^7.26.0", "@babel/traverse": "^7.26.0", "@babel/types": "^7.26.0", "@elurjs/core-compiler": "^1.0.0 || ^1.1.0-beta.0" }, "peerDependencies": { "@elurjs/core": "^3.6.2 || ^3.7.0-beta.0", "vite": "^7.0.0 || ^8.0.0" } }, "sha512-BAQvcjWc+FnhCapRTiE0pVCjrUK9BJQQKSTuZW5TtPltCCwzFw729ru4lTHPKN7/HOALCrpb5Rt1diLmI6L4WA=="],
+    "@elurjs/vite-plugin-elur": ["@elurjs/vite-plugin-elur@2.2.0", "", { "dependencies": { "@babel/core": "^7.26.0", "@babel/generator": "^7.26.0", "@babel/parser": "^7.26.0", "@babel/traverse": "^7.26.0", "@babel/types": "^7.26.0", "@elurjs/core-compiler": "^1.0.0 || ^1.1.0-beta.0" }, "peerDependencies": { "@elurjs/core": "^3.6.2 || ^3.7.0-beta.0 || ^4.0.0", "vite": "^7.0.0 || ^8.0.0" } }, "sha512-ndWNoDgoMUWDOYKS1dGmyelpkATVk6rTO07D0Q5LoNWwGL9oFHzpbZPVO9OrtgZ2OrV0OePdaqO9yPYYIKpkfA=="],
 
     "@emnapi/runtime": ["@emnapi/runtime@1.11.3", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA=="],
 
