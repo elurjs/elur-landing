@@ -71,10 +71,10 @@ function Counter() {
 
 ```typescript
 // Elur: the component runs once; only the text node updates
-function Counter() {
+const Counter = defineComponent(() => {
   const count = signal(0);
   return html`<button @click=${() => count.value++}>${() => count.value}</button>`;
-}
+});
 ```
 
 In React, clicking the button calls `setCount`, which re-runs `Counter`,

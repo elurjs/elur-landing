@@ -213,9 +213,8 @@ const Counter = defineComponent<{ initial: number }>((props, ctx) => {
   ctx.onUnmount(() => console.log("gone"));
 
   // children render lazily under the declaring parent's owner
-  const slot = ctx.slot();
   return html`<button @click=${() => count.value++}>
-    ${() => count.value} ${slot}
+    ${() => count.value} ${() => ctx.slot()}
   </button>`;
 });
 
@@ -226,9 +225,9 @@ mount(Counter({ initial: 10 }), "#app");
 Sibling invocations with the **same definition and `key`** reconcile via
 `updateProps` in place; different definition or key remounts.
 
-**`SetupCtx`:** `onMount(fn)`, `onUnmount(fn)`, `onError(fn)`,
-`onServerRender(fn)` (SSR only), `slot(name?)`, `propSignal(name)`,
-`addController(c)`, `owner`, `instance`.
+**`SetupCtx`:** `onMount(fn)` (may return a cleanup), `onUnmount(fn)`,
+`onError(fn)`, `onServerRender(fn)` (SSR only), `slot(name?)` (returns the
+marked `Slot`), `propSignal(name)`, `slots`, `owner`.
 
 ### `slot(name?, fallback?)`
 

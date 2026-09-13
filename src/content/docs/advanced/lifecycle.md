@@ -1,16 +1,52 @@
 ---
 title: Lifecycle
-description: ElurComponent lifecycle hooks — onInit, onMount, onUnmount, onError, and onServerRender.
+description: Component lifecycle — ctx hooks for defineComponent, and onInit/onMount/onUnmount/onError/onServerRender for ElurComponent classes.
 section: Advanced
 order: 3
 ---
 
 # Lifecycle
 
-Elur components are classes that extend `ElurComponent`. Because components run
+Elur has two component models — functional (`defineComponent`) and class-based
+(`ElurComponent`) — sharing the same lifecycle machinery. Because components run
 once (they are not re-rendered), the lifecycle is simple: there's **init**,
 **mount**, and **unmount** — no "update" phase. Reactivity is handled by
 signals, not by re-running the component.
+
+This page covers the class model in depth. For `defineComponent` — live props,
+slots and `ctx` hooks — see [Components](/docs/core/components).
+
+## Lifecycle in functional components
+
+With `defineComponent`, the same phases are exposed through `ctx` — registered
+inside `setup` instead of as method overrides:
+
+```typescript
+const Timer = defineComponent((_props, ctx) => {
+  const seconds = signal(0);
+
+  ctx.onMount(() => {
+    const id = setInterval(() => seconds.update((n) => n + 1), 1000);
+    return () => clearInterval(id); // cleanup on unmount
+  });
+
+  ctx.onUnmount(() => console.log("gone"));
+  ctx.onError((info) => console.error(info.cause));
+  ctx.onServerRender(() => { /* SSR only, never on client */ });
+
+  return html`<p>${() => seconds.value}s</p>`;
+});
+```
+
+| `ctx` hook | Class equivalent |
+| --- | --- |
+| `ctx.onMount(fn)` | `onMount()` — post-commit; may return a cleanup |
+| `ctx.onUnmount(fn)` | `onUnmount()` |
+| `ctx.onError(fn)` | `onError(err)` — receives `ComponentErrorInfo` |
+| `ctx.onServerRender(fn)` | `onServerRender()` — SSR only |
+| setup body | `onInit()` + `render()` |
+
+The rest of this page documents the class model.
 
 ## The `ElurComponent` class
 
@@ -91,8 +127,8 @@ class Timer extends ElurComponent {
 
 :::tip
 The cleanup function returned from `onMount` is the equivalent of a separate
-`onCleanup` hook — there is no standalone `onCleanup`. Return the teardown
-logic directly.
+`onCleanup` hook. A standalone `onCleanup(fn)` is also exported — it registers
+teardown on the current owner (useful inside `setup` or any owned scope).
 :::
 
 ### `onUnmount()`
