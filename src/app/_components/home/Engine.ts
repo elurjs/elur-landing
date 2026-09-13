@@ -58,9 +58,9 @@ export function Engine(): ElurTemplate {
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
             </div>
-            <h3>Zero JS by default</h3>
-            <p>Elur Kit pages ship 0KB of JavaScript unless they opt in. Islands hydrate independently — this very
-              demo island is the only script this section loads.</p>
+            <h3>Render-priority scheduling</h3>
+            <p>Render effects and user effects run in separate queues — DOM writes never yield to expensive
+              user-side work. The flush only cedes the main thread when real input is pending, protecting INP.</p>
           </div>
         </div>
 
