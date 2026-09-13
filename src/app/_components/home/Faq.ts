@@ -49,7 +49,7 @@ export function Faq(): ElurTemplate {
                 <strong>0 KB of JavaScript</strong> on pages without islands.
                 The latest ecosystem packages are <code>@elurjs/core-compiler</code> 1.1.0,
                 <code>@elurjs/vite-plugin-elur</code> 2.2.0, <code>@elurjs/query</code> 1.6.1,
-                <code>@elurjs/ionic</code> 1.6.2, <code>@elurjs/auth</code> 1.3.1,
+                <code>@elurjs/ionic</code> 2.1.1, <code>@elurjs/auth</code> 1.3.1,
                 and <code>@elurjs/i18n</code> 1.4.1.
               </div>
             </div>
@@ -143,7 +143,7 @@ export function Faq(): ElurTemplate {
             </button>
             <div class="home-faq-answer">
               <div class="home-faq-answer-inner">
-                Yes. Use <code>@elurjs/ionic@1.6.2</code> with Ionic Core for routing + native-style UI, then wrap
+                Yes. Use <code>@elurjs/ionic@2.1.1</code> with Ionic Core for routing + native-style UI, then wrap
                 with Capacitor for Android/iOS deployment using the same codebase.
               </div>
             </div>
