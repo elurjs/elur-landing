@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@elurjs/core": "^4.0.0",
+    "@elurjs/core": "^4.0.1",
     "@elurjs/kit": "^2.6.0",
     "@elurjs/vite-plugin-elur": "^2.2.0",
     "marked": "^18.0.12",

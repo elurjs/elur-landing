@@ -7,7 +7,7 @@ order: 1
 
 # API Reference
 
-This is the complete API reference for `@elurjs/core` v4.0.0. All exports are
+This is the complete API reference for `@elurjs/core` v4.0.1. All exports are
 also available via subpath imports (e.g. `@elurjs/core/signals`).
 
 ## Reactivity
@@ -197,6 +197,48 @@ transition(
 `onBeforeLeave?`, `onAfterLeave?`.
 
 ## Components
+
+### `defineComponent(setup)`
+
+Defines a functional component. The `setup` runs **once per instance** (not
+per render) and returns the template. Props are *live*: getters are backed
+by signals, so `props.foo` in a binding updates in place when the parent
+passes a new value — `setup` never re-runs.
+
+```typescript
+const Counter = defineComponent<{ initial: number }>((props, ctx) => {
+  const count = signal(props.initial);
+
+  ctx.onMount(() => console.log("in DOM"));
+  ctx.onUnmount(() => console.log("gone"));
+
+  // children render lazily under the declaring parent's owner
+  const slot = ctx.slot();
+  return html`<button @click=${() => count.value++}>
+    ${() => count.value} ${slot}
+  </button>`;
+});
+
+// calling it creates an invocation — mount it like any template
+mount(Counter({ initial: 10 }), "#app");
+```
+
+Sibling invocations with the **same definition and `key`** reconcile via
+`updateProps` in place; different definition or key remounts.
+
+**`SetupCtx`:** `onMount(fn)`, `onUnmount(fn)`, `onError(fn)`,
+`onServerRender(fn)` (SSR only), `slot(name?)`, `propSignal(name)`,
+`addController(c)`, `owner`, `instance`.
+
+### `slot(name?, fallback?)`
+
+Creates a lazy slot marker for use inside `html\`\`` — equivalent to
+`ctx.slot(name)` in the parent that *declares* the children.
+
+### `mountComponent(invocation, container)`
+
+Mounts a `ComponentInvocation` directly. Returns
+`{ unmount(), instance }`.
 
 ### `ElurComponent`
 
