@@ -86,7 +86,7 @@ export function ElurKit(): ElurTemplate {
           </div>
 
           <div class="home-elur-kit-callout">
-            v2.5 ships a next-generation client router: lifecycle events (<code>elur:navigate-*</code>,
+            v2.6 ships a next-generation client router: lifecycle events (<code>elur:navigate-*</code>,
             <code>elur:before-render</code>), <code>data-elur-persist</code> element survival, LRU prefetch
             with Save-Data/2g awareness, optional idiomorph morphing, Speculation Rules, and a loading
             indicator — while pages without islands emit <strong>0 KB of JavaScript</strong> per page.

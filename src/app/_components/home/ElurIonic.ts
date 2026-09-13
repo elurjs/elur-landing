@@ -41,10 +41,10 @@ export function ElurIonic(): ElurTemplate {
           <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;font-size:0.78rem;color:var(--c-text-3)">
             <span
               style="padding:6px 10px;border:1px solid var(--c-border);border-radius:999px;background:rgba(251,146,60,0.08)">Elur-Ionic
-              2.1.0</span>
+              1.6.2</span>
             <span
               style="padding:6px 10px;border:1px solid var(--c-border);border-radius:999px;background:rgba(96,165,250,0.08)">Elur
-              3.6.2 compatible</span>
+              4.x compatible</span>
             <span
               style="padding:6px 10px;border:1px solid var(--c-border);border-radius:999px;background:rgba(52,211,153,0.08)">Ionic
               Core 8.x</span>
@@ -158,7 +158,7 @@ export function ElurIonic(): ElurTemplate {
       <!-- Bundle showcase -->
       <div class="home-ionic-bundle-section animate-on-scroll">
         <div class="home-ionic-bundle-header">
-          <h3>Available Bundles — v2.1.0</h3>
+          <h3>Available Bundles — v1.6.2</h3>
           <span class="home-ionic-bundle-badge">
             <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fb923c"></span>
             Tree-shakeable

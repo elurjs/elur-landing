@@ -65,7 +65,7 @@ You can use Elur directly in the browser via esm.sh:
 <body>
   <div id="app"></div>
   <script type="module">
-    import { html, signal } from "https://esm.sh/@elurjs/core@3.6.2";
+    import { html, signal } from "https://esm.sh/@elurjs/core@4.0.0";
 
     const count = signal(0);
 

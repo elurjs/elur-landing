@@ -13,7 +13,7 @@ either input updates the other automatically. Demonstrates two-way binding
 with signals and computed values.
 
 ```elur
-import { html, signal, computed } from "https://esm.sh/@elurjs/core@3.6.2";
+import { html, signal, computed } from "https://esm.sh/@elurjs/core@4.0.0";
 
 const celsius = signal(25);
 

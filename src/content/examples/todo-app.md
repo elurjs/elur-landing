@@ -13,7 +13,7 @@ A classic todo application demonstrating list rendering with `repeat()`,
 computed values for filtering, and signal-based state management.
 
 ```elur
-import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@3.6.2";
+import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@4.0.0";
 
 const todos = signal([
   { id: 1, text: "Learn Elur signals", done: true },

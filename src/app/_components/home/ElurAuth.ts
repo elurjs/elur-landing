@@ -29,7 +29,7 @@ export function ElurAuth(): ElurTemplate {
           </ul>
 
           <div class="home-elur-auth-callout">
-            v1.3.0 adds a credential-safe DevTools plugin for inspecting live auth instances, providers,
+            v1.3.1 adds a credential-safe DevTools plugin for inspecting live auth instances, providers,
             session state, and user previews during development.
           </div>
 

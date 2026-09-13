@@ -15,7 +15,7 @@ HTML. Demonstrates external library integration and reactive computed values
 with side effects.
 
 ```elur
-import { html, signal, computed, ref, raw } from "https://esm.sh/@elurjs/core@3.6.2";
+import { html, signal, computed, ref, raw } from "https://esm.sh/@elurjs/core@4.0.0";
 
 const markdown = signal(`# Hello Elur
 

@@ -13,7 +13,7 @@ the rating. Demonstrates reactive state for hover and selected values, and
 dynamic class binding.
 
 ```elur
-import { html, signal, repeat } from "https://esm.sh/@elurjs/core@3.6.2";
+import { html, signal, repeat } from "https://esm.sh/@elurjs/core@4.0.0";
 
 const rating = signal(3);
 const hover = signal(0);

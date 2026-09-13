@@ -179,7 +179,7 @@ export function Benchmark(): ElurTemplate {
       <p>
         Results from <a href="https://krausest.github.io/js-framework-benchmark/2026/chrome152.html" target="_blank" rel="noopener">krausest/js-framework-benchmark</a>
         — Chrome 152, keyed implementations, September 2026.
-        Elur v3.6.2 · Solid v1.9.3 · Svelte v5.42.1 · Vue v3.5.39 · React v19.2.0.
+        Elur v4.0.0 · Solid v1.9.3 · Svelte v5.42.1 · Vue v3.5.39 · React v19.2.0.
       </p>
     </div>
   </div>

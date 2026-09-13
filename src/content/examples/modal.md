@@ -13,7 +13,7 @@ conditional rendering. Demonstrates conditional templates, event handling, and
 keyboard interaction.
 
 ```elur
-import { html, signal, effect } from "https://esm.sh/@elurjs/core@3.6.2";
+import { html, signal, effect } from "https://esm.sh/@elurjs/core@4.0.0";
 
 const open = signal(false);
 const confirmText = signal("");

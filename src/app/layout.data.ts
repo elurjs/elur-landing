@@ -55,7 +55,7 @@ export const load: PageDataLoad = async () => {
     // Warm up the Elur CDN before the preview iframes request it — the
     // modulepreload fills the shared HTTP cache so iframes load instantly.
     '<link rel="preconnect" href="https://esm.sh" crossorigin />',
-    '<link rel="modulepreload" href="https://esm.sh/@elurjs/core@3.6.2" crossorigin />',
+    '<link rel="modulepreload" href="https://esm.sh/@elurjs/core@4.0.0" crossorigin />',
   ];
 
   // Build docs dropdown sections (first 2 items per section for the navbar)

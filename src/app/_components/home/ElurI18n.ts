@@ -29,7 +29,7 @@ export function ElurI18n(): ElurTemplate {
           </ul>
 
           <div class="home-elur-i18n-callout">
-            v1.4.0 adds a DevTools plugin for inspecting live locales, fallbacks, loaded namespaces,
+            v1.4.1 adds a DevTools plugin for inspecting live locales, fallbacks, loaded namespaces,
             and message key counts during development, with no production overhead.
           </div>
 

@@ -27,7 +27,7 @@ export function QuickStart(): ElurTemplate {
             <span style="color:var(--c-text-3)"># or via ESM CDN (no install)</span><br>
             <span style="color:var(--c-accent-3)">import</span> { signal } <span
               style="color:var(--c-accent-3)">from</span><br>
-            &nbsp;&nbsp;<span style="color:var(--c-green)">"https://esm.sh/@elurjs/core@3.6.2"</span>;
+            &nbsp;&nbsp;<span style="color:var(--c-green)">"https://esm.sh/@elurjs/core@4.0.0"</span>;
           </div>
         </div>
 

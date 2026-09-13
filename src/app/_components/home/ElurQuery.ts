@@ -52,7 +52,7 @@ export function ElurQuery(): ElurTemplate {
           </div>
 
           <div class="home-elur-query-callout">
-            v1.6.0 adds a DevTools plugin for inspecting query cache freshness, subscribers, in-flight requests,
+            v1.6.1 adds a DevTools plugin for inspecting query cache freshness, subscribers, in-flight requests,
             and command queues during development, with no production overhead.
           </div>
 

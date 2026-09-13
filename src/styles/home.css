@@ -3671,3 +3671,108 @@
     font-size: 1.6rem;
   }
 }
+/* ============================================================
+   Engine section — glitch demo
+   ============================================================ */
+
+.glitch-demo {
+  margin-top: var(--space-8, 2rem);
+}
+
+.glitch-code pre {
+  background: var(--c-bg-2, #12121a);
+  border: 1px solid var(--c-border, #26262f);
+  border-radius: 12px;
+  padding: 18px 20px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: var(--c-text, #e6e6ea);
+  margin: 0 0 16px;
+}
+
+.glitch-c {
+  color: var(--c-text-dim, #8b8b98);
+}
+
+.glitch-demo > button {
+  margin-bottom: 20px;
+}
+
+.glitch-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.glitch-col {
+  background: var(--c-bg-2, #12121a);
+  border: 1px solid var(--c-border, #26262f);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.glitch-col-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.glitch-col-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.glitch-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.glitch-badge.ok {
+  color: var(--c-green, #34d399);
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+}
+
+.glitch-badge.bad {
+  color: var(--c-red, #f87171);
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.glitch-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.glitch-table th {
+  text-align: left;
+  color: var(--c-text-dim, #8b8b98);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--c-border, #26262f);
+}
+
+.glitch-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glitch-table tr.torn td {
+  color: var(--c-red, #f87171);
+  background: rgba(248, 113, 113, 0.07);
+}
+
+@media (max-width: 800px) {
+  .glitch-cols {
+    grid-template-columns: 1fr;
+  }
+}
