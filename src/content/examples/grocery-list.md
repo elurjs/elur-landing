@@ -13,7 +13,7 @@ them, and adjust quantities. Demonstrates nested `repeat()`, computed grouping,
 and complex state management.
 
 ```elur
-import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@4.0.1";
+import { html, signal, computed, repeat } from "https://esm.sh/@elurjs/core@4.0.5";
 
 const items = signal([
   { id: 1, name: "Milk", category: "Dairy", qty: 2 },

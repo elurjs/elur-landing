@@ -13,7 +13,7 @@ header to expand or collapse its content. Demonstrates conditional rendering
 and single-signal state management.
 
 ```elur
-import { html, signal, repeat } from "https://esm.sh/@elurjs/core@4.0.1";
+import { html, signal, repeat } from "https://esm.sh/@elurjs/core@4.0.5";
 
 const openIndex = signal(0);
 

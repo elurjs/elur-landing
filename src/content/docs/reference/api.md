@@ -7,7 +7,7 @@ order: 1
 
 # API Reference
 
-This is the complete API reference for `@elurjs/core` v4.0.1. All exports are
+This is the complete API reference for `@elurjs/core` v4.0.5. All exports are
 also available via subpath imports (e.g. `@elurjs/core/signals`).
 
 ## Reactivity

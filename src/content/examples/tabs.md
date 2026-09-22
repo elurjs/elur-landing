@@ -13,7 +13,7 @@ Demonstrates reactive class binding for active states and conditional content
 rendering.
 
 ```elur
-import { html, signal } from "https://esm.sh/@elurjs/core@4.0.1";
+import { html, signal } from "https://esm.sh/@elurjs/core@4.0.5";
 
 const active = signal("overview");
 

@@ -64,7 +64,7 @@ function buildDoc(initialCode: string): string {
 <script type="importmap">
 {
   "imports": {
-    "@elurjs/core": "https://esm.sh/@elurjs/core@4.0.1"
+    "@elurjs/core": "https://esm.sh/@elurjs/core@4.0.5"
   }
 }
 <\/script>
