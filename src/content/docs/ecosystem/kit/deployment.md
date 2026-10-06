@@ -27,6 +27,7 @@ elur-kit adapter vercel
 ```
 
 The Vercel adapter generates `.vercel/output/` (Build Output API v3):
+
 - `functions/__elur-js-kit.func/index.js` — bundled SSR function
 - `static/` — static files from `dist/`
 - `config.json` — routing config
@@ -41,6 +42,7 @@ elur-kit adapter netlify
 ```
 
 Produces:
+
 - `netlify/functions/__elur-js-kit.mjs` — bundled SSR function (Netlify
   Functions v2)
 - `netlify.toml` — redirects unmatched routes to the function
@@ -56,6 +58,7 @@ bun run .elur/bun-server.ts
 ```
 
 Produces:
+
 - `.elur/bun-index.ts` — SSR handler entry
 - `.elur/bun-server.ts` — Bun server serving `dist/` + rendering pages on
   demand
@@ -246,3 +249,12 @@ interface Adapter {
 - The generated Node/Bun servers serve `dist/` and delegate SSR to the
   bundled handler; they do **not** load `src/middleware.ts` yet —
   middleware runs in `dev`, `preview`, and `start` only.
+- Vercel and Netlify functions pin `runtime: nodejs20.x` — there is no
+  runtime-version config option.
+- `elur-kit start` is single-process; use a process manager or container
+  replica for multi-core/multi-instance deployments.
+- The shipped adapter set is Vercel, Netlify, Bun, and Node. AWS Lambda,
+  Cloudflare Workers, and Docker have no dedicated adapter yet — Node
+  output covers container deployments.
+- `buildSsrEntry` bundles the SSR graph into a single file; on very large
+  apps the bundling step can consume substantial memory.

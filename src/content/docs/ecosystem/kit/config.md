@@ -203,17 +203,6 @@ js: "legacy"   // unconditional combined entry (pre-2.5 behavior)
 - **`"legacy"`**: restores the single combined entry emitted on every page
   — escape hatch if the new emission breaks an existing setup.
 
-## `loadElurConfig(options?)`
-
-Loads config from `elur.config.ts` with defaults:
-
-```typescript
-import { loadElurConfig } from "@elurjs/kit";
-
-const config = await loadElurConfig({ cwd: process.cwd() });
-// ResolvedElurConfig with all defaults filled in
-```
-
 ## Integrations
 
 Integrations are typed hooks that optional ecosystem packages (i18n, auth,
@@ -343,6 +332,13 @@ const config = await loadElurConfig({
 | `command` | `string?` | Current command (`"dev"`, `"build"`, `"start"`, etc.) |
 | `mode` | `string?` | Mode string |
 | `overrides` | `ElurConfig?` | Partial config to override file values |
+
+:::note
+There is no env-specific config file (`elur.config.dev.ts` /
+`elur.config.prod.ts`) — one `elur.config.ts` serves all commands.
+`overrides` deep-merges only one level: deeply nested objects are
+replaced, not merged.
+:::
 
 ### Type aliases
 

@@ -157,6 +157,14 @@ elur-kit routes     # list all discovered routes and metadata
 elur-kit doctor     # diagnose common config and environment issues
 ```
 
+`check` exit codes: `0` success, `1` generic error, `2` config error,
+`3` type error, `4` route conflict, `5` missing dependency — useful for
+CI gating.
+
+`dev` runs a supervisor/worker pair: the supervisor watches `src/app/`
+and `src/islands/` and restarts the Vite worker on change (400 ms
+debounce, 600 ms after a crash).
+
 Common options: `--root`, `--app`, `--islands`, `--out`, `--public`,
 `--port`, `--host`, `--lang`, `--hydrate-import`, `--router-import`,
 `--client-config`, `--config`, `--cache-dir`, `--default-revalidate`.
@@ -174,6 +182,9 @@ same redirects/rewrites, middleware, ISR cache, logging, and streaming
 code path as production. `start` fails fast when `dist/` is missing.
 If the requested port is busy, the server retries on the next port (up
 to 20 candidates) and prints the bound URL in the startup banner.
+
+Note that `adapter` does *not* verify `dist/` exists — run `elur-kit
+build` first so the generated output has something to serve.
 :::
 
 ## Configuration

@@ -180,6 +180,16 @@ The server runs the action and redirects back to the referring page. If the
 client sends `Accept: application/json`, the result is returned as JSON
 instead.
 
+The action endpoint accepts `application/json`,
+`application/x-www-form-urlencoded`, and `multipart/form-data` bodies —
+forms post `urlencoded`, `callAction`/fetch post JSON. Redirects go out as
+`303` for form posts and as a JSON payload for API calls.
+
+:::note
+`elurJsAction`/`callAction` are fetch-based — use the plain HTML form
+above when the action must work without JavaScript.
+:::
+
 ## Security
 
 ### Origin verification
@@ -207,6 +217,9 @@ defineConfig({
   security: { bodyLimit: 1_000_000 }, // 1MB
 });
 ```
+
+Requests exceeding the limit get a `413` response. The limit is global to
+the action handler — there is no per-action body limit.
 
 ### HMAC-signed error cookies
 
@@ -350,8 +363,15 @@ enhancement), the failure data is relayed back via a short-lived signed
 cookie (`__elur_js_action_error`, Max-Age=15s, SameSite=Lax, HttpOnly).
 
 The cookie is HMAC-signed with `ELUR_JS_ACTION_SECRET` (env var) or a
-per-process key in dev. Small payloads are embedded directly in the cookie;
-large payloads overflow to an in-memory store keyed by a signed id.
+per-process key in dev. Small payloads (~3.5 KB) are embedded directly in
+the cookie; large payloads overflow to an in-memory store keyed by a
+signed id with a 15 s TTL.
+
+:::warning
+In multi-instance deployments set a shared `ELUR_JS_ACTION_SECRET` — the
+in-memory overflow store is per-process, so a redirect that lands on a
+different instance loses the error payload without it.
+:::
 
 ```typescript
 import {

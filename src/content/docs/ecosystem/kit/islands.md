@@ -107,8 +107,8 @@ if (!isSSR()) {
 
 :::warning
 `isSSR()` only guards environment reads. It is **not** the same as
-`directive: "only"`. DOM queries of own children need `ElurComponent.onMount()`
-+ `ref`.
+`directive: "only"`. DOM queries of own children need
+`ElurComponent.onMount()` with `ref`.
 :::
 
 ## Auto-generated entry naming
@@ -157,6 +157,12 @@ const islands = await scanIslands("./src/islands");
    successfully on server, fallback is ignored.
 4. **`build()` scans `src/app/`.** Files outside the app dir are not routes.
    API routes use `route.ts`, not `page.ts`.
+5. **Props are serialized, not reactive.** They are captured at SSR time and
+   deserialized on hydration — later server-side changes don't propagate to
+   the client.
+6. **Hydration mismatches remount.** If the server HTML and the client render
+   disagree, the island warns and remounts — there is no DOM reconciliation
+   and no automatic error boundary.
 
 ## Types
 

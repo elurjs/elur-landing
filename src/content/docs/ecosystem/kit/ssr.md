@@ -566,3 +566,10 @@ await copyPublicAssets({
    Keep `streaming: false` for routes you want cacheable.
 5. **`elur-kit start` needs a prior `elur-kit build`.** It fails fast when
    `dist/` is missing — it no longer renders everything on demand.
+6. **`onServerRender` is not invoked.** Kit renders the template returned
+   by `render()` — the core component lifecycle hook never fires during
+   Kit SSR.
+7. **Production errors are sanitized.** The handler returns a generic
+   `"Internal Server Error"` payload — `error.message` only reaches the
+   response in dev/`--verbose` mode. Don't rely on error text leaking to
+   clients in production.

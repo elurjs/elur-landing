@@ -176,6 +176,20 @@ const response = await serveStaticFile("./dist", "/images/hero.webp");
 const filePath = await resolveStaticFile("./dist", "/images/hero.webp");
 ```
 
+Static serving supports conditional and range requests out of the box:
+
+- `ETag` + `If-None-Match` → `304 Not Modified`
+- `If-Modified-Since` → `304`
+- `Range` (single byte range) + `If-Range` → `206` / `416`
+- `HEAD` requests served without a body
+- Content-hashed asset URLs get immutable `Cache-Control`
+- `..` traversal and symlink escapes resolve to `undefined` (→ 404)
+
+:::note
+There is no built-in compression (gzip/brotli) — put a reverse proxy in
+front of `elur-kit start` if you need compressed responses.
+:::
+
 ## `incomingMessageToRequest(req)` / `sendWebResponse(res, response, signal?)`
 
 Convert between Node.js and Web primitives:
@@ -246,12 +260,28 @@ import {
   DEFAULT_SECURITY_HEADERS,
 } from "@elurjs/kit/runtime";
 
-// Build headers from config
-const headers = buildSecurityHeaders(config.security.headers);
+// Build headers from config — buildSecurityHeaders(config, isHttps, nonce?)
+const headers = buildSecurityHeaders(
+  config.security.headers,
+  request.url.startsWith("https"),
+);
 
 // Apply to a response
 applySecurityHeaders(response, headers);
 ```
+
+Defaults (`DEFAULT_SECURITY_HEADERS`): `X-Content-Type-Options: nosniff`,
+`Referrer-Policy: strict-origin-when-cross-origin`, and
+`X-Frame-Options: SAMEORIGIN`. Behavior details:
+
+- **HSTS** is only emitted for HTTPS requests unless `hsts` is an explicit
+  string value.
+- **CSP** — when `contentSecurityPolicy` is set it replaces
+  `X-Frame-Options`; the `nonce` token is substituted per request with
+  `'nonce-<value>'`.
+- **Never overwrites** — a header already set on the response by
+  middleware, a route handler, or `routes.headers` is left untouched.
+- `security.headers: false` disables the whole block.
 
 ## App manifest
 

@@ -125,6 +125,32 @@ src/app/blog/
 └── [slug]/comments.slot.ts # named slot "comments"
 ```
 
+Each slot module exports a component that receives the same `PageProps` as
+the page. Rendered slot templates reach the layout through the `slots`
+prop (`Record<string, ElurTemplate>` keyed by file name):
+
+```typescript
+// src/app/blog/layout.ts
+import type { LayoutProps } from "@elurjs/kit";
+import { html } from "@elurjs/core";
+
+export default function BlogLayout(
+  props: LayoutProps & { slots?: Record<string, unknown> },
+) {
+  return html`
+    <div class="layout">
+      <main>${props.children}</main>
+      <aside>${props.slots?.sidebar}</aside>
+    </div>
+  `;
+}
+```
+
+:::note
+`slots` is passed at runtime but is not yet declared on `LayoutProps` —
+extend the type locally as shown above.
+:::
+
 ## SPA router
 
 The client router intercepts internal navigation and swaps the rendered

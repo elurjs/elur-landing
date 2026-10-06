@@ -297,3 +297,14 @@ interface SchemaValidator {
 A function that validates raw frontmatter data and returns the typed result.
 `createValidator(schema)` returns one when `zod` is installed, or `undefined`
 when it is not.
+
+## Limitations
+
+- **Markdown only** — collections read `.md` files; JSON, YAML data files,
+  and MDX are not supported.
+- **Frontmatter is a YAML subset** — flat scalar keys and simple lists/maps
+  only. Nested mappings are rejected deliberately; no anchors or aliases.
+- **`renderMarkdown` does not sanitize** — the content model is trusted.
+  Clean untrusted Markdown yourself before rendering.
+- **The content cache is in-memory** — it does not persist across restarts.
+  Use `clearContentCache()` after file changes in dev.

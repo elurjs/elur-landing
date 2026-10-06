@@ -9,7 +9,8 @@ order: 8
 
 ## Middleware
 
-Create `src/middleware.ts` to run logic before every request:
+Create `src/middleware.ts` to run logic before every request (a single
+global file — there is no middleware directory or per-route middleware):
 
 ```typescript
 import type { Middleware } from "@elurjs/kit";
@@ -263,6 +264,13 @@ import {
 const policy = normalizeCachePolicy(route.cache); // fills defaults
 shouldCachePublic(request); // false when Cookie/Authorization present
 ```
+
+:::warning
+`shouldCachePublic` only inspects the **request** — it does not check
+response headers (`Set-Cookie`, `private`, `no-store`). A route that sets
+cookies in its response can still be publicly cached; mark those routes
+`mode: "private"` or `"dynamic"` explicitly.
+:::
 
 ## Cache policy
 

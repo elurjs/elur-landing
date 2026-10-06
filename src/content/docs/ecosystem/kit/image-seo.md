@@ -66,6 +66,19 @@ Without `sharp`, emits a plain `<img>` with the original src.
   pool
 - **`images.strict`** — fails build on missing source or failed transform
 
+### Pipeline limitations
+
+- **Local sources only** — no remote image fetching
+  (`capabilities.remote = false`).
+- **No runtime image endpoint** — variants are generated at build time,
+  not on request (`capabilities.runtimeEndpoint = false`).
+- **Resize only** — no enlargement, crop, fit modes, or rotation.
+- **Manual `width`/`height` required** — intrinsic dimensions are not
+  detected at render time.
+- **`processImages` is the legacy pipeline** (`pipeline.ts`: MD5 keys,
+  non-atomic). `processImageBatch` / `getImage` (`service.ts`) is the
+  hardened path the build uses.
+
 ## `getImage(request, options)` — programmatic
 
 ```typescript
