@@ -2,7 +2,7 @@
 title: Deployment
 description: Deploy Elur Kit apps to Vercel, Netlify, Bun, or Node with built-in adapters.
 section: Elur Kit
-order: 6
+order: 13
 ---
 
 # Deployment

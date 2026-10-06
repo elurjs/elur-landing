@@ -20,9 +20,16 @@ collections, server actions, and deployment adapters.
 
 - [Overview](/docs/ecosystem/kit/overview/)
 - [Routing](/docs/ecosystem/kit/routing/)
+- [Data & Backend](/docs/ecosystem/kit/data-backend/)
 - [SSR & Hydration](/docs/ecosystem/kit/ssr/)
 - [Islands](/docs/ecosystem/kit/islands/)
 - [Content Collections](/docs/ecosystem/kit/content/)
+- [Server Actions](/docs/ecosystem/kit/actions/)
+- [Middleware & Cache](/docs/ecosystem/kit/middleware-cache/)
+- [Client Router](/docs/ecosystem/kit/client-router/)
+- [Image & SEO](/docs/ecosystem/kit/image-seo/)
+- [Configuration](/docs/ecosystem/kit/config/)
+- [Runtime & Manifest](/docs/ecosystem/kit/runtime-manifest/)
 - [Deployment](/docs/ecosystem/kit/deployment/)
 
 ### [@elurjs/query](/docs/ecosystem/query/overview/)

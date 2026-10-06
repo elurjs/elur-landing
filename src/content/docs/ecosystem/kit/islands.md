@@ -2,7 +2,7 @@
 title: Islands
 description: island() directives — load, idle, visible, only, hydrateIslands, cleanupHydratedIslands, data-elur-persist, lazyIsland, and isSSR().
 section: Elur Kit
-order: 4
+order: 5
 ---
 
 # Islands
@@ -83,8 +83,14 @@ Lazy-load an island on demand:
 ```typescript
 import { lazyIsland } from "@elurjs/kit/island";
 
-const HeavyChart = lazyIsland(() => import("../islands/HeavyChart"));
+const HeavyChart = lazyIsland(() =>
+  import("../islands/HeavyChart").then((m) => m.default),
+);
 ```
+
+`lazyIsland()` wraps a loader in the discriminated `{ load }` form that
+`hydrateIslands()` awaits before hydrating — the loader must resolve to the
+component itself, hence `.then((m) => m.default)`.
 
 ## `isSSR()`
 
@@ -115,18 +121,19 @@ src/islands/LikeButton.ts      → "LikeButton"
 src/islands/nav/MobileMenu.ts  → "nav/MobileMenu"
 ```
 
-Generated entry:
+Generated entry (simplified — the real output is a lazy registry, so
+islands code-split and only load when their directive triggers):
 
 ```typescript
 // AUTO-GENERATED — do not edit
-import { hydrateIslands } from "@elurjs/kit/island";
-import LikeButton_0 from "../src/islands/LikeButton";
-import MobileMenu_1 from "../src/islands/nav/MobileMenu";
+import { hydrateIslands, cleanupHydratedIslands } from "@elurjs/kit/island";
 
-hydrateIslands({
-  "LikeButton": LikeButton_0,
-  "nav/MobileMenu": MobileMenu_1,
-});
+const registry = {
+  "LikeButton": { load: () => import("../src/islands/LikeButton").then(m => m.default) },
+  "nav/MobileMenu": { load: () => import("../src/islands/nav/MobileMenu").then(m => m.default) },
+};
+
+hydrateIslands(registry);
 ```
 
 ## `scanIslands(dir)`

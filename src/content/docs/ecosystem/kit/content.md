@@ -2,7 +2,7 @@
 title: Content Collections
 description: defineCollection, getEntry, getCollection, renderMarkdown, and frontmatter for typed Markdown content.
 section: Elur Kit
-order: 5
+order: 6
 ---
 
 # Content Collections
@@ -37,6 +37,11 @@ export const collections = {
 `defineCollection` accepts `{ schema?: unknown }`. The collection name comes
 from the key in the `collections` object, and the directory is
 `src/content/<name>/`.
+
+:::note
+Collection names must be alphanumeric (plus `-` and `_`) — they are
+validated against the content root to prevent path traversal.
+:::
 
 ## Frontmatter
 
@@ -225,8 +230,11 @@ const schema = z.object({ title: z.string() });
 
 ## Per-request scope
 
-Content collections use `AsyncLocalStorage` for per-request scope. Set the
-content root per request:
+The content root defaults to `<cwd>/src/content` and is set automatically
+by the Vite plugin / CLI on startup via `setContentRoot()`. Content
+collections use `AsyncLocalStorage` for per-request scope — set the content
+root per request to prevent global state leaking between concurrent
+requests:
 
 ```typescript
 import { withContentRoot, setContentRoot, clearContentCache } from "@elurjs/kit/content";

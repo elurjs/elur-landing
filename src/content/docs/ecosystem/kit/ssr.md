@@ -2,7 +2,7 @@
 title: SSR & Hydration
 description: Server-side rendering, static generation, streaming, ISR, and hydration with Elur Kit.
 section: Elur Kit
-order: 3
+order: 4
 ---
 
 # SSR & Hydration
