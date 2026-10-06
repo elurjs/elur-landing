@@ -34,8 +34,8 @@ and `start` share the same pipeline: it executes after redirects/rewrites
 and the internal endpoints, before routing. A returned `Response`
 short-circuits through the standard finalize step (security headers,
 `X-Request-ID`, `Server-Timing` still apply); `next({ headers, locals })`
-merges into the downstream request and exposes `locals` to API routes and
-actions. Middleware errors return a sanitized 500 instead of crashing the
+merges into the downstream request and exposes `locals` to API routes.
+Middleware errors return a sanitized 500 instead of crashing the
 request. The generated Node/Bun adapter servers do not run the middleware
 file yet.
 
@@ -54,13 +54,13 @@ type Middleware = (
 | --- | --- | --- |
 | `next(options?)` | `(options?: { headers?, params?, locals? }) => void` | Continue to next handler with optional headers/params/locals |
 | `params` | `Record<string, string \| string[]> \| undefined` | Matched route params (if path matches a page route) |
-| `locals` | `Record<string, unknown> \| undefined` | Per-request data, passed to actions and loaders |
+| `locals` | `Record<string, unknown> \| undefined` | Per-request data published via `next({ locals })` — reaches API route handlers as `ctx.locals` (does **not** reach `page.data.ts` loaders; the built-in action endpoint currently passes an empty object) |
 
 ### `MiddlewareConfig`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `matcher` | `string[]` | Path patterns — `*` wildcard, `:param` segments |
+| `matcher` | `string[]` | Path patterns — `*` wildcard, `:param` segments, `:param*` catch-alls (a catch-all also matches the bare base path, so `/dashboard/:path*` matches `/dashboard` itself). No matcher = runs on every request |
 
 ### `LoadedMiddleware`
 

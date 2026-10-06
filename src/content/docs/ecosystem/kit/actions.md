@@ -71,7 +71,7 @@ export const submitContact = defineAction(
 | `signal` | `AbortSignal` | Aborts if client disconnects |
 | `idempotencyKey` | `string?` | From request header |
 | `params` | `Record<string, string \| string[]>` | Route params |
-| `locals` | `Record<string, unknown>` | Per-request locals from middleware |
+| `locals` | `Record<string, unknown>` | Per-request locals — currently `{}` through the built-in endpoint (middleware `locals` reach API routes, not actions yet) |
 
 ### Concurrency modes
 

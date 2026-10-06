@@ -72,11 +72,11 @@ document.addEventListener("elur:navigate-start", (e) => {
 | Event | When | `detail` |
 | --- | --- | --- |
 | `elur:navigate-start` | Navigation begins | `{ pathname, search, fromCache, popstate }` |
-| `elur:before-render` | **Before** `#app` is swapped — the old DOM is still attached | `+ persisted` (old `[data-elur-persist]` nodes) |
-| `elur:rendered` | After the swap + head merge + script re-execution | `+ persisted` |
+| `elur:before-render` | **Before** `#app` is swapped — the old DOM is still attached | `{ pathname, search, popstate, persisted }` (`persisted`: the live `Element`s that will survive) |
+| `elur:rendered` | After the swap + head merge + script re-execution | `{ pathname, search, popstate }` |
 | `elur:navigate-end` | After the view transition finished | `{ pathname, search, fromCache, popstate }` |
-| `elur:navigate-error` | Fetch/render failure | `{ pathname, search, fromCache, popstate, error }` |
-| `elur:persist-props-changed` | Persisted island received new props | `{ name, oldProps, newProps }` on the marker |
+| `elur:navigate-error` | Fetch/render failure (the error is rethrown, not attached to `detail`) | `{ pathname, search, fromCache, popstate }` |
+| `elur:persist-props-changed` | Persisted island received new props | `{ name, props, previousProps }` — bubbles from the island marker |
 
 The generated entry uses `elur:before-render` to dispose islands (except
 persisted ones) and `elur:rendered` to re-hydrate. Superseded navigations

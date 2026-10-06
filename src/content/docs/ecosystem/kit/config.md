@@ -166,12 +166,13 @@ router: {
   prefetch: true,          // prefetch on pointerenter/focus/pointerdown (+ opt-in viewport)
   morph: false,            // idiomorph-based DOM morphing instead of full #app swap (experimental)
   loadingIndicator: false, // top progress bar on navigations > ~200 ms
-  speculation: "prefetch", // Speculation Rules API on static pages: "prefetch" | "prerender" | "off"
+  speculation: "prefetch", // Speculation Rules API on static pages: "prefetch" | "prerender"
 }
 ```
 
 All flags are opt-in where noted — `enabled` and `prefetch` default to
-`true`, `morph`/`loadingIndicator` to `false`, `speculation` to `"off"`.
+`true`, `morph`/`loadingIndicator` to `false`; omit `speculation` to keep
+it off.
 
 - **`enabled: false`** disables SPA navigation entirely. With no islands on
   a page, that page ships **0 KB of JavaScript**.
