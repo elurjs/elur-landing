@@ -312,6 +312,7 @@ if (i18n) {
 Available registry types: `"i18n"`, `"auth"`, `"query"`, `"testing"`, `"custom"`.
 
 Each has a typed interface:
+
 - `I18nIntegration`: `getLocale`, `getAlternates`, `translate`
 - `AuthIntegration`: `getSession`, `seedSSR`
 - `QueryIntegration`: `dehydrate`, `rehydrate`, `invalidate`
