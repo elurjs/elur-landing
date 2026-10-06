@@ -290,6 +290,10 @@ export const cache = {
 };
 ```
 
+A plain `export const revalidate = 60` on the same data module also works —
+it sets `revalidate` without a full policy object. If both are present,
+`cache.revalidate` wins when it is greater than `0`.
+
 Default policy is `dynamic` (no caching). Requests with `Cookie` or
 `Authorization` headers are never cached publicly.
 

@@ -86,7 +86,7 @@ const takePhoto = async () => {
 Use `isSSR()` or platform detection to conditionally run native code:
 
 ```typescript
-import { isSSR } from "@elurjs/kit/island";
+import { isSSR } from "@elurjs/kit";
 
 if (!isSSR()) {
   const { Geolocation } = await import("@capacitor/geolocation");

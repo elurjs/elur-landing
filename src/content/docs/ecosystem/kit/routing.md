@@ -35,7 +35,14 @@ loaders, actions, API routes, middleware, and error pages.
 
 Each `page.ts` exports a default component:
 
+:::note
+Pages and layouts must be **function components** — the renderer invokes the
+default export as `Page(props)` / `Layout({ children, data, slots })`, so class
+components (`ElurComponent`) are not supported for routes.
+:::
+
 ```typescript
+// src/app/about/page.ts
 import { html } from "@elurjs/core";
 import type { PageProps } from "@elurjs/kit";
 

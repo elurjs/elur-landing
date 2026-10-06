@@ -151,16 +151,22 @@ const islands = await scanIslands("./src/islands");
 
 1. **Island SSR crash?** Use `directive: "only"` or `options: { ssr: false }`.
    Don't suppress the error — fix it.
-2. **`isSSR()` is not `"only"`.** It only guards environment reads. DOM
-   queries of own children need `ElurComponent.onMount()` + `ref`.
-3. **`fallback` only renders when SSR is skipped.** If the component renders
+2. **Islands must be function components.** The runtime calls
+   `Component(props)` in both SSR and hydration — class components
+   (`ElurComponent`) throw. The body runs on every render path, so keep
+   browser-only side effects guarded or inside template bindings, which are
+   disposed when the island unmounts/remounts.
+3. **`isSSR()` is not `"only"`.** It only guards environment reads. DOM
+   queries of own children need `ref` — the function body runs before mount
+   on the server too, so guard with `isSSR()` or use `directive: "only"`.
+4. **`fallback` only renders when SSR is skipped.** If the component renders
    successfully on server, fallback is ignored.
-4. **`build()` scans `src/app/`.** Files outside the app dir are not routes.
+5. **`build()` scans `src/app/`.** Files outside the app dir are not routes.
    API routes use `route.ts`, not `page.ts`.
-5. **Props are serialized, not reactive.** They are captured at SSR time and
+6. **Props are serialized, not reactive.** They are captured at SSR time and
    deserialized on hydration — later server-side changes don't propagate to
    the client.
-6. **Hydration mismatches remount.** If the server HTML and the client render
+7. **Hydration mismatches remount.** If the server HTML and the client render
    disagree, the island warns and remounts — there is no DOM reconciliation
    and no automatic error boundary.
 
@@ -253,7 +259,7 @@ await generateClientEntry({
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `enabled` | `boolean` | Include SPA router code — `false` generates a hydrate-only entry and a no-op router module |
+| `enabled` | `boolean` | Include SPA router code — `false` generates a hydrate-only entry and no router module is emitted |
 | `separate` | `boolean` | Split mode: router lives in its own generated module (`router.outFile`) — what lets pages without islands load only the router |
 | `prefetch` | `boolean` | Forwarded to `startClientRouter({ prefetch })` |
 | `morph` | `boolean` | Forwarded to `startClientRouter({ morph })` (idiomorph swap) |

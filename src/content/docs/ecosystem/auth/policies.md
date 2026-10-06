@@ -92,18 +92,25 @@ In Elur Kit, use middleware to protect routes:
 
 ```typescript
 // src/middleware.ts
-import { defineMiddleware } from "@elurjs/kit";
+import type { Middleware } from "@elurjs/kit";
 
-export default defineMiddleware(async (ctx, next) => {
-  if (ctx.path.startsWith("/login")) return next();
+const middleware: Middleware = async (request, { next }) => {
+  const { pathname } = new URL(request.url);
+  if (pathname.startsWith("/login")) return next();
 
-  const session = await getSession(ctx.request);
+  const session = await getSession(request);
   if (!session) {
-    return Response.redirect(new URL("/login", ctx.request.url));
+    return Response.redirect(new URL("/login", request.url));
   }
 
-  return next();
-});
+  next({ locals: { session } });
+};
+
+export default middleware;
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/admin/:path*"],
+};
 ```
 
 ## Route-level guards with the core router

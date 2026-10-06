@@ -67,16 +67,14 @@ export const load: PageDataLoad = async () => {
 
 ```typescript
 // src/app/blog/layout.ts
-import { html, ElurComponent } from "@elurjs/core";
+import { html } from "@elurjs/core";
 import type { LayoutProps } from "@elurjs/kit";
 
-export default class BlogLayout extends ElurComponent {
-  override render({ children, data }: LayoutProps<{ categories: string[] }>) {
-    return html`
-      <nav>${data?.categories.map(c => html`<a href="/blog/${c}">${c}</a>`)}</nav>
-      ${children}
-    `;
-  }
+export default function BlogLayout({ children, data }: LayoutProps<{ categories: string[] }>) {
+  return html`
+    <nav>${data?.categories.map(c => html`<a href="/blog/${c}">${c}</a>`)}</nav>
+    ${children}
+  `;
 }
 ```
 

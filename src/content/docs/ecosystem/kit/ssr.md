@@ -421,6 +421,8 @@ const result = await renderPageBody({
 // result.title — page title
 // result.head — <head> tags for SPA merge
 // result.fullHtml — full document (for ISR caching)
+// result.data / result.actions — serialized #elur-data / #elur-actions
+//   script contents so the router refreshes them after navigation
 // result.clearActionErrorCookie — cookie cleanup if action error was consumed
 // result.response — first-class Response if a loader threw one
 ```
@@ -434,7 +436,7 @@ Throws `RouteNotFoundError` if no route matches the pathname.
 | `routes` | `ScannedRoutes` | All scanned routes |
 | `pathname` | `string` | Path to render |
 | `searchParams` | `URLSearchParams` | Query string |
-| `config` | `Pick<BuildConfig, "lang" \| "clientEntry">` | Render config |
+| `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "router" \| "js">` | Render config |
 | `actions` | `Record<string, string[]>?` | Action registry |
 | `importer` | `(path) => Promise<unknown>?` | Custom module loader |
 | `request` | `Request?` | Original request |
@@ -462,7 +464,7 @@ const result = await renderErrorPage({
 | `routes` | `ScannedRoutes` | All scanned routes |
 | `status` | `404 \| 500` | Error status code |
 | `error` | `unknown?` | The original error (for 500 pages) |
-| `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "renderEndpoint">` | Render config |
+| `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "renderEndpoint" \| "router" \| "js">` | Render config |
 | `actions` | `Record<string, string[]>?` | Action registry |
 | `importer` | `(path) => Promise<unknown>?` | Custom module loader |
 
@@ -485,7 +487,7 @@ const result = await renderErrorPage({
 | `router` | `object?` | Router flags (`enabled`, `prefetch`, `morph`, `loadingIndicator`, `speculation`, `separate`, `entry`, `outFile`) baked into the generated entries |
 | `js` | `"modern" \| "legacy"?` | Client JS emission mode — `"modern"` gates per page (0% JS) |
 | `site` | `string?` | Public site URL — enables automatic `sitemap.xml` generation from scanned routes |
-| `onPhase` | `(name, durationMs) => void?` | Observer called once per build phase (`scan`, `pages`, `images`, `integrations`, `sitemap`, `transform`, `manifest`, `client bundle`) |
+| `onPhase` | `(name, durationMs) => void?` | Observer called once per reported build phase (`scan`, `pages`, `images`, `integrations`, `sitemap`) — later stages (transform, manifest, client bundle) do not report phases |
 | `integrations` | `ElurKitIntegration[]?` | Integrations to invoke during build |
 
 ## `BuildResult`
@@ -527,10 +529,12 @@ import { buildClientBundle } from "@elurjs/kit";
 
 const result = await buildClientBundle({
   root: process.cwd(),
-  entry: "./.elur/entry-client.ts",
-  outDir: "dist/_elur",
-  clientEntry: "/_elur/entry-client.js",
+  appDir: "/abs/src/app",
+  islandsDir: "/abs/src/islands",
+  outDir: "/abs/dist/_elur",
+  defaultInputs: { "entry-client": "/abs/.elur/entry-client.ts" },
 });
+// result: { outDir, outputCount }
 ```
 
 ### `beginAtomicStage(options)` — atomic staging
@@ -540,9 +544,10 @@ Stages build output outside `dist/` and swaps only on success:
 ```typescript
 import { beginAtomicStage } from "@elurjs/kit";
 
-const stage = await beginAtomicStage({ outDir: "dist", stageDir: ".elur-stage" });
-// ... write files to stage.path ...
+const stage = await beginAtomicStage({ outDir: "dist", tempDir: ".elur-stage" });
+// ... write files to stage.tempDir ...
 await stage.commit(); // atomic swap to dist/
+// on failure: await stage.rollback();
 ```
 
 ### `copyPublicAssets(options)` — copy static files
