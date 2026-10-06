@@ -38,6 +38,11 @@ export default defineConfig({
   router: { enabled: true, prefetch: true, morph: false,
             loadingIndicator: false, speculation: "prefetch" },
   js: "modern",
+  logger: { level: "info" },
+  streaming: false,
+  redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
+  rewrites: [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  headers: [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
   integrations: [],
 });
 ```
@@ -52,18 +57,21 @@ export default defineConfig({
 | `contentDir` | `string` | `src/content` | Content collections directory |
 | `publicDir` | `string` | `public` | Static assets directory |
 | `outDir` | `string` | `dist` | Build output directory |
-| `site` | `string` | — | Base site URL |
+| `site` | `string` | — | Base site URL — enables automatic `sitemap.xml` generation on build |
 | `base` | `string` | `/` | Base path prefix |
 | `trailingSlash` | `TrailingSlashMode` | `ignore` | `"always"` \| `"never"` \| `"ignore"` |
 | `output` | `ElurOutputMode` | `static` | `"static"` \| `"server"` \| `"hybrid"` |
 | `adapter` | `Adapter` | — | Deployment adapter |
 | `images` | `object` | — | Image optimization config |
-| `cache` | `object` | — | Cache config |
+| `cache` | `object` | — | Cache config (`dir`, `defaultRevalidate`, `adapter`) |
 | `security` | `object` | — | Security config |
 | `router` | `object` | — | Router config (see below) |
 | `js` | `"modern" \| "legacy"` | `"modern"` | Client JS emission mode |
-| `logger` | `object` | — | Structured logger config (`level`) |
-| `streaming` | `boolean` | `false` | Enable streaming SSR (`renderStreamingPage`) |
+| `logger` | `{ level?: LogLevel }` | `debug` dev / `info` prod | Structured request logging — JSON in production, readable `[LEVEL]` text in dev |
+| `streaming` | `boolean` | `false` | Opt-in real streaming SSR — `loading.ts` boundaries stream via `createStreamingResponse` (experimental) |
+| `redirects` | `RedirectRule[]` | `[]` | Redirect rules evaluated before routing (first match wins) |
+| `rewrites` | `RewriteRule[]` | `[]` | Transparent path rewrites before routing |
+| `headers` | `RouteHeadersRule[]` | `[]` | Extra response headers per path pattern |
 | `integrations` | `ElurKitIntegration[]` | `[]` | Integration hooks |
 
 ## Output modes
@@ -98,8 +106,29 @@ images: {
 cache: {
   dir: ".elur/cache",        // filesystem cache directory (default)
   defaultRevalidate: 60,     // default revalidation seconds
+  adapter: myCacheAdapter,   // pluggable CacheAdapter (Redis, KV, ...)
+                             // default: filesystem adapter rooted at cache.dir
 }
 ```
+
+See [Middleware & Cache](/docs/ecosystem/kit/middleware-cache/) for the
+`CacheAdapter` contract and the built-in Redis/Cloudflare KV adapters.
+
+## Redirects, rewrites, and route headers
+
+Evaluated by the unified Web handler in `dev`, `preview`, and `start`:
+
+```typescript
+export default defineConfig({
+  redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
+  rewrites:  [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  headers:   [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
+});
+```
+
+Patterns support literal segments, `:param`, `*` wildcards, and `:param*`
+catch-alls with `:param` interpolation in destinations. See
+[Routing — Redirects, rewrites, and route headers](/docs/ecosystem/kit/routing/).
 
 ## Security config
 

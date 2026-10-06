@@ -136,7 +136,7 @@ const result = await callAction(
 ## `fail(data, status?)` — return a failure
 
 ```typescript
-import { fail } from "@elurjs/kit/action";
+import { fail } from "@elurjs/kit";
 
 export async function submitContact(data: { name: string }) {
   if (!data.name) return fail({ message: "Name required" }, 400);
@@ -150,7 +150,7 @@ export async function submitContact(data: { name: string }) {
 ## `redirect(location, status?)` — return a redirect
 
 ```typescript
-import { redirect } from "@elurjs/kit/action";
+import { redirect } from "@elurjs/kit";
 
 export async function login(data: { email: string; password: string }) {
   const user = await auth(data);
@@ -184,12 +184,18 @@ instead.
 
 ### Origin verification
 
-```typescript
-import { verifyOrigin } from "@elurjs/kit/action";
+`verifyOrigin` returns an error **message** when the request must be
+rejected, or `undefined` when it is allowed — combine it with
+`originForbidden` to build the `403` response:
 
-if (!verifyOrigin(request, { allowedOrigins: ["https://myapp.com"] })) {
-  return new Response("Forbidden", { status: 403 });
-}
+```typescript
+import { verifyOrigin, originForbidden } from "@elurjs/kit";
+
+const reason = verifyOrigin(request, {
+  allowedOrigins: ["https://myapp.com"],
+  strictOrigin: true, // reject requests missing both Origin and Referer
+});
+if (reason) return originForbidden(reason);
 ```
 
 ### Body limits
@@ -218,26 +224,6 @@ type ActionConcurrencyMode = "latest" | "queue" | "parallel";
 - `"latest"` — only the most recent call runs; previous in-flight calls are cancelled
 - `"queue"` — calls run sequentially in order
 - `"parallel"` — all calls run concurrently
-
-### `ActionContext`
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `request` | `Request` | The original Web Request |
-| `signal` | `AbortSignal` | Aborts if the client disconnects |
-| `idempotencyKey` | `string?` | From request header, for safe retries |
-| `params` | `Record<string, string \| string[]>` | Route params (page-scoped actions) |
-| `locals` | `Record<string, unknown>` | Per-request data from middleware |
-
-### `DefineActionOptions<TInput>`
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `input` | `ActionInputValidator<TInput>?` | Validator with `.parse()` (Zod-compatible) |
-| `concurrency` | `ActionConcurrencyMode?` | Concurrency mode |
-| `idempotent` | `boolean?` | Safe to retry |
-| `invalidateTags` | `string[]?` | Cache tags to invalidate after success |
-| `invalidatePaths` | `string[]?` | Cache paths to invalidate after success |
 
 ### `DefinedAction<TInput, TOutput>`
 
@@ -274,25 +260,21 @@ type DefinedActionFn<TInput, TOutput> = (
 | `allowedOrigins` | `string[]?` | — | Extra origins allowed to call actions |
 | `strictOrigin` | `boolean?` | `false` | Reject requests missing both `Origin` and `Referer` |
 
-## Type guards
+## Distinguishing results
+
+`fail()` and `redirect()` return instances of the `ActionFailure` /
+`RedirectResponse` classes exported from the package root — check them
+with `instanceof`:
 
 ```typescript
-import {
-  isActionFailure,
-  isRedirectResponse,
-  isFirstClassResponse,
-} from "@elurjs/kit/action";
+import { ActionFailure, RedirectResponse } from "@elurjs/kit";
 
-if (isActionFailure(result)) {
+const result = await contact.submit({ name: "Ada" });
+
+if (result instanceof ActionFailure) {
   console.log(result.data, result.status);
-}
-
-if (isRedirectResponse(result)) {
+} else if (result instanceof RedirectResponse) {
   console.log(result.location, result.status);
-}
-
-if (isFirstClassResponse(error)) {
-  // thrown Response object (redirect, 404, etc.)
 }
 ```
 
@@ -302,7 +284,7 @@ Low-level server handler with CSRF verification, body parsing, and error
 handling:
 
 ```typescript
-import { handleActionRequest } from "@elurjs/kit/action";
+import { handleActionRequest } from "@elurjs/kit";
 
 const response = await handleActionRequest(
   request,
@@ -356,7 +338,7 @@ const names = actionNames(registry);
 Builds a `403` text response for a rejected origin check:
 
 ```typescript
-import { verifyOrigin, originForbidden } from "@elurjs/kit/action";
+import { verifyOrigin, originForbidden } from "@elurjs/kit";
 
 const reason = verifyOrigin(request, { strictOrigin: true });
 if (reason) return originForbidden(reason);
@@ -391,7 +373,7 @@ import {
   clearActionErrorCookieHeader,
   setActionErrorCookieHeader,
   ACTION_ERROR_COOKIE,
-} from "@elurjs/kit/action";
+} from "@elurjs/kit";
 
 // Encode a failure for the redirect cookie
 const { value, storeId } = encodeActionErrorCookie(
@@ -412,26 +394,9 @@ headers.set("Set-Cookie", clearActionErrorCookieHeader());
 
 The `form` prop on `PageProps` is populated from this cookie during SSR.
 
-## Public error helpers
-
-```typescript
-import {
-  toPublicErrorInfo,
-  publicErrorResponse,
-  isFirstClassResponse,
-} from "@elurjs/kit";
-
-// Production-safe error info (no stacks or internal paths)
-const info = toPublicErrorInfo(error, { includeDetail: false });
-// { code: "INTERNAL_SERVER_ERROR", message: "Internal Server Error", status: 500 }
-
-// Build a JSON error Response with safe body
-const response = publicErrorResponse(error, {
-  includeDetail: process.env.NODE_ENV !== "production",
-  requestId: ctx.requestId,
-});
-```
-
-`isFirstClassResponse(error)` returns `true` when a loader or layout threw
-a `Response` object (redirect, 404, etc.) — these are re-thrown as control
-flow, not treated as 500 errors.
+:::note
+The runtime sanitizes server errors automatically in production — no
+stacks or internal paths leak into responses. If a loader or layout throws
+a `Response` object (redirect, 404, etc.), the runtime re-throws it as
+control flow instead of treating it as a 500.
+:::

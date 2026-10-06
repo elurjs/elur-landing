@@ -41,7 +41,7 @@ export function ElurKit(): ElurTemplate {
                 code-splitting, and a <code>js: "legacy"</code> escape hatch.</span></li>
             <li><span class="home-elur-kit-check">✓</span> <span><strong>Content collections</strong> with typed Markdown,
                 YAML frontmatter, and Zod validation.</span></li>
-            <li><span class="home-elur-kit-check">✓</span> <span><strong>Server actions</strong> with <code>elurAction()</code>
+            <li><span class="home-elur-kit-check">✓</span> <span><strong>Server actions</strong> with <code>elurJsAction()</code>
                 — reactive <code>pending</code>, <code>error</code>, and <code>data</code> signals. Progressive
                 enhancement via HTML form submissions. <code>fail()</code> and <code>redirect()</code> helpers.</span></li>
             <li><span class="home-elur-kit-check">✓</span> <span><strong>Suspense streaming</strong> — <code>streamBoundary()</code>

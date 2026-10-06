@@ -181,17 +181,47 @@ import { startClientRouter } from "@elurjs/kit/router";
 startClientRouter({ prefetch: true, morph: false, loadingIndicator: false });
 ```
 
-## Redirects and rewrites
+## Redirects, rewrites, and route headers
 
-Redirect and rewrite rules are internal utilities that match path patterns
-with `:param` and `*` wildcards. They are used by the framework during build
-and request handling:
+Since v2.5 these rules are configured in `elur.config.ts` and evaluated by
+the unified Web handler — they work in `dev`, `preview`, `start`, and the
+generated Node/Bun servers (the Vercel/Netlify bundled handlers do not
+pick them up yet):
 
 ```typescript
-// Internal API (not exported via @elurjs/kit/router)
-// RedirectRule: { from, to, status? } — default status 308
-// RewriteRule: { from, to }
-// RouteHeadersRule: { path, headers }
+// elur.config.ts
+import { defineConfig } from "@elurjs/kit";
+
+export default defineConfig({
+  redirects: [
+    { from: "/old/:slug", to: "/blog/:slug", status: 301 },
+    { from: "/home", to: "/" }, // 308 by default
+  ],
+  rewrites: [
+    { from: "/docs/*", to: "/pages/docs/:0" }, // URL stays /docs/*
+  ],
+  headers: [
+    { path: "/api/*", headers: { "Cache-Control": "no-store" } },
+  ],
+});
+```
+
+- **Redirects** are evaluated *before* all routing and return a `Location`
+  response. First match wins.
+- **Rewrites** transparently change the pathname used for routing — the
+  browser URL does not change. The rewritten path drives static serving,
+  SSR, API routes, and the ISR cache key.
+- **Route headers** merge into responses matching the public (pre-rewrite)
+  path. They may override security headers; `Server-Timing` and
+  `X-Request-ID` always win.
+- Patterns support literal segments, `:param`, `*` wildcards, and
+  `:param*` catch-alls, with `:param` interpolation in destinations.
+
+The rule types are exported from the package root so you can annotate
+rule arrays outside `defineConfig`:
+
+```typescript
+import type { RedirectRule, RewriteRule, RouteHeadersRule } from "@elurjs/kit";
 ```
 
 ### `RedirectRule`
@@ -215,12 +245,6 @@ and request handling:
 | --- | --- | --- |
 | `path` | `string` | Path pattern to match |
 | `headers` | `Record<string, string>` | Headers to apply |
-
-```typescript
-const headers = [
-  { path: "/api/*", headers: { "Cache-Control": "no-store" } },
-];
-```
 
 ## Types
 

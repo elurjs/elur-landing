@@ -349,15 +349,15 @@ export const load = async ({ params }) => {
 };
 ```
 
-Use `isFirstClassResponse(error)` to detect these in error boundaries:
+When catching errors around framework calls, re-throw `Response` objects
+(`error instanceof Response`) so redirects and 404s keep flowing as
+control flow instead of being handled as real errors:
 
 ```typescript
-import { isFirstClassResponse } from "@elurjs/kit";
-
 try {
   // ...
 } catch (error) {
-  if (isFirstClassResponse(error)) throw error; // re-throw as control flow
+  if (error instanceof Response) throw error; // re-throw as control flow
   // handle real errors
 }
 ```
@@ -370,21 +370,37 @@ Middleware runs before route matching and rendering. Define it at the root:
 src/middleware.ts   or   middleware.ts
 ```
 
+The signature is `(request: Request, context: MiddlewareContext)` — return a
+`Response` to short-circuit, or call `next({ headers, locals })` and return
+nothing to continue:
+
 ```typescript
-import type { MiddlewareContext } from "@elurjs/kit";
+import type { Middleware } from "@elurjs/kit";
 
-export async function middleware({ request, next, locals }: MiddlewareContext) {
-  // Add per-request data
-  locals.user = await getUser(request);
+const middleware: Middleware = async (request, { next }) => {
+  if (!request.headers.get("Cookie")?.includes("session=")) {
+    return Response.redirect(new URL("/login", request.url), 307);
+  }
 
-  // Continue to the route handler
-  const result = await next();
+  // Continue — attach locals for loaders/actions and extra request headers
+  next({
+    locals: { user: await getUser(request) },
+    headers: { "x-user-id": "123" },
+  });
+};
 
-  // Add response headers
-  result.headers?.set("X-Frame-Options", "DENY");
-  return result;
-}
+export default middleware;
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/admin/:path*"],
+};
 ```
+
+:::note
+Middleware runs in the unified Web handler — `elur-kit dev`, `preview`,
+and `start` — after redirects/rewrites and the internal endpoints, before
+routing. It does not run in the generated Node/Bun adapter servers yet.
+:::
 
 See the [Middleware & Cache](/docs/ecosystem/kit/middleware-cache/) page for
 the full API: `MiddlewareContext`, `next()`, tagged invalidation, cache
@@ -392,10 +408,16 @@ adapters, and `streamBoundary`.
 
 ## Cache control
 
-Route modules can export a `cache` object to control ISR behavior:
+Route modules can export a `cache` object (from `page.data.ts`, the data
+module) to control ISR behavior:
 
 ```typescript
-// src/app/blog/[slug]/page.ts
+// src/app/blog/[slug]/page.data.ts
+export const load = async ({ params }) => {
+  const post = await getEntry("blog", params.slug);
+  return { post };
+};
+
 export const cache = {
   mode: "public",       // "public" | "private" | "dynamic"
   revalidate: 60,       // seconds

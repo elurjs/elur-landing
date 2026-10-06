@@ -11,6 +11,19 @@ order: 1
 `@elurjs/core`. It brings file-based routing, server-side rendering, islands
 architecture, content collections, and deployment adapters to Elur.
 
+| | |
+| --- | --- |
+| **Current version** | `2.6.1` |
+| **Peer dependency** | `@elurjs/core` `^4.0.5` |
+| **Runtime** | Node `>= 20.19` (Bun supported via adapter) |
+| **License** | MIT |
+
+:::warning Upgrading from Elur 3
+`@elurjs/kit@2.6.1` requires `@elurjs/core@^4.0.5` — the Elur 3 range was
+dropped so the package always resolves the v4 engine (with duplicate-instance
+detection). Projects still on Elur 3 should stay on `@elurjs/kit@2.5.x`.
+:::
+
 ## Key features
 
 - **File-based routing** — `page.ts`, `layout.ts`, dynamic routes `[slug]`,
@@ -28,13 +41,76 @@ architecture, content collections, and deployment adapters to Elur.
   events, `data-elur-persist` element survival, network-aware LRU
   prefetch, optional idiomorph morphing, Speculation Rules, and a loading
   indicator.
+- **Streaming SSR (opt-in)** — real streaming for routes with a
+  `loading.ts` boundary via `defineConfig({ streaming: true })`.
 - **Deployment adapters** — Vercel, Netlify, Bun, Node.
+- **Observability built in** — structured JSON request logging,
+  `X-Request-ID` correlation, and `Server-Timing` metrics on every
+  response.
+
+## Requirements
+
+| Requirement | Version |
+| --- | --- |
+| Node.js | `>= 20.19.0` |
+| `@elurjs/core` (peer) | `^4.0.5` |
+| `vite` (peer) | `^7.0.0 \|\| ^8.0.0` |
+| `marked` (optional peer) | `^16 \|\| ^17 \|\| ^18` — Markdown for content collections |
+| `zod` (optional peer) | `^4.0.0` — frontmatter/action validation |
+| `sharp` (optional peer) | `^0.33 \|\| ^0.34 \|\| ^0.35` — image variants |
+| `@elurjs/vite-plugin-elur` (optional peer) | `^2.2.1` — build-time compiler + HMR |
 
 ## Installation
 
+### Scaffold a new project (recommended)
+
 ```bash
-npm install @elurjs/core @elurjs/kit
+npm create elur-app@latest my-app -- --template kit
+cd my-app
+npm run dev
 ```
+
+The `kit` template ships `elur-kit` scripts already wired up: `dev`,
+`build`, `preview`, `start`, `check`, `routes`, and `doctor`. Tailwind CSS
+v4 is available via `--tailwind`.
+
+### Add to an existing project
+
+```bash
+npm install @elurjs/core @elurjs/kit vite
+```
+
+Optional peers, installed only if you use the feature:
+
+```bash
+npm install marked   # content collections (renderMarkdown)
+npm install zod      # frontmatter + action input validation
+npm install sharp    # build-time image variants (WebP/AVIF)
+```
+
+## Your first page
+
+```typescript
+// src/app/page.ts
+import { html } from "@elurjs/core";
+import type { PageProps } from "@elurjs/kit";
+import { load } from "./page.data.ts";
+
+export default function HomePage({ data }: PageProps<typeof load>) {
+  return html`<h1>${data.title}</h1>`;
+}
+```
+
+```typescript
+// src/app/page.data.ts
+import type { PageDataLoad } from "@elurjs/kit";
+
+export const load: PageDataLoad = async () => {
+  return { title: "Hello Elur Kit" };
+};
+```
+
+Then `elur-kit dev` and open `http://localhost:3000`.
 
 ## Project structure
 
@@ -69,9 +145,9 @@ src/
 
 ```bash
 elur-kit dev        # dev server with rebuild-on-change
-elur-kit build      # static site build to dist/
+elur-kit build      # static site build to dist/ (atomic staging, phase timings)
 elur-kit preview    # serve the static build in production mode
-elur-kit start      # SSR server that renders pages on demand
+elur-kit start      # SSR server — requires a previous `elur-kit build`
 elur-kit adapter vercel   # generate Vercel output
 elur-kit adapter netlify  # generate Netlify output
 elur-kit adapter bun      # generate Bun server
@@ -82,8 +158,23 @@ elur-kit doctor     # diagnose common config and environment issues
 ```
 
 Common options: `--root`, `--app`, `--islands`, `--out`, `--public`,
-`--port`, `--host`, `--lang`, `--config`, `--cache-dir`,
-`--default-revalidate`.
+`--port`, `--host`, `--lang`, `--hydrate-import`, `--router-import`,
+`--client-config`, `--config`, `--cache-dir`, `--default-revalidate`.
+
+Verbosity flags (override `logger.level` from the config file):
+
+```bash
+elur-kit build --verbose   # debug logging
+elur-kit build --quiet     # errors only (wins over --verbose)
+```
+
+:::note
+`dev`, `preview`, and `start` all run through the unified Web handler —
+same redirects/rewrites, middleware, ISR cache, logging, and streaming
+code path as production. `start` fails fast when `dist/` is missing.
+If the requested port is busy, the server retries on the next port (up
+to 20 candidates) and prints the bound URL in the startup banner.
+:::
 
 ## Configuration
 
@@ -93,8 +184,22 @@ import { defineConfig } from "@elurjs/kit";
 
 export default defineConfig({
   output: "static",        // "static" | "server" | "hybrid"
+  site: "https://example.com", // enables automatic sitemap.xml on build
   trailingSlash: "always", // "always" | "never" | "ignore"
+  js: "modern",            // "modern" (0% JS gating) | "legacy"
+  streaming: false,        // opt-in streaming SSR (experimental)
+  router: {
+    enabled: true,         // SPA router (false → 0 KB JS on island-free pages)
+    prefetch: true,        // hover/focus/pointerdown prefetch
+    morph: false,          // idiomorph DOM morphing (experimental)
+    speculation: "prefetch", // "prefetch" | "prerender" speculation rules
+  },
+  redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
+  rewrites:  [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  headers:   [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
   images: { formats: ["avif", "webp"], quality: 80 },
+  cache: { dir: "./.cache", adapter: myCacheAdapter }, // pluggable ISR adapter
+  logger: { level: "info" }, // structured request logging
   security: { strictOrigin: true, bodyLimit: 1_000_000 },
 });
 ```
@@ -103,19 +208,20 @@ export default defineConfig({
 
 | Path | Key exports |
 | --- | --- |
-| `@elurjs/kit` | `build`, `island`, `defineConfig`, `renderToString`, `documentShell`, `image`, `streamBoundary`, `renderPage`, `renderStreamingPage`, `renderErrorPage`, `renderPageBody`, `createSsrServer`, `scanRoutes`, `scanActions`, `scanIslands`, `createAppManifest`, `matchRoute` |
+| `@elurjs/kit` | `build`, `scanRoutes`, `island`, `defineConfig`, `renderToString`, `isSSR`, `documentShell`, `extractAppBody`, `buildHeadTags`, `collectShellExtras`, `image`, `processImages`, `streamBoundary`, `renderPage`, `renderErrorPage`, `renderPageBody`, `createStreamingResponse`, `createBufferedResponse`, `createSsrServer` *(deprecated)*, `renderStreamingPage` *(deprecated)*, `scanActions`, `scanIslands`, `generateClientEntry`, `matchRoute`, `matchApiRoute`, `createAppManifest`, `defineAction`, `callAction`, `handleActionRequest`, `verifyOrigin`, `originForbidden`, `fail`, `redirect`, `ActionFailure`, `RedirectResponse`, action error cookie helpers, `loadMiddleware`, `runMiddleware`, `matchesMiddleware`, `createFsCacheAdapter`, `createRedisCacheAdapter`, `createCloudflareKVCacheAdapter`, `defaultInvalidator`, `connectCacheAdapter`, `getCachedHtml`, `setCachedHtml`, `clearCache`, `StructuredLogger`, `createRequestLogger`, `loadElurConfig`, `vercelAdapter`, `netlifyAdapter`, `bunAdapter`, `nodeAdapter`, `startClientRouter`, `navigateTo`, `prefetch`, `runIntegrationHook` |
 | `/island` | `island`, `hydrateIslands`, `cleanupHydratedIslands`, `scanIslands`, `lazyIsland`, `ISLAND_MARKER_ATTR`, `PERSIST_ATTR` |
-| `/action` | `defineAction`, `elurJsAction`, `callAction`, `fail`, `redirect`, `handleActionRequest`, `verifyOrigin` |
-| `/config` | `defineConfig`, `loadElurConfig`, `ElurConfig` |
-| `/content` | `defineCollection`, `getEntry`, `getCollection`, `getEntries`, `renderMarkdown`, `renderEntryHTML`, `raw`, `parseDocument`, `parseFrontmatter`, `splitFrontmatter`, `createValidator`, `getZod` |
-| `/seo` | `generateSitemap`, `generateRobots`, `jsonLd` |
-| `/image` | `image`, `processImages`, `getImage`, `createImageService`, `consumeImageRegistry`, `setImageManifest`, `isSharpAvailable` |
+| `/action` | `callAction`, `elurJsAction`, `defineAction` (+ `ActionRequest`, `CallActionOptions`, `ElurJsAction`, `ActionContext` types) |
+| `/config` | `defineConfig`, `loadElurConfig`, `ElurConfig`, `ResolvedElurConfig` |
+| `/content` | `defineCollection`, `getEntry`, `getCollection`, `getEntries`, `renderMarkdown`, `renderEntryHTML`, `raw`, `parseDocument`, `parseFrontmatter`, `splitFrontmatter`, `createValidator`, `getZod`, `setContentRoot`, `withContentRoot`, `clearContentCache` |
+| `/seo` | `generateSitemap`, `generateSitemapFromRoutes`, `generateRobots`, `jsonLd` |
+| `/image` | `image`, `processImages`, `processImageBatch`, `getImage`, `createImageService`, `consumeImageRegistry`, `setImageManifest`, `isSharpAvailable`, `readManifest`, `writeManifest`, `buildSrcset`, `buildPictureMarkup` |
+| `/cache` | `CacheAdapter`, `createFsCacheAdapter`, `createRedisCacheAdapter`, `createCloudflareKVCacheAdapter`, `getWithSWR`, `cacheKey`, `defaultInvalidator`, `connectCacheAdapter`, `CacheInvalidator`, `normalizeCachePolicy`, `shouldCachePublic`, `isStale` |
 | `/adapters/vercel` | `vercelAdapter` |
 | `/adapters/netlify` | `netlifyAdapter` |
 | `/adapters/bun` | `bunAdapter` |
 | `/adapters/node` | `nodeAdapter` |
-| `/router` | `startClientRouter`, `navigateTo`, `prefetch`, `ClientRouterOptions`, `NavigationEventDetail` |
-| `/runtime` | `createWebHandler`, `RequestContext`, `serveStaticFile`, `resolveStaticFile`, `incomingMessageToRequest`, `htmlResponse`, `jsonResponse`, `textResponse`, `notFound`, `methodNotAllowed`, `serverError`, `guessContentType`, `buildSecurityHeaders`, `applySecurityHeaders` |
+| `/router` | `startClientRouter`, `navigateTo`, `prefetch`, `hoistStyles`, `ClientRouterOptions`, `NavigationEventDetail` |
+| `/runtime` | `createWebHandler`, `RequestContext`, `serveStaticFile`, `resolveStaticFile`, `incomingMessageToRequest`, `sendWebResponse`, `htmlResponse`, `jsonResponse`, `textResponse`, `notFound`, `methodNotAllowed`, `serverError`, `guessContentType`, `buildSecurityHeaders`, `applySecurityHeaders`, `StructuredLogger`, `createRequestLogger`, `validateCapabilities`, `createCapabilities`, `DEFAULT_CAPABILITIES`, `SERVERLESS_CAPABILITIES`, `EDGE_CAPABILITIES` |
 | `/vite` | `elurJsKit` (Vite plugin), `elurJsInterpolationPlugin` |
 | `/manifest` | `createAppManifest`, `writeAppManifest`, `writeRouteTypes`, `validateManifestRoutes`, `assertClientImportAllowed` |
 | `/integrations` | `runIntegrationHook`, `registerIntegration`, `getI18nIntegration`, `getAuthIntegration`, `getQueryIntegration`, `getTestingIntegration` |

@@ -28,6 +28,16 @@ export const config = {
 };
 ```
 
+Since v2.5 middleware runs in the unified Web handler — `dev`, `preview`,
+and `start` share the same pipeline: it executes after redirects/rewrites
+and the internal endpoints, before routing. A returned `Response`
+short-circuits through the standard finalize step (security headers,
+`X-Request-ID`, `Server-Timing` still apply); `next({ headers, locals })`
+merges into the downstream request and exposes `locals` to API routes and
+actions. Middleware errors return a sanitized 500 instead of crashing the
+request. The generated Node/Bun adapter servers do not run the middleware
+file yet.
+
 ### `Middleware` type
 
 ```typescript
@@ -50,15 +60,6 @@ type Middleware = (
 | Field | Type | Description |
 | --- | --- | --- |
 | `matcher` | `string[]` | Path patterns — `*` wildcard, `:param` segments |
-
-### `Middleware` type
-
-```typescript
-type Middleware = (
-  request: Request,
-  context: MiddlewareContext,
-) => Response | void | Promise<Response | void>;
-```
 
 ### `LoadedMiddleware`
 
@@ -132,14 +133,15 @@ streaming.
 
 ## HTML cache
 
-Legacy cache functions (from `@elurjs/kit`):
+Legacy cache functions (exported from both `@elurjs/kit` and
+`@elurjs/kit/cache` for backward compatibility):
 
 ```typescript
-import { getCachedHtml, setCachedHtml, clearCache } from "@elurjs/kit";
+import { getCachedHtml, setCachedHtml, clearCache, isStale } from "@elurjs/kit";
 
 // Check cache before rendering
 const cached = await getCachedHtml(cacheDir, "/blog/hello-world");
-if (cached) return cached;
+if (cached && !isStale(cached)) return cached;
 
 // Cache after rendering
 await setCachedHtml(cacheDir, "/blog/hello-world", html, 60);
@@ -155,15 +157,21 @@ interface CacheEntry {
   html: string;
   generatedAt: number;
   revalidate: number;
+  tags?: string[]; // stored since v2.5 for tag-based invalidation
 }
 ```
 
 ## Cache adapters
 
+Everything below is exported from the dedicated **`@elurjs/kit/cache`**
+subpath (and re-exported from the package root). Wire an adapter globally
+via `defineConfig({ cache: { adapter } })`, or manually with
+`connectCacheAdapter`.
+
 ### Filesystem (default)
 
 ```typescript
-import { createFsCacheAdapter } from "@elurjs/kit";
+import { createFsCacheAdapter } from "@elurjs/kit/cache";
 
 const adapter = createFsCacheAdapter({
   cacheDir: "./.elur/cache",
@@ -172,10 +180,13 @@ const adapter = createFsCacheAdapter({
 });
 ```
 
+When `cache.adapter` is omitted, the handler creates a filesystem adapter
+rooted at `cache.dir` and shares it per directory for the process.
+
 ### Redis
 
 ```typescript
-import { createRedisCacheAdapter } from "@elurjs/kit";
+import { createRedisCacheAdapter } from "@elurjs/kit/cache";
 
 const adapter = createRedisCacheAdapter({
   client: redisClient, // ioredis, node-redis, or Upstash
@@ -186,9 +197,9 @@ const adapter = createRedisCacheAdapter({
 ### Cloudflare KV
 
 ```typescript
-import { createCloudflareKvCacheAdapter } from "@elurjs/kit";
+import { createCloudflareKVCacheAdapter } from "@elurjs/kit/cache";
 
-const adapter = createCloudflareKvCacheAdapter({
+const adapter = createCloudflareKVCacheAdapter({
   namespace: KV_NAMESPACE, // Cloudflare KV binding
 });
 ```
@@ -211,6 +222,46 @@ interface CacheAdapter {
 | `revalidate` | `number` | Revalidation seconds |
 | `tags` | `string[]?` | Tags for tag-based invalidation |
 | `version` | `string?` | Version string |
+
+### `getWithSWR(adapter, key, revalidate)`
+
+Stale-while-revalidate read: returns the cached entry immediately and
+revalidates in the background when it is stale. On a cache miss the
+revalidation runs synchronously:
+
+```typescript
+import { getWithSWR, cacheKey } from "@elurjs/kit/cache";
+
+const { entry, stale } = await getWithSWR(
+  adapter,
+  cacheKey("/blog/hello-world"),
+  async () => {
+    const html = await renderPage(options);
+    return { html, generatedAt: Date.now(), revalidate: 60, tags: ["posts"] };
+  },
+);
+```
+
+### `cacheKey(...parts)`
+
+SHA-256 page cache keys — the same scheme used by path-based invalidation:
+
+```typescript
+const key = cacheKey("/blog/hello-world"); // sha256 hex
+```
+
+### Cache policy helpers
+
+```typescript
+import {
+  normalizeCachePolicy,
+  shouldCachePublic,
+  DEFAULT_CACHE_POLICY,
+} from "@elurjs/kit/cache";
+
+const policy = normalizeCachePolicy(route.cache); // fills defaults
+shouldCachePublic(request); // false when Cookie/Authorization present
+```
 
 ## Cache policy
 
@@ -244,7 +295,7 @@ Default policy is `dynamic` (no caching). Requests with `Cookie` or
 ### Tag-based
 
 ```typescript
-import { defaultInvalidator } from "@elurjs/kit";
+import { defaultInvalidator } from "@elurjs/kit/cache";
 
 await defaultInvalidator.invalidateTags(["posts"]);
 ```
@@ -253,6 +304,7 @@ await defaultInvalidator.invalidateTags(["posts"]);
 
 ```typescript
 await defaultInvalidator.invalidatePaths(["/blog", "/blog/hello-world"]);
+// paths are hashed with cacheKey() before hitting the adapter
 ```
 
 ### From actions
@@ -270,13 +322,50 @@ export const deletePost = defineAction(
 );
 ```
 
-## `connectCacheAdapter(adapter, invalidator?)`
+Actions declared via `defineAction` dispatch their `invalidateTags` /
+`invalidatePaths` to the connected cache adapter automatically on success —
+actions that return `fail(...)` invalidate nothing.
 
-Connects a cache adapter to the invalidation system. Returns an unsubscribe
-function:
+### `CacheInvalidator`
+
+A pub/sub hub for invalidation events — actions emit, adapters listen:
 
 ```typescript
-import { connectCacheAdapter, defaultInvalidator } from "@elurjs/kit";
+import { CacheInvalidator } from "@elurjs/kit/cache";
+
+const invalidator = new CacheInvalidator();
+
+const unsubscribe = invalidator.on(async (event) => {
+  // event: { tags?: string[]; paths?: string[]; source?: string }
+});
+
+await invalidator.invalidateTags(["posts"], "admin-panel");
+await invalidator.emit({ tags: ["posts"], source: "webhook" });
+
+unsubscribe();   // remove one listener
+invalidator.clear(); // remove all listeners
+```
+
+`defaultInvalidator` is the global instance the runtime registers the cache
+adapter on.
+
+### `InvalidationEvent`
+
+```typescript
+interface InvalidationEvent {
+  tags?: readonly string[];
+  paths?: readonly string[];
+  source?: string;
+}
+```
+
+## `connectCacheAdapter(adapter, invalidator?)`
+
+Connects a cache adapter to the invalidation system so tag/path events from
+actions reach the cache. Returns an unsubscribe function:
+
+```typescript
+import { connectCacheAdapter, defaultInvalidator, createRedisCacheAdapter } from "@elurjs/kit/cache";
 
 const adapter = createRedisCacheAdapter({ client: redisClient });
 const unsubscribe = connectCacheAdapter(adapter, defaultInvalidator);

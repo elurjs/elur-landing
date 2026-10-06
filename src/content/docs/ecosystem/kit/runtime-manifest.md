@@ -50,6 +50,19 @@ const response = await handler(request);
 | `clientEntry` | `string?` | Client entry path |
 | `renderEndpoint` | `boolean?` | Whether `/__elur-js/render` exists |
 | `securityHeaders` | `SecurityHeadersConfig \| false?` | Security response headers |
+| `logLevel` | `LogLevel?` | Minimum level for the per-request structured logger |
+| `cacheAdapter` | `CacheAdapter?` | Pluggable ISR cache — default: filesystem adapter at `cacheDir` |
+| `redirects` | `RedirectRule[]?` | Redirect rules evaluated before routing |
+| `rewrites` | `RewriteRule[]?` | Transparent path rewrites |
+| `routeHeaders` | `RouteHeadersRule[]?` | Extra response headers per path pattern |
+| `streaming` | `boolean?` | Opt-in streaming SSR for `loading` boundaries (experimental) |
+| `capabilities` | `AdapterCapabilities?` | Host capabilities gating streaming (default `DEFAULT_CAPABILITIES`) |
+| `middleware` | `LoadedMiddleware?` | User middleware (load with `loadMiddleware`) |
+| `router` | `{ enabled?, entry? }?` | SPA router flags affecting SSR output |
+| `js` | `"modern" \| "legacy"?` | Client JS emission mode |
+
+Every response carries `X-Request-ID` (correlation) and `Server-Timing`
+(per-phase metrics: `action`, `render-endpoint`, `api`, `ssr`) headers.
 
 ### `WebHandlerRouteTable`
 
@@ -163,20 +176,66 @@ const response = await serveStaticFile("./dist", "/images/hero.webp");
 const filePath = await resolveStaticFile("./dist", "/images/hero.webp");
 ```
 
-## `incomingMessageToRequest(req)`
+## `incomingMessageToRequest(req)` / `sendWebResponse(res, response, signal?)`
 
-Converts a Node.js `IncomingMessage` to a Web `Request`:
+Convert between Node.js and Web primitives:
 
 ```typescript
-import { incomingMessageToRequest } from "@elurjs/kit/runtime";
+import { incomingMessageToRequest, sendWebResponse } from "@elurjs/kit/runtime";
 import { createServer } from "node:http";
 
 const server = createServer(async (req, res) => {
   const request = incomingMessageToRequest(req);
   const response = await handler(request);
-  // ...write response to res...
+  await sendWebResponse(res, response, request.signal);
 });
 ```
+
+`sendWebResponse` forwards streamed chunks as they are produced (with
+backpressure) and cancels the upstream stream when the socket closes —
+required for real streaming SSR on Node.
+
+## Structured logging
+
+The handler creates a `StructuredLogger` per request instead of bare
+`console.*` calls — JSON in production, readable `[LEVEL]` text in dev,
+with structured fields (`path`, `method`, `route`, `error`, `stack`),
+sensitive-header redaction, and a request ID from the incoming
+`X-Request-ID` header or generated per request:
+
+```typescript
+import { StructuredLogger, createRequestLogger } from "@elurjs/kit/runtime";
+
+// createRequestLogger(request?, minLevel?) — reuses the request's
+// X-Request-ID header when present
+const logger = createRequestLogger(request, "info"); // "debug" | "info" | "warn" | "error"
+logger.info("request handled", { path: "/blog", status: 200 });
+```
+
+Configure globally via `defineConfig({ logger: { level } })` or the
+`--verbose`/`--quiet` CLI flags.
+
+## Adapter capabilities
+
+Hosts declare what they support; `createWebHandler` uses it to gate
+streaming, and the CLI `adapter` command fails fast on incompatible
+combinations:
+
+```typescript
+import {
+  validateCapabilities,
+  DEFAULT_CAPABILITIES,    // Node/Bun — full capabilities
+  SERVERLESS_CAPABILITIES, // Vercel/Netlify — ephemeral filesystem
+  EDGE_CAPABILITIES,       // Edge — readonly filesystem
+  createCapabilities,
+  supportsStreaming,
+  supportsPersistentStorage,
+  supportsWritableFilesystem,
+} from "@elurjs/kit/runtime";
+```
+
+See [Deployment — Adapter capabilities](/docs/ecosystem/kit/deployment/)
+for the full capability contract.
 
 ## Security headers
 

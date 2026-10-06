@@ -175,6 +175,31 @@ with `data-scroll-preserve` keep their own scroll across navigations.
 6. `<head>` merged (`data-elur-head` tags, title, canonical, `og:url`);
    `#elur-data` / `#elur-actions` JSON refreshed; inline `<script>`s
    re-executed (external `src` deduplicated across navigations,
-   `data-elur-no-reload` opts out).
+   `data-elur-no-reload` opts out); `<link rel="stylesheet">` and
+   `<style>` tags inside `#app` are **hoisted** into `<head>` so they
+   persist across navigations (prevents FOUC).
 7. `elur:rendered` → islands re-hydrate.
 8. `elur:navigate-end` after the view transition settles.
+
+## `hoistStyles(container)`
+
+Style hoisting is also available as a standalone export — it moves
+`<link rel="stylesheet">` and `<style>` elements found inside a container
+into `<head>`, deduplicating by `href`/content:
+
+```typescript
+import { hoistStyles } from "@elurjs/kit/router";
+
+hoistStyles(fragment); // hoists styles before the #app swap
+```
+
+## `navigateTo` / `prefetch`
+
+```typescript
+import { navigateTo, prefetch } from "@elurjs/kit/router";
+
+await navigateTo("/blog/hello-world");        // push + swap
+await navigateTo("/login", "", false);        // replace-style (popstate)
+await prefetch("/docs/islands");              // cache for 30 s
+await prefetch("/heavy", "", { force: true }); // bypass network guards
+```

@@ -54,7 +54,11 @@ const html = await renderToString(() => Page({ data }));
 
 ## `documentShell(options)`
 
-Wraps page HTML with the document shell (`<html>`, `<head>`, `<body>`):
+Wraps page HTML with the document shell (`<html>`, `<head>`, `<body>`).
+The `#app` content is delimited with explicit
+`<!--elur:app:start-->`/`<!--elur:app:end-->` comment markers so adapters
+and the streaming pipeline can locate the body without fragile regexes —
+use `extractAppBody(html)` to pull it back out:
 
 ```typescript
 import { documentShell } from "@elurjs/kit";
@@ -69,6 +73,8 @@ const fullHtml = documentShell({
   data: { user: { name: "Ada" } },
   actions: { "/contact": ["submitContact"] },
   clientEntry: "/_elur/entry-client.js",
+  routerEntry: "/_elur/router.js", // split builds only
+  routerEnabled: true,
   metadata: pageMetadata,
   renderEndpoint: true,
 });
@@ -82,13 +88,31 @@ const fullHtml = documentShell({
 | `title` | `string?` | Page title |
 | `lang` | `string?` | HTML lang attribute |
 | `htmlAttributes` | `Record<string, string>?` | Additional `<html>` attributes |
-| `headScripts` | `string[]?` | Scripts to inject in `<head>` |
-| `headLinks` | `string[]?` | `<link>` tags for `<head>` |
+| `headScripts` | `string[]?` | Inline scripts to inject in `<head>` (run before first paint — ideal for no-flash theme bootstrapping) |
+| `headLinks` | `string[]?` | Raw HTML for `<head>` (`<link>` icons, manifest, theme-color) |
 | `data` | `unknown?` | Serialized loader data for client hydration |
 | `actions` | `Record<string, string[]>?` | Action names per page (for client) |
-| `clientEntry` | `string?` | Client entry URL path |
+| `clientEntry` | `string?` | Client entry URL path — emitted only when the body contains islands (modern JS mode) |
+| `routerEntry` | `string?` | URL of the split router chunk, e.g. `/_elur/router.js` |
+| `routerEnabled` | `boolean?` | Whether the SPA router is enabled — `false` omits the `elur:render-endpoint` meta |
+| `speculation` | `"prefetch" \| "prerender"?` | Emits `<script type="speculationrules">` (static builds only) |
 | `metadata` | `PageMetadata?` | SEO metadata (title, description, OG, Twitter) |
 | `renderEndpoint` | `boolean?` | Whether `/__elur-js/render` exists (default `true`; `false` for static) |
+
+Every emitted module entry (`clientEntry`, `routerEntry`) also gets a
+`<link rel="modulepreload">` so the fetch starts during HTML parsing.
+
+### `extractAppBody(html)`
+
+Returns the HTML between the `<!--elur:app:start-->`/`<!--elur:app:end-->`
+markers — the stable way for adapters to pull the rendered body out of a
+full document:
+
+```typescript
+import { extractAppBody } from "@elurjs/kit";
+
+const body = extractAppBody(fullHtml);
+```
 
 ## `buildHeadTags(metadata, fallbackTitle)`
 
@@ -135,10 +159,15 @@ export const load = async ({ params }) => {
 
 ## Streaming
 
-Use `streamBoundary` for per-request Suspense-style streaming. During SSR,
-the fallback is emitted immediately and the resolved content is streamed as
-a `<template>` chunk that swaps in-place. During SSG, boundaries are
-resolved synchronously:
+Two complementary mechanisms:
+
+- **`streamBoundary`** — a Suspense-style boundary inside a template. During
+  SSR the fallback is emitted immediately and the resolved content is
+  streamed as a `<template>` chunk that swaps in-place. During SSG,
+  boundaries are resolved synchronously.
+- **Real streaming SSR (opt-in, v2.5+)** — `defineConfig({ streaming: true })`
+  streams the document shell + the `loading.ts` fallback immediately while
+  the page renders in the background, then swaps the boundary in-place.
 
 ```typescript
 import { streamBoundary } from "@elurjs/kit";
@@ -158,7 +187,69 @@ const template = streamBoundary({
 | `promise` | `Promise<T>` | Promise that resolves to the real data |
 | `children` | `(value: T) => ElurTemplate` | Renders the resolved value |
 
-## `createSsrServer(options)`
+### Real streaming SSR (`streaming: true`)
+
+```typescript
+// elur.config.ts
+export default defineConfig({
+  output: "server",
+  streaming: true, // experimental
+});
+```
+
+```text
+src/app/blog/loading.ts   → marks /blog/* as a streaming boundary
+```
+
+Behavior:
+
+- Works everywhere the unified Web handler runs — `dev`, `preview`,
+  `start`, and the generated Node/Bun servers. Hosts that declare
+  `capabilities.streaming: false` degrade to buffered rendering, and the
+  CLI `adapter` command validates the combination at build time.
+- Streamed responses send `Content-Type: text/html` early, no
+  `Content-Length`, `X-Accel-Buffering: no`, and `Cache-Control: no-store`.
+- **ISR interaction**: streamed pages bypass the cache entirely (never
+  read, never written). Buffered routes keep normal ISR behavior.
+- **Abort handling**: client disconnects cancel the stream via
+  `request.signal`; late background renders are discarded.
+- **Mid-stream failures**: a loader `redirect()`/`throw new Response()`
+  navigates via an inline script chunk; a render error swaps the boundary
+  for an inline `role="alert"` notice instead of a dead spinner.
+
+### `createStreamingResponse` / `createBufferedResponse`
+
+Low-level primitives used by the handler (exported from the package root).
+Both take `StreamResponseOptions` — the matched route plus render config —
+and return a `Response`; `createStreamingResponse` falls back to buffered
+rendering automatically when the route has no `loading` boundary:
+
+```typescript
+import { createStreamingResponse, createBufferedResponse } from "@elurjs/kit";
+
+const response = await createStreamingResponse({
+  route: matchedRoute,          // PageRoute with loadingPath → streams
+  params: { slug: "hello" },
+  searchParams: new URLSearchParams(),
+  config: { lang: "es", clientEntry: "/_elur/entry-client.js" },
+  request,
+  signal: request.signal,       // client disconnect cancels the stream
+});
+```
+
+`sendWebResponse(res, response, request.signal)` (from
+`@elurjs/kit/runtime`) writes the response to a Node `ServerResponse`,
+forwarding chunks with backpressure and cancelling the upstream stream on
+socket close.
+
+## `createSsrServer(options)` — deprecated
+
+:::warning Deprecated since v2.5
+`createSsrServer` is the legacy standalone SSR pipeline. `dev`, `preview`,
+and `start` all run through `createWebHandler` now. It remains exported
+for backward compatibility and will be removed in a future major — use
+`elur-kit start` or `createWebHandler` instead.
+:::
 
 Create an SSR server for on-demand rendering:
 
@@ -226,7 +317,12 @@ export const cache = {
 };
 ```
 
-Default policy is `dynamic` (no caching).
+Default policy is `dynamic` (no caching). Stale entries are served
+immediately while the page re-renders in the background
+(stale-while-revalidate). Storage goes through the pluggable
+`CacheAdapter` — filesystem by default, or Redis/Cloudflare KV via
+`defineConfig({ cache: { adapter } })`. See
+[Middleware & Cache](/docs/ecosystem/kit/middleware-cache/).
 
 ## `renderPage(options)` — single page SSR
 
@@ -262,7 +358,13 @@ first-class `Response` (redirect, 404, etc.).
 | `actions` | `Record<string, string[]>?` | Action registry |
 | `request` | `Request?` | Original request (for loaders) |
 
-## `renderStreamingPage(options)` — streaming SSR
+## `renderStreamingPage(options)` — deprecated
+
+:::warning Deprecated since v2.5
+`renderStreamingPage` used the legacy shell + client-fetch streaming
+approach. It is superseded by `createStreamingResponse` — real streaming
+via `defineConfig({ streaming: true })` + a `loading.ts` boundary.
+:::
 
 Streaming renders pages incrementally — sending static parts immediately and
 resolving async boundaries as they complete:
@@ -377,6 +479,10 @@ const result = await renderErrorPage({
 | `publicDir` | `string?` | Public directory for static assets |
 | `imageFormats` | `ImageFormat[]?` | Image formats (default `["webp", "avif"]`) |
 | `renderEndpoint` | `boolean?` | Whether `/__elur-js/render` exists (default `true`; `false` for static) |
+| `router` | `object?` | Router flags (`enabled`, `prefetch`, `morph`, `loadingIndicator`, `speculation`, `separate`, `entry`, `outFile`) baked into the generated entries |
+| `js` | `"modern" \| "legacy"?` | Client JS emission mode — `"modern"` gates per page (0% JS) |
+| `site` | `string?` | Public site URL — enables automatic `sitemap.xml` generation from scanned routes |
+| `onPhase` | `(name, durationMs) => void?` | Observer called once per build phase (`scan`, `pages`, `images`, `integrations`, `sitemap`, `transform`, `manifest`, `client bundle`) |
 | `integrations` | `ElurKitIntegration[]?` | Integrations to invoke during build |
 
 ## `BuildResult`
@@ -390,22 +496,6 @@ const result = await renderErrorPage({
 | `generatedEntry` | `string?` | Path to generated client entry |
 | `imagesProcessed` | `number` | Image variants generated (0 if no sharp) |
 | `outDir` | `string` | Output directory (atomic staging dir when via CLI) |
-
-## `ShellOptions`
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `body` | `string` | Rendered inner HTML for `#app` |
-| `title` | `string?` | `<title>` text |
-| `lang` | `string?` | `<html lang>` attribute |
-| `htmlAttributes` | `Record<string, string>?` | Additional `<html>` attributes |
-| `headScripts` | `string[]?` | Inline scripts in `<head>` (no-flash bootstrapping) |
-| `headLinks` | `string[]?` | Raw HTML in `<head>` (icons, manifest, theme-color) |
-| `data` | `unknown?` | Loader data serialized in `<script id="elur-data">` |
-| `actions` | `Record<string, string[]>?` | Per-page action names in `<script id="elur-actions">` |
-| `clientEntry` | `string?` | Client entry URL path |
-| `metadata` | `PageMetadata?` | Page metadata (meta, link, OG/Twitter tags) |
-| `renderEndpoint` | `boolean?` | Whether `/__elur-js/render` exists (default `true`) |
 
 ## `SsrServerOptions`
 
@@ -472,3 +562,7 @@ await copyPublicAssets({
 3. **SSR errors are never silenced.** If an island throws during SSR, the
    error propagates with remediation hints. Use `directive: "only"` or
    `options: { ssr: false }` to skip SSR.
+4. **Streaming pages bypass the ISR cache** — never read, never written.
+   Keep `streaming: false` for routes you want cacheable.
+5. **`elur-kit start` needs a prior `elur-kit build`.** It fails fast when
+   `dist/` is missing — it no longer renders everything on demand.

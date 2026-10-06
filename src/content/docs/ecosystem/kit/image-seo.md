@@ -320,9 +320,37 @@ const script = jsonLd({
 
 Safe escaping: `<`, `>`, `&`, U+2028, U+2029 are escaped to prevent injection.
 
+### `generateSitemapFromRoutes(routes, options)` — automatic sitemap
+
+When `site` is set in `defineConfig`, `elur-kit build` writes `sitemap.xml`
+from the scanned route manifest automatically — dynamic routes, error
+pages, and internal namespaces are excluded; sites over 50,000 URLs are
+split into `sitemap-N.xml` files with a `sitemap.xml` index. An existing
+`sitemap.xml` (from `public/` or an integration hook) always takes
+precedence and is never overwritten.
+
+To generate it manually from the scanned routes:
+
+```typescript
+import { generateSitemapFromRoutes } from "@elurjs/kit/seo";
+
+await generateSitemapFromRoutes({
+  siteUrl: "https://example.com",
+  outDir: "./dist",
+  routes,                    // ScannedRoutes from scanRoutes()
+  extraUrls: ["/blog/hello-world"], // concrete URLs for dynamic routes
+  defaultChangefreq: "weekly",
+  defaultPriority: 0.7,
+});
+```
+
+Dynamic routes are excluded automatically — pass their concrete URLs via
+`extraUrls` (e.g. generated from your content collections).
+
 ## Using in build hook
 
-Generate sitemap and robots during build:
+Generate sitemap and robots during build — integration hooks are declared
+flat on the integration object:
 
 ```typescript
 // elur.config.ts
@@ -334,22 +362,26 @@ export default defineConfig({
   integrations: [
     {
       name: "seo",
-      hooks: {
-        build: async ({ manifest, config }) => {
-          await generateSitemap({
-            siteUrl: config.site!,
-            outDir: config.outDir,
-            urls: manifest.routes.map(r => r.path),
-          });
+      build: async (result, ctx) => {
+        await generateSitemap({
+          siteUrl: "https://example.com",
+          outDir: result.outDir,
+          urls: ["/", "/blog"],
+        });
 
-          await generateRobots({
-            siteUrl: config.site!,
-            outDir: config.outDir,
-            disallow: ["/api/"],
-          });
-        },
+        await generateRobots({
+          siteUrl: "https://example.com",
+          outDir: result.outDir,
+          disallow: ["/api/"],
+        });
       },
     },
   ],
 });
 ```
+
+:::tip
+When `site` is configured you usually don't need this — the build already
+generates `sitemap.xml` from the route manifest. Use the hook for custom
+URLs or `lastmod`/`priority` metadata.
+:::

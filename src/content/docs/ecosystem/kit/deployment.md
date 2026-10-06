@@ -226,3 +226,21 @@ interface Adapter {
 | `clientEntry` | `string` | Client entry URL path |
 | `lang` | `string` | HTML lang attribute |
 | `hydrateImport` | `string?` | Import specifier for `hydrateIslands` |
+| `logLevel` | `LogLevel?` | Minimum level for the runtime structured logger |
+| `cacheAdapter` | `CacheAdapter?` | Pluggable ISR cache (programmatic only — generated Node/Bun servers can't serialize adapter instances) |
+| `redirects` | `RedirectRule[]?` | Redirect rules baked into the generated server |
+| `rewrites` | `RewriteRule[]?` | Rewrite rules baked into the generated server |
+| `routeHeaders` | `RouteHeadersRule[]?` | Route headers baked into the generated server |
+| `streaming` | `boolean?` | Opt-in streaming SSR — streams `loading` boundaries when the adapter declares `capabilities.streaming: true` |
+| `router` | `{ enabled?: boolean }?` | Router flag baked into the generated server |
+| `js` | `"modern" \| "legacy"?` | Client JS mode baked into the generated server |
+
+## Notes
+
+- `elur-kit adapter <name>` runs `validateCapabilities` at build time —
+  incompatible host/feature combinations (e.g. `streaming` on a host that
+  can't stream, ISR on an ephemeral filesystem) fail fast instead of
+  producing broken output.
+- The generated Node/Bun servers serve `dist/` and delegate SSR to the
+  bundled handler; they do **not** load `src/middleware.ts` yet —
+  middleware runs in `dev`, `preview`, and `start` only.
