@@ -206,7 +206,7 @@ export default defineConfig({
     speculation: "prefetch", // "prefetch" | "prerender" speculation rules
   },
   redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
-  rewrites:  [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  rewrites: [{ from: "/docs/:rest*", to: "/pages/docs/:rest" }],
   headers:   [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
   images: { formats: ["avif", "webp"], quality: 80 },
   cache: { dir: "./.cache", adapter: myCacheAdapter }, // pluggable ISR adapter

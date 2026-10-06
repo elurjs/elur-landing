@@ -41,7 +41,7 @@ export default defineConfig({
   logger: { level: "info" },
   streaming: false,
   redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
-  rewrites: [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  rewrites: [{ from: "/docs/:rest*", to: "/pages/docs/:rest" }],
   headers: [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
   integrations: [],
 });
@@ -121,7 +121,7 @@ Evaluated by the unified Web handler in `dev`, `preview`, and `start`:
 ```typescript
 export default defineConfig({
   redirects: [{ from: "/old/:slug", to: "/blog/:slug", status: 301 }],
-  rewrites:  [{ from: "/docs/*", to: "/pages/docs/:0" }],
+  rewrites: [{ from: "/docs/:rest*", to: "/pages/docs/:rest" }],
   headers:   [{ path: "/api/*", headers: { "Cache-Control": "no-store" } }],
 });
 ```

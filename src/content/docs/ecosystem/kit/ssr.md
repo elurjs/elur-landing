@@ -262,11 +262,12 @@ Create an SSR server for on-demand rendering:
 import { createSsrServer } from "@elurjs/kit";
 
 const server = await createSsrServer({
-  appDir: "./src/app",
-  outDir: "./dist",
+  appDir: "/abs/path/src/app",   // absolute path required
+  publicDir: "/abs/path/public", // optional static files
+  port: 3000,
 });
 
-await server.listen(); // default port 3000
+await server.listen();
 await server.close();  // shutdown
 ```
 
@@ -380,14 +381,15 @@ resolving async boundaries as they complete:
 ```typescript
 import { renderStreamingPage } from "@elurjs/kit";
 
-const stream = await renderStreamingPage({
+const html = await renderStreamingPage({
   route: matchedRoute,
   params: { slug: "hello-world" },
   searchParams: new URLSearchParams(),
   config: { lang: "es", clientEntry: "/_elur/entry-client.js" },
   request,
 });
-// Returns a ReadableStream
+// Returns a string — the shell HTML with client-fetch placeholders
+// (the legacy approach, not a real ReadableStream)
 ```
 
 ### `StreamingPageOptions`

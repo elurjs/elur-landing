@@ -265,6 +265,8 @@ export default defineConfig({
   `X-Request-ID` always win.
 - Patterns support literal segments, `:param`, `*` wildcards, and
   `:param*` catch-alls, with `:param` interpolation in destinations.
+  A bare `*` matches the rest but captures nothing — use a named
+  `:param*` catch-all when the destination needs the matched tail.
 
 The rule types are exported from the package root so you can annotate
 rule arrays outside `defineConfig`:
