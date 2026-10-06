@@ -41,7 +41,8 @@ elur-kit adapter netlify
 ```
 
 Produces:
-- `netlify/functions/__elur-js-kit.mjs` — bundled SSR function (Netlify Functions v2)
+- `netlify/functions/__elur-js-kit.mjs` — bundled SSR function (Netlify
+  Functions v2)
 - `netlify.toml` — redirects unmatched routes to the function
 
 Static files stay in `dist/` and are served directly by Netlify.
@@ -56,7 +57,8 @@ bun run .elur/bun-server.ts
 
 Produces:
 - `.elur/bun-index.ts` — SSR handler entry
-- `.elur/bun-server.ts` — Bun server serving `dist/` + rendering pages on demand
+- `.elur/bun-server.ts` — Bun server serving `dist/` + rendering pages on
+  demand
 
 Respects `PORT` env var (default `3000`).
 

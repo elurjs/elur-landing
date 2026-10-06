@@ -235,15 +235,27 @@ generation for fast page loads.
 
 ## Next steps
 
-- [Routing](/docs/ecosystem/kit/routing/) — file conventions, layouts, dynamic routes, SPA router, redirects
-- [Data & Backend](/docs/ecosystem/kit/data-backend/) — loaders, API routes, actions, middleware, metadata, cache
-- [SSR & Hydration](/docs/ecosystem/kit/ssr/) — `build()`, `renderToString`, streaming, ISR
-- [Islands](/docs/ecosystem/kit/islands/) — `island()`, directives, `hydrateIslands`, `lazyIsland`
-- [Content Collections](/docs/ecosystem/kit/content/) — `defineCollection`, `getEntry`, frontmatter
-- [Server Actions](/docs/ecosystem/kit/actions/) — `defineAction`, `elurJsAction`, progressive enhancement
-- [Middleware & Cache](/docs/ecosystem/kit/middleware-cache/) — middleware, `streamBoundary`, cache adapters
-- [Image & SEO](/docs/ecosystem/kit/image-seo/) — `image()`, `generateSitemap`, `jsonLd`
-- [Configuration](/docs/ecosystem/kit/config/) — `ElurConfig`, security, Vite plugin, integrations
-- [Runtime & Manifest](/docs/ecosystem/kit/runtime-manifest/) — `createWebHandler`, `RequestContext`, `AppManifest`
-- [Client router](/docs/ecosystem/kit/client-router/) — SPA navigation, lifecycle events, `data-elur-persist`, morphing, speculation
-- [Deployment](/docs/ecosystem/kit/deployment/) — Vercel, Netlify, Bun, Node adapters, capabilities
+- [Routing](/docs/ecosystem/kit/routing/) — file conventions, layouts,
+  dynamic routes, SPA router, redirects
+- [Data & Backend](/docs/ecosystem/kit/data-backend/) — loaders, API
+  routes, actions, middleware, metadata, cache
+- [SSR & Hydration](/docs/ecosystem/kit/ssr/) — `build()`,
+  `renderToString`, streaming, ISR
+- [Islands](/docs/ecosystem/kit/islands/) — `island()`, directives,
+  `hydrateIslands`, `lazyIsland`
+- [Content Collections](/docs/ecosystem/kit/content/) — `defineCollection`,
+  `getEntry`, frontmatter
+- [Server Actions](/docs/ecosystem/kit/actions/) — `defineAction`,
+  `elurJsAction`, progressive enhancement
+- [Middleware & Cache](/docs/ecosystem/kit/middleware-cache/) — middleware,
+  `streamBoundary`, cache adapters
+- [Image & SEO](/docs/ecosystem/kit/image-seo/) — `image()`,
+  `generateSitemap`, `jsonLd`
+- [Configuration](/docs/ecosystem/kit/config/) — `ElurConfig`, security,
+  Vite plugin, integrations
+- [Runtime & Manifest](/docs/ecosystem/kit/runtime-manifest/) —
+  `createWebHandler`, `RequestContext`, `AppManifest`
+- [Client router](/docs/ecosystem/kit/client-router/) — SPA navigation,
+  lifecycle events, `data-elur-persist`, morphing, speculation
+- [Deployment](/docs/ecosystem/kit/deployment/) — Vercel, Netlify, Bun,
+  Node adapters, capabilities

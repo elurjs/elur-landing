@@ -136,7 +136,8 @@ content without a full page load:
 - Prefetching is network-aware — it skips on `Save-Data` and
   `effectiveType` `2g`/`slow-2g` unless you pass `data-prefetch="always"`
 - Add `data-no-prefetch` to any link to opt out
-- View Transitions API used when supported (disabled with `prefers-reduced-motion`)
+- View Transitions API used when supported (disabled with
+  `prefers-reduced-motion`)
 - Add `data-no-router` to any link to opt out of client-side navigation
 - `data-elur-persist="key"` keeps live DOM nodes (islands, media, canvas)
   across navigations

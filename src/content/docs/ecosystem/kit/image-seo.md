@@ -58,9 +58,12 @@ Without `sharp`, emits a plain `<img>` with the original src.
 
 ### Image pipeline hardening
 
-- **SHA-256 transform keys** — variant hash incorporates source content digest + transform options + encoder versions
-- **Path containment** — sources and outputs validated against traversal, NUL, symlink escape
-- **Atomic writes + single-flight** — temp+rename with bounded concurrency pool
+- **SHA-256 transform keys** — variant hash incorporates source content
+  digest + transform options + encoder versions
+- **Path containment** — sources and outputs validated against traversal,
+  NUL, symlink escape
+- **Atomic writes + single-flight** — temp+rename with bounded concurrency
+  pool
 - **`images.strict`** — fails build on missing source or failed transform
 
 ## `getImage(request, options)` — programmatic

@@ -221,7 +221,8 @@ preventing tampering.
 type ActionConcurrencyMode = "latest" | "queue" | "parallel";
 ```
 
-- `"latest"` — only the most recent call runs; previous in-flight calls are cancelled
+- `"latest"` — only the most recent call runs; previous in-flight calls
+  are cancelled
 - `"queue"` — calls run sequentially in order
 - `"parallel"` — all calls run concurrently
 
@@ -296,7 +297,14 @@ const response = await handleActionRequest(
 );
 ```
 
-`ActionResolver` is `(name: string, page?: string) => Promise<((...args: unknown[]) => unknown) | undefined>`.
+`ActionResolver`:
+
+```typescript
+type ActionResolver = (
+  name: string,
+  page?: string,
+) => Promise<((...args: unknown[]) => unknown) | undefined>;
+```
 
 ## `scanActions(appDir)` — build-time discovery
 

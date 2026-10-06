@@ -165,8 +165,9 @@ interface CacheEntry {
 ## Cache adapters
 
 Everything below is exported from the dedicated **`@elurjs/kit/cache`**
-subpath only. Wire an adapter globally via `defineConfig({ cache: { adapter } })`,
-or manually with `connectCacheAdapter`.
+subpath only. Wire an adapter globally via
+`defineConfig({ cache: { adapter } })`, or manually with
+`connectCacheAdapter`.
 
 ### Filesystem (default)
 

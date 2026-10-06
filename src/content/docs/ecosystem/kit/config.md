@@ -128,7 +128,7 @@ export default defineConfig({
 
 Patterns support literal segments, `:param`, `*` wildcards, and `:param*`
 catch-alls with `:param` interpolation in destinations. See
-[Routing — Redirects, rewrites, and route headers](/docs/ecosystem/kit/routing/).
+[Routing](/docs/ecosystem/kit/routing/) for the full rule reference.
 
 ## Security config
 
@@ -177,7 +177,8 @@ All flags are opt-in where noted — `enabled` and `prefetch` default to
   a page, that page ships **0 KB of JavaScript**.
 - **`prefetch: false`** disables link prefetching (programmatic
   `prefetch()` still works).
-- **`morph: true`** uses [idiomorph](https://github.com/bigskysoftware/idiomorph)
+- **`morph: true`** uses
+  [idiomorph](https://github.com/bigskysoftware/idiomorph)
   to morph `#app` instead of replacing it — preserves transient state
   (form values, `<details>` open, scroll) outside islands too. Experimental.
 - **`loadingIndicator: true`** shows a thin progress bar when a navigation
@@ -309,7 +310,8 @@ if (i18n) {
 }
 ```
 
-Available registry types: `"i18n"`, `"auth"`, `"query"`, `"testing"`, `"custom"`.
+Available registry types: `"i18n"`, `"auth"`, `"query"`, `"testing"`,
+`"custom"`.
 
 Each has a typed interface:
 
@@ -384,8 +386,10 @@ export default defineConfig({
 
 Three priority levels when `interpolation: "auto"` (default):
 
-1. **Vite plugin** (`@elurjs/vite-plugin-elur` >= 1.1.0) — state-machine lexer rewrites at build time
-2. **Core native** — when `templateFeatures.partialAttributeInterpolation` is available (core >= 3.3)
+1. **Vite plugin** (`@elurjs/vite-plugin-elur` >= 1.1.0) — state-machine
+   lexer rewrites at build time
+2. **Core native** — when `templateFeatures.partialAttributeInterpolation`
+   is available (core >= 3.3)
 3. **Kit legacy transform** — heuristic HTML tag walker fallback
 
 ```typescript
@@ -413,5 +417,6 @@ The compiler activates:
 
 - Build-time `html\`\`` lowering to imperative DOM code
 - Partial attribute interpolation via state-machine lexer
-- HMR with state preservation (signals, stores, forms, routers survive hot updates)
+- HMR with state preservation (signals, stores, forms, routers survive
+  hot updates)
 - Scroll/focus preservation after re-mount
