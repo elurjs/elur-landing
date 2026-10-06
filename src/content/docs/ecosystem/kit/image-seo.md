@@ -338,7 +338,7 @@ const script = jsonLd({
 
 Safe escaping: `<`, `>`, `&`, U+2028, U+2029 are escaped to prevent injection.
 
-### `generateSitemapFromRoutes(routes, options)` — automatic sitemap
+### `generateSitemapFromRoutes(options)` — automatic sitemap
 
 When `site` is set in `defineConfig`, `elur-kit build` writes `sitemap.xml`
 from the scanned route manifest automatically — dynamic routes, error

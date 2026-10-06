@@ -402,8 +402,9 @@ Loads `src/middleware.ts` and returns the loaded middleware with its config:
 ```typescript
 import { loadMiddleware } from "@elurjs/kit";
 
-const loaded = await loadMiddleware("./src");
-// loaded.handler, loaded.config
+const loaded = await loadMiddleware(".");
+// loaded.handler, loaded.config — root is the project root;
+// candidates are `<root>/src/middleware.ts` then `<root>/middleware.ts`
 // Returns null if no middleware file exists
 ```
 

@@ -152,9 +152,10 @@ defineConfig({ router: { speculation: "prefetch" } })  // or "prerender"
 
 Emits `<script type="speculationrules">` with `eagerness: "moderate"` on
 static and hybrid-prerendered pages — Chromium prefetches (or prerenders)
-internal pages on hover intent. Safe exclusions are baked in:
-`/__elur-js/*`, `a[download]`, `a[target]`, `[data-no-router]`,
-`[data-no-speculation]`.
+internal pages on hover intent. The rule scopes to same-origin paths
+(`href_matches: "/*"`) and excludes `a[download]`, `a[target]`,
+`a[data-no-router]`, and `a[data-no-speculation]` — add
+`data-no-speculation` to any link Chromium should never speculate.
 
 ## Scroll restoration
 

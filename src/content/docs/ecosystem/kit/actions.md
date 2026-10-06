@@ -391,8 +391,12 @@ const { value, storeId } = encodeActionErrorCookie(
 // Set on the redirect response
 headers.set("Set-Cookie", setActionErrorCookieHeader(value));
 
-// On the next render, read and consume
-const error = decodeActionErrorCookie(request.headers.get("Cookie"));
+// On the next render, read and consume — pass the cookie VALUE
+// (the part after `__elur_js_action_error=`), not the whole header
+const match = request.headers.get("Cookie")?.match(
+  /(?:^|;\s*)__elur_js_action_error=([^;]+)/,
+);
+const error = decodeActionErrorCookie(match?.[1]);
 // { data: { email: "Invalid" }, status: 400 } | undefined
 
 // Clear after consuming

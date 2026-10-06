@@ -86,7 +86,7 @@ export default function BlogLayout({ children, data }: LayoutProps<{ categories:
 | `layoutData` | `T?` | Parent layout loader data |
 | `params` | `RouteParams` | Route parameters |
 | `searchParams` | `URLSearchParams` | Query string |
-| `form` | `unknown?` | Last action result (from form submissions) |
+| `form` | `unknown?` | Action failure relayed via the error cookie: `{ __elur_js_action_error: true, status, data }` when a plain-form action failed |
 
 ### `LayoutProps`
 
