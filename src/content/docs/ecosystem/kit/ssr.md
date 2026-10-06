@@ -340,11 +340,14 @@ const result = await renderPage({
   request,                    // for loaders that need cookies/headers
 });
 // result.html, result.revalidate, result.head, result.resolvedTitle
+// result.data, result.status, result.cachePolicy
 // result.clearActionErrorCookie (if action error was consumed)
 ```
 
 `RenderPageResult` also includes `response` when a loader throws a
-first-class `Response` (redirect, 404, etc.).
+first-class `Response` (redirect, 404, etc.), `status` for the HTTP status
+to emit, `data` with the serialized loader payload, and `cachePolicy`
+with the route's resolved cache policy.
 
 ### `RenderPageOptions`
 
@@ -353,7 +356,7 @@ first-class `Response` (redirect, 404, etc.).
 | `route` | `PageRoute` | Matched route from `scanRoutes` (required) |
 | `params` | `RouteParams?` | Route parameters |
 | `searchParams` | `URLSearchParams?` | Query string |
-| `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "renderEndpoint">` | Render config (required) |
+| `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "renderEndpoint" \| "router" \| "js">` | Render config (required) |
 | `importer` | `(path) => Promise<unknown>?` | Custom module loader |
 | `actions` | `Record<string, string[]>?` | Action registry |
 | `request` | `Request?` | Original request (for loaders) |

@@ -102,6 +102,16 @@ Optional catch-all uses `[[...slug]]` — matches the parent path too:
 src/app/blog/[[...slug]]/page.ts  → /blog, /blog/a, /blog/a/b
 ```
 
+## Matching priority
+
+When several routes could match the same URL, the matcher scores each
+segment — static `+2`, `:param` `+1`, catch-all `+0` — and tries the most
+specific route first:
+
+1. Exact static segments (`/blog/new` beats `/blog/[slug]`)
+2. Dynamic params (`/blog/[slug]` beats `/blog/[...slug]`)
+3. Catch-all / optional catch-all
+
 ## Route groups
 
 Route groups `(name)` are URL-invisible. They only affect layout nesting,

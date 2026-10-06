@@ -72,7 +72,8 @@ Without `sharp`, emits a plain `<img>` with the original src.
   (`capabilities.remote = false`).
 - **No runtime image endpoint** — variants are generated at build time,
   not on request (`capabilities.runtimeEndpoint = false`).
-- **Resize only** — no enlargement, crop, fit modes, or rotation.
+- **Resize only** — no enlargement, crop, or rotation. (`ImageRequest.fit`
+  exists in the type but is not implemented yet.)
 - **Manual `width`/`height` required** — intrinsic dimensions are not
   detected at render time.
 - **`processImages` is the legacy pipeline** (`pipeline.ts`: MD5 keys,
@@ -114,6 +115,7 @@ const meta = await getImage(
 | `loading` | `"lazy" \| "eager"?` | Loading strategy |
 | `decoding` | `"async" \| "sync" \| "auto"?` | Decoding hint |
 | `quality` | `number?` | Quality (1-100) |
+| `fit` | `string?` | Declared but **not implemented** — ignored today |
 | `class` | `string?` | CSS class |
 | `attributes` | `Record<string, unknown>?` | Additional HTML attributes |
 

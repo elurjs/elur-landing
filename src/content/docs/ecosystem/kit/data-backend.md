@@ -96,6 +96,7 @@ export default class BlogLayout extends ElurComponent {
 | --- | --- | --- |
 | `children` | `ElurChildren` | Page content to render |
 | `data` | `T?` | Layout loader data |
+| `slots` | `Record<string, ElurTemplate>?` | Rendered `*.slot.ts` templates keyed by name — passed at runtime but not declared on the type yet (see [Routing — Layout slots](/docs/ecosystem/kit/routing/)) |
 
 ### Static params
 
@@ -391,7 +392,7 @@ const middleware: Middleware = async (request, { next }) => {
     return Response.redirect(new URL("/login", request.url), 307);
   }
 
-  // Continue — attach locals for loaders/actions and extra request headers
+  // Continue — attach locals for API routes and extra request headers
   next({
     locals: { user: await getUser(request) },
     headers: { "x-user-id": "123" },
@@ -437,7 +438,7 @@ export const cache = {
 | Mode | Behavior |
 | --- | --- |
 | `"public"` | Cached globally; served from cache until revalidate |
-| `"private"` | Cached per-user (Cookie/Authorization present) |
+| `"private"` | Never publicly cached (reserved for a future per-user adapter) |
 | `"dynamic"` | Always rendered fresh (default, `revalidate: 0`) |
 
 Public cache is automatically disabled for requests with `Cookie` or

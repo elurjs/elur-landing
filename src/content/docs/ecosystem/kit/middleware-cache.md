@@ -262,7 +262,7 @@ import {
 } from "@elurjs/kit/cache";
 
 const policy = normalizeCachePolicy(route.cache); // fills defaults
-shouldCachePublic(request); // false when Cookie/Authorization present
+shouldCachePublic(policy, request); // false when Cookie/Authorization present
 ```
 
 :::warning
@@ -295,8 +295,8 @@ Default policy is `dynamic` (no caching). Requests with `Cookie` or
 
 | Mode | Description |
 | --- | --- |
-| `public` | CDN-cacheable, shared cache |
-| `private` | Browser-only cache |
+| `public` | ISR/public cache, shared (`shouldCachePublic` still skips requests with `Cookie`/`Authorization`) |
+| `private` | Never publicly cached — reserved for a future per-user adapter (today it renders on demand) |
 | `dynamic` | Never cache, always render on demand |
 
 ## Invalidation

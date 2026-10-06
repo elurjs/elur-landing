@@ -14,10 +14,10 @@ generates the correct output format for the platform.
 
 | Adapter | Command | Output |
 | --- | --- | --- |
-| Vercel | `elur-kit adapter vercel` | Vercel output (`.vercel/output.json`) |
-| Netlify | `elur-kit adapter netlify` | Netlify functions + static |
-| Bun | `elur-kit adapter bun` | Bun server (`bun run server.ts`) |
-| Node | `elur-kit adapter node` | Node server (`node server.js`) |
+| Vercel | `elur-kit adapter vercel` | Build Output API v3 (`.vercel/output/`) |
+| Netlify | `elur-kit adapter netlify` | `netlify/functions/__elur-js-kit.mjs` + `netlify.toml` |
+| Bun | `elur-kit adapter bun` | `.elur/bun-server.ts` (`bun run .elur/bun-server.ts`) |
+| Node | `elur-kit adapter node` | `.elur/node-server.mjs` (`node .elur/node-server.mjs`) |
 
 ## Vercel
 
