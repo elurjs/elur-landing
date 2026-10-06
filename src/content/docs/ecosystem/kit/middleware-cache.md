@@ -133,11 +133,12 @@ streaming.
 
 ## HTML cache
 
-Legacy cache functions (exported from both `@elurjs/kit` and
-`@elurjs/kit/cache` for backward compatibility):
+Legacy cache functions. `getCachedHtml`, `setCachedHtml`, and `clearCache`
+are exported from both `@elurjs/kit` and `@elurjs/kit/cache` for backward
+compatibility; `isStale` lives only on the `/cache` subpath:
 
 ```typescript
-import { getCachedHtml, setCachedHtml, clearCache, isStale } from "@elurjs/kit";
+import { getCachedHtml, setCachedHtml, clearCache, isStale } from "@elurjs/kit/cache";
 
 // Check cache before rendering
 const cached = await getCachedHtml(cacheDir, "/blog/hello-world");
@@ -164,9 +165,8 @@ interface CacheEntry {
 ## Cache adapters
 
 Everything below is exported from the dedicated **`@elurjs/kit/cache`**
-subpath (and re-exported from the package root). Wire an adapter globally
-via `defineConfig({ cache: { adapter } })`, or manually with
-`connectCacheAdapter`.
+subpath only. Wire an adapter globally via `defineConfig({ cache: { adapter } })`,
+or manually with `connectCacheAdapter`.
 
 ### Filesystem (default)
 

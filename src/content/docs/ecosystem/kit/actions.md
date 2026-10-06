@@ -105,7 +105,7 @@ html`
 `
 ```
 
-### `ElurAction<TInput, TOutput>`
+### `ElurJsAction<TInput, TOutput>`
 
 | Member | Type | Description |
 | --- | --- | --- |
@@ -310,27 +310,6 @@ const registry = await scanActions("./src/app");
 //   "/contact": { "submitContact": "/abs/path/to/page.action.ts" },
 //   "/blog":    { "createPost": "/abs/path/to/page.action.ts" },
 // }
-```
-
-### `relativeActions(actions, root)`
-
-Returns a copy with file paths made relative to `root`:
-
-```typescript
-import { relativeActions } from "@elurjs/kit";
-
-const safe = relativeActions(registry, process.cwd());
-```
-
-### `actionNames(actions)`
-
-Returns only action names per page (safe for HTML shell serialization):
-
-```typescript
-import { actionNames } from "@elurjs/kit";
-
-const names = actionNames(registry);
-// { "/contact": ["submitContact"], "/blog": ["createPost"] }
 ```
 
 ## `originForbidden(message)`

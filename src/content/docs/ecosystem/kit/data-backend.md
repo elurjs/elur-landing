@@ -185,12 +185,21 @@ src/app/api/posts/[id]/route.ts  → /api/posts/:id
 ```
 
 ```typescript
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+interface ApiContext {
+  params: Record<string, string | string[]>;
+  locals: Record<string, unknown>; // published by middleware via next({ locals })
+}
+
+export async function GET(request: Request, { params, locals }: ApiContext) {
   const post = await getPost(params.id);
   if (!post) return new Response("Not Found", { status: 404 });
   return Response.json(post);
 }
 ```
+
+The second argument is the API context — `params` from the matched route and
+`locals` populated by middleware (see
+[Middleware](/docs/ecosystem/kit/middleware-cache/)).
 
 ## Server actions
 

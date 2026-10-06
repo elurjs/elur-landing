@@ -293,7 +293,7 @@ import {
   getTestingIntegration,
   getCustomIntegrations,
   clearIntegrations,
-} from "@elurjs/kit";
+} from "@elurjs/kit/integrations";
 
 // Optional packages call this on import
 registerIntegration("i18n", {
