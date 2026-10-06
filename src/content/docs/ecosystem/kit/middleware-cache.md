@@ -141,11 +141,14 @@ compatibility; `isStale` lives only on the `/cache` subpath:
 ```typescript
 import { getCachedHtml, setCachedHtml, clearCache, isStale } from "@elurjs/kit/cache";
 
-// Check cache before rendering
+// Check cache before rendering — returns the entry only while fresh
 const cached = await getCachedHtml(cacheDir, "/blog/hello-world");
-if (cached && !isStale(cached)) return cached;
+if (cached) return cached.html;
 
-// Cache after rendering
+// Staleness probe (cacheDir + pathname, async)
+const stale = await isStale(cacheDir, "/blog/hello-world");
+
+// Cache after rendering (60s revalidate)
 await setCachedHtml(cacheDir, "/blog/hello-world", html, 60);
 
 // Clear all cache
@@ -159,9 +162,14 @@ interface CacheEntry {
   html: string;
   generatedAt: number;
   revalidate: number;
-  tags?: string[]; // stored since v2.5 for tag-based invalidation
+  tags?: string[]; // adapter CacheEntry only (tag-based invalidation)
+  version?: string; // adapter CacheEntry only
 }
 ```
+
+`getCachedHtml` returns the entry only while it is **fresh** (returns
+`undefined` once stale — use `isStale()` to distinguish miss from stale),
+and the legacy entry shape has no `tags`/`version` fields.
 
 ## Cache adapters
 

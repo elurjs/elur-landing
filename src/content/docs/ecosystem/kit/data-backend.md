@@ -138,8 +138,9 @@ export async function DELETE(request: Request): Promise<Response> {
 }
 ```
 
-Supported methods: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`. Unmatched
-methods return `405 Method Not Allowed`.
+The handler lookup is dynamic — `mod[request.method]` — so any exported
+method name works (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`,
+`OPTIONS`, …). Unmatched methods return `405 Method Not Allowed`.
 
 ### Programmatic route matching
 
@@ -164,6 +165,8 @@ matching, so `/about` wins over `/:slug` even if the catch-all appears first.
 interface MatchResult {
   route: PageRoute;
   params: Record<string, string | string[]>;
+  // Always empty — matchRoute strips the query; callers parse it from the
+  // request URL themselves.
   searchParams: URLSearchParams;
 }
 ```

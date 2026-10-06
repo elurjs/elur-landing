@@ -70,7 +70,7 @@ export const submitContact = defineAction(
 | `request` | `Request` | Original Web Request |
 | `signal` | `AbortSignal` | Aborts if client disconnects |
 | `idempotencyKey` | `string?` | From request header |
-| `params` | `Record<string, string \| string[]>` | Route params |
+| `params` | `Record<string, string \| string[]>` | Route params — currently `{}` through the built-in endpoint (actions resolve by page path, so params are not known there) |
 | `locals` | `Record<string, unknown>` | Per-request locals — currently `{}` through the built-in endpoint (middleware `locals` reach API routes, not actions yet) |
 
 ### Concurrency modes

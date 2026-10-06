@@ -199,7 +199,12 @@ The registry passed to `hydrateIslands` — maps island names to their
 components or lazy loaders:
 
 ```typescript
-type IslandRegistry = Record<string, IslandComponent | { load: () => Promise<IslandComponent> }>;
+type IslandRegistry = Record<
+  string,
+  | IslandComponent
+  | { load: () => Promise<IslandComponent> }
+  | (() => Promise<IslandComponent>) // legacy async loader — still accepted
+>;
 ```
 
 ## `cleanupHydratedIslands(options?)`

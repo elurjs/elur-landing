@@ -68,7 +68,12 @@ const fullHtml = documentShell({
   title: "My Page",
   lang: "en",
   htmlAttributes: { "data-theme": "dark" },
-  headScripts: ["/scripts/analytics.js"],
+  headScripts: [
+    // Inline JS content — runs before first paint (no-flash bootstrap)
+    `document.documentElement.dataset.theme = localStorage.getItem("theme") ?? "light"`,
+    // Or a complete <script> tag, emitted as-is (incl. src / JSON-LD)
+    '<script type="application/ld+json">{"@context":"https://schema.org"}</script>',
+  ],
   headLinks: ['<link rel="stylesheet" href="/styles/tokens.css">'],
   data: { user: { name: "Ada" } },
   actions: { "/contact": ["submitContact"] },
@@ -88,7 +93,7 @@ const fullHtml = documentShell({
 | `title` | `string?` | Page title |
 | `lang` | `string?` | HTML lang attribute |
 | `htmlAttributes` | `Record<string, string>?` | Additional `<html>` attributes |
-| `headScripts` | `string[]?` | Inline scripts to inject in `<head>` (run before first paint — ideal for no-flash theme bootstrapping) |
+| `headScripts` | `string[]?` | Inline JS content wrapped in `<script>` (runs before first paint — no-flash bootstrapping). Strings starting with `<script` are emitted as-is, so full tags with `src` also work |
 | `headLinks` | `string[]?` | Raw HTML for `<head>` (`<link>` icons, manifest, theme-color) |
 | `data` | `unknown?` | Serialized loader data for client hydration |
 | `actions` | `Record<string, string[]>?` | Action names per page (for client) |
@@ -150,7 +155,7 @@ export const load = async ({ params }) => {
   return {
     title: post.title,
     htmlAttributes: { "data-page": "blog" },
-    headScripts: ["/scripts/highlight.js"],
+    headScripts: ['<script src="/scripts/highlight.js"></script>'],
     headLinks: ['<link rel="stylesheet" href="/styles/code.css">'],
     post,
   };
@@ -463,7 +468,7 @@ const result = await renderErrorPage({
 | --- | --- | --- |
 | `routes` | `ScannedRoutes` | All scanned routes |
 | `status` | `404 \| 500` | Error status code |
-| `error` | `unknown?` | The original error (for 500 pages) |
+| `error` | `unknown?` | Declared for the original error — currently unused by the implementation |
 | `config` | `Pick<BuildConfig, "lang" \| "clientEntry" \| "renderEndpoint" \| "router" \| "js">` | Render config |
 | `actions` | `Record<string, string[]>?` | Action registry |
 | `importer` | `(path) => Promise<unknown>?` | Custom module loader |

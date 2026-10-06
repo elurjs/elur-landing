@@ -306,5 +306,9 @@ when it is not.
   only. Nested mappings are rejected deliberately; no anchors or aliases.
 - **`renderMarkdown` does not sanitize** — the content model is trusted.
   Clean untrusted Markdown yourself before rendering.
-- **The content cache is in-memory** — it does not persist across restarts.
-  Use `clearContentCache()` after file changes in dev.
+- **The content cache is in-memory** — 5 s TTL per collection (invalidated
+  on dev HMR), does not persist across restarts. Use `clearContentCache()`
+  after file changes that must be visible immediately.
+- **Sorting is fixed** — entries come sorted by frontmatter `date`
+  descending when both entries have ISO dates (parsed to `Date`), otherwise
+  by slug. There is no query API; filter/sort in your loader.

@@ -181,6 +181,25 @@ with `data-scroll-preserve` keep their own scroll across navigations.
 7. `elur:rendered` → islands re-hydrate.
 8. `elur:navigate-end` after the view transition settles.
 
+### The render payload
+
+`GET /__elur-js/render?page=<path>` returns JSON with **all keys always
+present** (missing values are `null`, not omitted — stable wire shape):
+
+```typescript
+interface RenderPayload {
+  title?: string | null;   // <title> for the new page
+  body: string;            // rendered #app HTML
+  head?: string | null;    // <head> tags to merge (title, meta, OG, twitter)
+  data?: string | null;    // serialized <script id="elur-data"> content
+  actions?: string | null; // serialized <script id="elur-actions"> content
+  clearActionErrorCookie?: string | null; // Set-Cookie to clear a consumed action error
+}
+```
+
+When the response clears an action error cookie it is also relayed as the
+`X-Elur-Action-Clear-Cookie` response header (parity with the dev path).
+
 ## `hoistStyles(container)`
 
 Style hoisting is also available as a standalone export — it moves

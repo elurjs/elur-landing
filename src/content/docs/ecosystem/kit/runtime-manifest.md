@@ -94,6 +94,8 @@ const ctx = new RequestContext({
 ctx.pathname;    // URL pathname
 ctx.method;      // HTTP method (uppercased)
 ctx.wantsJson;   // true if Accept: application/json
+ctx.searchParams; // URLSearchParams of the query string
+ctx.renderConfig; // { lang, clientEntry, renderEndpoint } for renderPage
 ctx.cookies;     // read-only cookie jar
 ctx.locals;      // per-request data from middleware
 ctx.params;      // route params
@@ -169,10 +171,11 @@ guessContentType("style.css"); // "text/css; charset=utf-8"
 ```typescript
 import { serveStaticFile, resolveStaticFile } from "@elurjs/kit/runtime";
 
-// High-level: returns a Response
-const response = await serveStaticFile("./dist", "/images/hero.webp");
+// High-level: returns a Response (or null when the path doesn't resolve).
+// Pass the incoming Request to enable HEAD, Range and If-* handling.
+const response = await serveStaticFile("./dist", "/images/hero.webp", request);
 
-// Low-level: returns the file path or undefined
+// Low-level: returns the resolved absolute path or null
 const filePath = await resolveStaticFile("./dist", "/images/hero.webp");
 ```
 
@@ -183,14 +186,14 @@ Static serving supports conditional and range requests out of the box:
 - `Range` (single byte range) + `If-Range` → `206` / `416`
 - `HEAD` requests served without a body
 - Content-hashed asset URLs get immutable `Cache-Control`
-- `..` traversal and symlink escapes resolve to `undefined` (→ 404)
+- `..` traversal and symlink escapes resolve to `null` (→ 404)
 
 :::note
 There is no built-in compression (gzip/brotli) — put a reverse proxy in
 front of `elur-kit start` if you need compressed responses.
 :::
 
-## `incomingMessageToRequest(req)` / `sendWebResponse(res, response, signal?)`
+## `incomingMessageToRequest(req, body?)` / `sendWebResponse(res, response)`
 
 Convert between Node.js and Web primitives:
 
@@ -201,7 +204,7 @@ import { createServer } from "node:http";
 const server = createServer(async (req, res) => {
   const request = incomingMessageToRequest(req);
   const response = await handler(request);
-  await sendWebResponse(res, response, request.signal);
+  await sendWebResponse(res, response);
 });
 ```
 

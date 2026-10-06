@@ -101,6 +101,9 @@ Use `[...slug]` for catch-all segments:
 src/app/docs/[...slug]/page.ts  →  /docs/*
 ```
 
+The param arrives as `string[]` — `/docs/a/b` gives
+`params.slug === ["a", "b"]`. A plain `[slug]` gives `string`.
+
 ## Optional catch-all
 
 Optional catch-all uses `[[...slug]]` — matches the parent path too:
@@ -108,6 +111,8 @@ Optional catch-all uses `[[...slug]]` — matches the parent path too:
 ```text
 src/app/blog/[[...slug]]/page.ts  → /blog, /blog/a, /blog/a/b
 ```
+
+On `/blog` the param is an empty array (`params.slug === []`).
 
 ## Matching priority
 
@@ -327,96 +332,11 @@ interface ScannedRoutes {
 }
 ```
 
-### `RouteRecord`
-
-```typescript
-interface RouteRecord {
-  path: string;
-  component: () => ElurTemplate | ElurComponent;
-  name?: string;
-  children?: RouteRecord[];
-  meta?: Record<string, unknown>;
-  beforeEnter?: NavigationGuard;
-}
-```
-
-### `NavigateOptions`
-
-```typescript
-interface NavigateOptions {
-  replace?: boolean;  // replace history entry instead of pushing
-}
-```
-
-### `NavigationGuard`
-
-```typescript
-type NavigationGuard = (
-  to: string,
-  from: string,
-) => boolean | string | void | { redirect: string };
-
-// Return false to cancel, a path string to redirect, or nothing to continue
-```
-
-### `NavigationGuardResult`
-
-```typescript
-type NavigationGuardResult = boolean | string | void | { redirect: string };
-```
-
-### `AfterEachHook`
-
-```typescript
-type AfterEachHook = (to: string, from: string) => void;
-```
-
-### `RouterMode`
-
-```typescript
-type RouterMode = "history" | "hash";
-```
-
-### `ScrollBehavior`
-
-```typescript
-type ScrollBehavior = (
-  to: string,
-  from: string,
-  savedPosition: ScrollPosition | null,
-) => ScrollPosition | false;
-```
-
-### `RouteLocation`
-
-```typescript
-type RouteLocation = string | NamedRouteLocation;
-
-interface NamedRouteLocation {
-  name: string;
-  params?: Record<string, string>;
-}
-```
-
-### `Router` interface
-
-```typescript
-interface Router {
-  readonly current: Signal<string>;
-  readonly params: Signal<Record<string, string>>;
-  readonly query: Signal<Record<string, string>>;
-  readonly base: string;
-  readonly intent: Signal<NavigationIntent>;
-  readonly canGoBack: Signal<boolean>;
-  navigate(location: RouteLocation, options?: NavigateOptions): void;
-  replace(location: RouteLocation, options?: NavigateOptions): void;
-  back(animation?: unknown): void;
-  forward(animation?: unknown): void;
-  go(delta: number): void;
-  isActive(path: string, exact?: boolean): boolean;
-  resolve(path: string): ResolvedRoute;
-  readonly routes: RouteRecord[];
-  beforeEach(guard: NavigationGuard): () => void;
-  afterEach(hook: AfterEachHook): () => void;
-}
-```
+:::note
+The types above (`PageRoute`, `ApiRoute`, `ScannedRoutes`) are the **Kit**
+file-system route objects. For the SPA navigation layer see
+[Client Router](/docs/ecosystem/kit/client-router/); the imperative
+`createRouter` API (`RouteRecord`, `NavigationGuard`, `RouteLocation`,
+`Router`) belongs to `@elurjs/core` and is documented under
+[Router](/docs/state/router/) — Kit apps don't use it directly.
+:::

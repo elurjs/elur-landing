@@ -115,12 +115,19 @@ Elur Kit includes built-in image optimization:
 ```typescript
 import { image } from "@elurjs/kit";
 
-const optimized = image("/images/photo.jpg", {
+const optimized = image({
+  src: "/images/photo.jpg",
+  alt: "Photo",
+  width: 1200,
+  height: 800,
   widths: [400, 800, 1200],
-  formats: ["avif", "webp"],
-  quality: 80,
+  sizes: "100vw",
 });
 ```
+
+Variants are generated at build time (formats come from `images.formats` in
+`elur.config.ts` — default `["webp", "avif"]`). See
+[Image & SEO](/docs/ecosystem/kit/image-seo/).
 
 ## SEO
 
