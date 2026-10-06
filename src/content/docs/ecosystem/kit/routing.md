@@ -198,7 +198,7 @@ export default defineConfig({
     { from: "/home", to: "/" }, // 308 by default
   ],
   rewrites: [
-    { from: "/docs/*", to: "/pages/docs/:0" }, // URL stays /docs/*
+    { from: "/docs/:rest*", to: "/pages/docs/:rest" }, // URL stays /docs/*
   ],
   headers: [
     { path: "/api/*", headers: { "Cache-Control": "no-store" } },
