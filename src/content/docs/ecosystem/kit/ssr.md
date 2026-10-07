@@ -242,10 +242,10 @@ const response = await createStreamingResponse({
 });
 ```
 
-`sendWebResponse(res, response, request.signal)` (from
-`@elurjs/kit/runtime`) writes the response to a Node `ServerResponse`,
-forwarding chunks with backpressure and cancelling the upstream stream on
-socket close.
+`sendWebResponse(res, response)` (from `@elurjs/kit/runtime`) writes the
+response to a Node `ServerResponse`, forwarding chunks with backpressure
+(`drain`) and cancelling the upstream stream when the socket emits
+`close` before `finish`.
 
 ## `createSsrServer(options)` — deprecated
 

@@ -337,8 +337,10 @@ const config = await loadElurConfig({
 :::note
 There is no env-specific config file (`elur.config.dev.ts` /
 `elur.config.prod.ts`) — one `elur.config.ts` serves all commands.
-`overrides` deep-merges only one level: deeply nested objects are
-replaced, not merged.
+`overrides` merges one level deep inside `images`, `cache`, `security`,
+`router`, and `logger` (deeper nesting is replaced, not merged); rule
+arrays `redirects`/`rewrites`/`headers` concatenate with overrides first,
+so override rules win on first-match. `integrations` is override-or-base.
 :::
 
 ### Type aliases

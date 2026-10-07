@@ -158,18 +158,18 @@ descending (if present), otherwise by slug ascending.
 
 ## Frontmatter parsing
 
-### `parseFrontmatter(text)`
+### `parseFrontmatter(raw)`
+
+Parses a raw YAML-subset frontmatter string (without the `---` fences) into
+a plain object — split the document first with `splitFrontmatter`, or use
+`parseDocument` to do both in one call:
 
 ```typescript
-import { parseFrontmatter } from "@elurjs/kit/content";
+import { splitFrontmatter, parseFrontmatter } from "@elurjs/kit/content";
 
-const { data, body } = parseFrontmatter(`---
-title: Hello
----
-
-# Markdown body`);
+const { raw, body } = splitFrontmatter(text);
+const data = parseFrontmatter(raw);
 // data: { title: "Hello" }
-// body: "# Markdown body"
 ```
 
 ### `splitFrontmatter(source)`
@@ -213,8 +213,11 @@ if (validator) {
 }
 ```
 
-When `zod` is not installed but a schema is provided, validation is skipped
-with a warning.
+Validation is duck-typed — any object with `.parse()` or a plain function
+works. When a collection has a `schema` but `zod` isn't installed, entries
+still load; the schema is only enforced when `createValidator` can build a
+validator from it (an unrecognized shape returns `undefined`, skipping
+validation silently).
 
 ### `getZod()`
 

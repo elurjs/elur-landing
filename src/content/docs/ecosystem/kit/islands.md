@@ -107,8 +107,10 @@ if (!isSSR()) {
 
 :::warning
 `isSSR()` only guards environment reads. It is **not** the same as
-`directive: "only"`. DOM queries of own children need
-`ElurComponent.onMount()` with `ref`.
+`directive: "only"`. For DOM access inside an island, bind the `ref`
+directive to a ref object (`const r = { el: null as HTMLElement | null }`,
+then `ref=${r}`) — the island component body also runs during SSR, where
+no real DOM exists.
 :::
 
 ## Auto-generated entry naming

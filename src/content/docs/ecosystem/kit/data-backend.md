@@ -332,6 +332,11 @@ Tags are marked with `data-elur-head` so the SPA router swaps them on
 navigation. See also [Image & SEO](/docs/ecosystem/kit/image-seo/) for
 `generateSitemap`, `generateRobots`, and `jsonLd`.
 
+Metadata resolution falls back when `generateMetadata` is absent or returns
+nothing: the renderer looks for a `metadata` field in the **page loader
+data** first, then in each `layout.data.ts` result — so a loader can return
+`{ post, metadata: { title: post.title } }` without a separate export.
+
 ## `throw new Response()` — first-class HTTP control flow
 
 Loaders and layout loaders can throw `Response` objects for redirects, 404s,
