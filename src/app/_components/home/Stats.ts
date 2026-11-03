@@ -15,7 +15,7 @@ export function Stats(): ElurTemplate {
         <div class="home-stat-label">Best-case JS-only gain</div>
       </div>
       <div class="home-stat-item">
-        <div class="home-stat-value orange">1900+</div>
+        <div class="home-stat-value orange">2,000+</div>
         <div class="home-stat-label">Tests passing</div>
       </div>
       <div class="home-stat-item">

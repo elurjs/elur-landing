@@ -26,7 +26,7 @@ const tabs = [
 const panels = {
   overview: html`
     <h3 style="margin-bottom:8px">Elur Overview</h3>
-    <p style="color:#a0a0b5">A fine-grained reactive UI framework with signals and tagged templates. ~15 KB runtime, zero dependencies, no virtual DOM.</p>
+    <p style="color:#a0a0b5">A fine-grained reactive UI framework with signals and tagged templates. ~21 KB runtime, zero dependencies, no virtual DOM.</p>
   `,
   features: html`
     <h3 style="margin-bottom:8px">Key Features</h3>

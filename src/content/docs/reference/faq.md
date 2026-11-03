@@ -18,7 +18,7 @@ README for status.
 
 ### How big is the Elur runtime?
 
-The core `@elurjs/core` package is ~15 KB gzipped with zero dependencies. This
+The core `@elurjs/core` package is ~21 KB gzipped with zero dependencies. This
 includes signals, computed, effects, and the template renderer.
 
 ### Do I need a build step?

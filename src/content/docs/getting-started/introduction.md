@@ -9,7 +9,7 @@ order: 1
 
 **Elur** is a fine-grained reactive UI framework that uses tagged template
 literals for rendering and signals for state management. It ships a tiny
-runtime (~15 KB gzipped), requires no virtual DOM, and updates the DOM
+runtime (~21 KB gzipped), requires no virtual DOM, and updates the DOM
 surgically — only the nodes affected by a state change are touched.
 
 ## Why Elur?
@@ -22,7 +22,7 @@ templating primitive. This means:
 - **No build step required** — templates are plain JavaScript tagged templates.
 - **No virtual DOM** — the framework tracks which DOM nodes depend on which
   signals and updates them directly.
-- **Tiny runtime** — the core is ~15 KB gzipped with zero dependencies.
+- **Tiny runtime** — the core is ~21 KB gzipped with zero dependencies.
 - **Universal** — the same code runs on the server (SSR) and the client
   (hydration).
 

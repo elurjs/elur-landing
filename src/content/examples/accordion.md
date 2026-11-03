@@ -20,7 +20,7 @@ const openIndex = signal(0);
 const sections = [
   {
     title: "What is Elur?",
-    body: "Elur is a fine-grained reactive UI framework that uses tagged template literals and signals. It ships a tiny ~15 KB runtime with zero dependencies.",
+    body: "Elur is a fine-grained reactive UI framework that uses tagged template literals and signals. It ships a tiny ~21 KB runtime with zero dependencies.",
   },
   {
     title: "How does reactivity work?",

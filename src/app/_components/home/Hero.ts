@@ -49,9 +49,9 @@ export function Hero(): ElurTemplate {
       <div class="home-ecosystem-bar">
         <span class="home-eco-badge"><span class="home-eco-dot ts"></span> TypeScript-first</span>
         <span class="home-eco-badge"><span class="home-eco-dot mit"></span> MIT License</span>
-        <span class="home-eco-badge"><span class="home-eco-dot test"></span> 1900+ tests passing</span>
+        <span class="home-eco-badge"><span class="home-eco-dot test"></span> 2,000+ tests passing</span>
         <span class="home-eco-badge"><span class="home-eco-dot"
-            style="background:#10b981;box-shadow:0 0 10px rgba(16, 185, 129,0.5)"></span> 92.9% Coverage</span>
+            style="background:#10b981;box-shadow:0 0 10px rgba(16, 185, 129,0.5)"></span> 96.5% Coverage</span>
         <span class="home-eco-badge"><span class="home-eco-dot size"></span> ~21 KB gzipped</span>
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#60a5fa"></span> Elur UI</span>
         <span class="home-eco-badge"><span class="home-eco-dot" style="background:#fb923c"></span> Elur Query 1.6.2</span>

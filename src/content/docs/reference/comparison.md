@@ -18,7 +18,7 @@ ecosystem.
 | Reactivity | Signals | VDOM diff | Refs/Reactive | Compile-time | Signals |
 | Templating | Tagged templates | JSX | SFC templates | SFC templates | JSX |
 | Build step | Optional | Required | Required | Required | Required |
-| Runtime size | ~15 KB | ~45 KB | ~35 KB | ~2 KB* | ~8 KB |
+| Runtime size | ~21 KB | ~45 KB | ~35 KB | ~2 KB* | ~8 KB |
 | SSR | Yes | Yes | Yes | Yes | Yes |
 | TypeScript | First-class | First-class | Good | Good | First-class |
 
